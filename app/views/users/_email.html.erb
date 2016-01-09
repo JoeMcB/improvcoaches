@@ -1,0 +1,24 @@
+<div class="modal" id="email" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Email <%= @user.name %></h4>
+      </div>
+      <div class="modal-body">
+        <%= form_tag user_email_path(@user), method: :post, remote: true, class: "form-email" do %>
+          <div class="form-group">
+            <textarea name="message" class="form-control" rows="8" ></textarea>
+          </div>
+          <div class="pull-right">
+            <%= submit_tag "Send", class: "btn btn-success btn-lg btn-block"  %>
+          </div>
+          <div class="clearfix"/>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        Any replies will be sent to <%= current_user.email %>
+      </div>
+    </div>
+  </div>
+</div>

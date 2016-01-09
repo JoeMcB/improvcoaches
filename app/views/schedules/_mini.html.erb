@@ -1,0 +1,47 @@
+<% days = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"] %>
+
+<% fraction = 0.5 %>
+
+<% if !schedule.nil? && 
+      first_hour = schedule.first_hour_available && 
+      last_hour  = schedule.last_hour_available then %>
+  <div class="table-responsive">
+    <table class="table table-condensed table-bordered table-hover">
+      <thead>
+        <th></th>
+        <% for day in days do%>
+          <th><%= day %>
+        <% end %>
+      </thead>
+
+      <tbody>
+        
+        <%  for h in schedule.first_hour_available..schedule.last_hour_available do%>
+          <% (1/fraction).to_i.times do |i| %>
+            <tr>
+              <% m = ((60 / (i+1)) - 60 ).abs %>
+              <% if(i == 0 ) then %>
+                <% suffix = ( h >= 12) ? 'pm' : 'am' %>
+                <% display_h = ( h > 12) ? h-12 : h %>
+                <td class='time_of_day hour'><%= display_h.to_s + ":00" + suffix %></td>
+              <% else %>
+                <td class='time_of_day half'> :<%= m %> &nbsp;&nbsp;&nbsp; </td>
+              <% end %>
+            
+              <% 7.times do |d| %>
+                <td class="time_block <%= schedule.has_block?(d, h, m) ? 'success' : 'error' %>">
+                  
+                </td>
+              <% end %>
+            </tr>
+          <% end %>
+        <% end %>
+
+      </tbody>
+    </table>
+    <small class="pull-right">Green = Available</small>
+    <span id="last_updated">Last updated <%= time_ago_in_words(schedule.updated_at) %> ago</span>
+  </div>
+<% else %>
+    <h3>No Availability Listed</h3>
+<% end %>

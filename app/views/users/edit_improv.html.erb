@@ -1,0 +1,72 @@
+<div class="page-header">
+  <h1>Profile</h1>
+</div>
+
+  <div class="row">
+    <div class="col-sm-1 col-md-2">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Your Profile
+        </div>
+        <div class="panel-body">
+          <%= render "edit_links", current: :improv %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-md-6" id="experience_list">
+      <%= form_for(current_user) do |f| %>
+        <%= hidden_field_tag :experience_update, 1 %>
+
+        <% current_city.theatres.each do |theatre| %>
+          <div class="form-group">
+            <h3><%= theatre.name %></h3>
+          
+            <% ExperienceType.all.each do |experience_type| %>
+              <%= label_tag "experience[#{theatre.id}][#{experience_type.id}]", experience_type.name do%>
+                <%= check_box_tag "experience[#{theatre.id}][#{experience_type.id}]",  1, current_user.has_experience?( theatre.id, experience_type.id)%>
+                <%= experience_type.name %>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+        <div>
+          <a data-toggle="collapse" data-parent="#experience_list" href="#other_cities">
+            View Other Theatres
+          </a>
+        </div>
+        <div class="form-group collapse" id="other_cities">
+          <% current_city.other_theatres.each do |theatre| %>
+            <div class="form-group">
+              <h3><%= theatre.name %></h3>
+            
+              <% ExperienceType.all.each do |experience_type| %>
+                <%= label_tag "experience[#{theatre.id}][#{experience_type.id}]", experience_type.name do%>
+                  <%= check_box_tag "experience[#{theatre.id}][#{experience_type.id}]",  1, current_user.has_experience?( theatre.id, experience_type.id)%>
+                  <%= experience_type.name %>
+                <% end %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+
+        <%= f.submit "Save", class: "btn btn-primary btn-lg" %>
+      <% end %>
+    </div>
+
+    <div class="col-sm-12 col-md-4">
+      <div class="panel panel-warning">
+        <div class="panel-heading">
+          Explanation of Roles
+        </div>
+
+        <div class="panel-body">
+          <strong>Students</strong> take classes at a theatre.<br/>
+          <strong>Performers</strong> are listed as performers by the theatre.<br/>
+          <strong>Teachers</strong> teach full-length classes or workshops for the theatre.</br>
+          <strong>House Team</strong> members are currently on a house team created by the theatre.</br>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

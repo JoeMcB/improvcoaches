@@ -1,0 +1,17 @@
+<div class="result">
+	<div class="row">
+		<div class="col-md-12">
+			<%= link_to space_path(space, options) do %>
+				<h2><%= space.name %></h2>
+			<% end %>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<%= space.compiled_address %>
+		</div>
+		<div class="col-md-6">
+			<% link_to space.phone, "tel:#{space.phone}" %>
+		</div>
+	</div>
+</div>

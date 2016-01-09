@@ -1,0 +1,15 @@
+// Place all the styles related to the Auth controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.auth{
+	form.form-signin{
+		width: 330px;
+		padding: 15px;
+		margin: 0 auto;
+
+		.remember-me{
+			margin: 10px 0px 10px 0px;
+		}
+	}
+}

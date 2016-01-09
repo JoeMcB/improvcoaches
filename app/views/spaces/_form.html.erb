@@ -1,0 +1,87 @@
+<div class="row">
+  <div class="col-md-6">
+    <%= form_for(@space, html: {class: "form-group" } ) do |f| %>
+      <% if @space.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@space.errors.count, "error") %> prohibited this space from being saved:</h2>
+
+          <ul>
+          <% @space.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="field ">
+        <%= f.label :name %><br />
+        <%= f.text_field :name, class: "form-control" %>
+      </div>
+      <div class="field">
+        <%= f.label :description %><br />
+        <%= f.text_area :description, class: "form-control"  %>
+      </div>
+      <div class="field">
+        <%= f.label :city_id %><br />
+        <%= f.collection_select(:city_id, City.all, :id, :name, { class: "form-control" } ) %>
+      </div>
+      <div class="field">
+        <%= f.label :rating %><br />
+        <%= f.text_field :rating, class: "form-control"  %>
+      </div>
+      <div class="field">
+        <%= f.label :website_link %><br />
+        <%= f.text_field :website_link, class: "form-control"  %>
+      </div>
+      <div class="field">
+        <%= f.label :yelp_link %><br />
+        <%= f.text_field :yelp_link, class: "form-control"  %>
+      </div>
+      <div class="field">
+        <%= f.label :facebook_link %><br />
+        <%= f.text_field :facebook_link, class: "form-control"  %>
+      </div>
+      <div class="field">
+        <%= f.label :address %><br />
+        <%= f.text_field :address, class: "form-control"  %>
+      </div>
+      <div class="field">
+        <%= f.label :address_2 %><br />
+        <%= f.text_field :address_2, class: "form-control"  %>
+      </div>
+      <div class="field">
+        <%= f.label :zip %><br />
+        <%= f.text_field :zip, class: "form-control"  %>
+      </div>
+      <div class="field">
+        <%= f.label :real_city %><br />
+        <%= f.text_field :real_city, class: "form-control"  %>
+      </div>
+      <div class="field">
+        <%= f.label :state %><br />
+        <%= f.text_field :state, class: "form-control"  %>
+      </div>
+      <div class="field">
+        <%= f.label :phone %><br />
+        <%= f.text_field :phone, class: "form-control"  %>
+      </div>
+      <div class="field">
+        <%= f.label :email %><br />
+        <%= f.text_field :email, class: "form-control"  %>
+      </div>
+      <div class="field">
+        <%= f.label :is_rehearsal, "Is Rehearsal" %>
+        <%= f.check_box :is_rehearsal %>
+      </div>
+      <div class="field">
+        <%= f.label :is_performance, "Is Performance" %>
+        <%= f.check_box :is_performance %>
+      </div>
+      <div class="actions">
+        <%= f.submit "Edit", class: "btn btn-block btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+
+  </div>
+</div>

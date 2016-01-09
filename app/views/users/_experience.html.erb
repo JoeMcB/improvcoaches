@@ -1,0 +1,12 @@
+<% if(!@user.experiences.empty?) %>
+	<% @user.theatres.each do |theatre| %>
+		<h4><%= theatre.name %></h4>
+		<ul>
+			<% @user.experiences.each do |experience| %>
+				<% if experience.theatre == theatre %>
+					<li><%= experience.experience_type.name %></li>
+				<% end %>
+			<% end %>
+		</ul>
+	<% end %>
+<% end %>

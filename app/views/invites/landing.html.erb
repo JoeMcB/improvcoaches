@@ -1,0 +1,74 @@
+<div id="invite">
+	<div class="jumbotron">
+		<div class="container">
+			<h1>So you want to be a coach, huh?</h1>
+		
+			<p>That's great.  Really.  But don't thank me.  Thank <%= @invite.owner.name %> for thinking you've got the chops.</p>
+			<br />
+			<div class="panel panel-success">
+				<div class="panel-heading">
+					A few things you should know:
+				</div>
+				<div class="panel-body">
+					<ul>
+						<li>The more information you provide, the easier it will be for people to find you.</li>
+						<li>Want gigs?  Keep your schedule updated.</li>
+						<li>You'll be rated by other users.  It's 100% anonymous, but it'll appear on your profile.</li>
+						<li>The more people using ImprovCoaches, the better it is for everyone.  Spread the word in your practices and community.</li>
+						<li>If you ever see <%= link_to "this handsome devil", user_url(1) %>, toss him a high-five.</li>
+					</ul>
+				</div>
+				<% if current_user %>
+					<div class = 'text-center form-group'>
+						<%= link_to invite_accept_path(@invite) do %>
+							<button class="btn btn-lg btn-success">
+								<span class="glyphicon glyphicon-thumbs-up"></span> Accept Invite
+							</button>
+						<% end %>
+					</div>
+				<% end %>
+			</div>
+		</div>
+	</div>
+
+	<% unless current_user %>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12 col-md-6">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							Create an Account or Login with Facebook
+						</div>
+						<div class="panel-body" id="facebook">
+	    					<%= link_to "/auth/facebook" do%>
+								<button id="fb_login" class="btn btn-lg btn-facebook">
+									<span class="icon-facebook"></span> | Login with Facebook
+								</button>
+							<% end %>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-sm-12 col-md-6">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							Log In to an Existing Account
+						</div>
+						<div class="panel-body">
+							<%= render partial: 'auth/login', locals: { invite_code: @invite.code} %>
+						</div>
+					</div>
+					<h3 class='text-center'>OR</h3>
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							Create an Account without Facebook
+						</div>
+						<div class="panel-body">
+							<%= render partial: 'users/register', locals: { invite_code: @invite.code } %>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	<% end %>
+</div>

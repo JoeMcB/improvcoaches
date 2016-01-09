@@ -1,0 +1,28 @@
+.spaces{
+	#show{
+		#address .btn{
+			width: 100%;
+			margin: 5px 0px;
+		}
+
+		ul{
+			list-style: none;
+			padding: 0px;
+			margin: 0px;
+
+			li{
+				display: inline-block;
+				vertical-align: bottom;
+				text-align: left;
+
+				img{
+					max-height: 50px;
+				}
+			}
+		}
+
+		.admin-only{
+			margin-top: 20px;
+		}
+	}	
+}

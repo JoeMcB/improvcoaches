@@ -1,0 +1,31 @@
+<div id="home">
+	<div class="jumbotron">
+			<div class="container">
+				<h1>Welcome to ImprovCoaches</h1>
+			
+				<p>A website for improv coaches and students (that isn't a message board.)</p>
+				<br/>
+				<div class="panel panel-default">
+					<div class="panel-body form-inline">
+						<%= render "search/basic" %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="coaches row">
+			<% @user_list.each do |user| %>
+				<div class="col-lg-4 col-md-4 text-center">
+					<%= link_to user do %>
+						<%= image_tag user.avatar :medium %>
+						<div class="caption">
+							<h4><%= user.name %></h4>
+						</div>
+					<% end %>
+				</div>
+			<% end %>
+		</div>
+	</div>
+</div>

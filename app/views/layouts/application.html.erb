@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <%= analytics_init if Rails.env.production? %>
+  
+  <%= display_meta_tags :site => ('ImprovCoaches.com - '+current_city.name) %>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+  <%= yield :open_graph %>
+
+  	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+	<!-- Awesome Icons -->
+	<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<%= render "shared/fb_tag" %>
+
+	<div class="navbar">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+
+				<a class="navbar-brand" href="/">ImprovCoaches</a>
+			</div>
+
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li class="dropdown">
+			       		<a href="#" class="dropdown-toggle" data-toggle="dropdown"><%=current_city.name %> <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<% City.all.each do |city| %>
+								<% if(current_city != city) %>
+									<li><%= link_to city.name, root_url(subdomain: city.subdomain) %></li>
+								<% end %>
+							<% end %>
+						</ul>
+				  	</li>
+					<li><%= link_to "Coaches", users_path %></li>
+					<% if(current_city.has_spaces) %>
+						<li><%= link_to "Spaces", spaces_path %></li>
+					<% end %>
+					<li><%= link_to "Search", search_path %></li>
+				</ul>
+
+				<ul class="nav navbar-nav navbar-right">
+					<% if(current_user.nil?) %>
+						<li>
+							<%= link_to "/auth/facebook" do%>
+								<button id="fb_login" class="btn btn-xs btn-facebook">
+									<span class="icon-facebook"></span> | Login with Facebook</button>
+							<% end %>
+						</li>
+						<li><%= link_to "Login", login_path %></li>
+						<li><%= link_to "Join", join_path %></li>
+					<% else %>
+						<% if current_user.is_coach %>
+							<li>
+								<%= link_to user_path(current_user) do %>
+									<span class="glyphicon glyphicon-user">&nbsp;</span><%= current_user.name %>
+								<% end %>
+							</li>
+						<% end %>
+						<li>
+							<%= link_to profile_edit_path do %>
+							<span class="glyphicon glyphicon-cog">&nbsp;</span> Settings
+							<%end%>
+						</li>
+						<li>
+							<%= link_to logout_path do %>
+								<span class="glyphicon glyphicon-log-out">&nbsp;</span> Logout
+							<% end %>
+						</li>
+					<% end %>
+				</ul>
+			</div>
+		</div>
+	</div>
+		
+	<div id="wrap">
+		<div id="alerts" class="container">
+			<% if flash[:alert] %>
+				<div class="alert alert-danger"><%= flash[:alert] %></div>
+			<% end %>
+			<% if flash[:warning] %>
+				<div class="alert alert-warning"><%= flash[:warning] %></div>
+			<% end %>
+			<% if flash[:notice] %>
+				<div class="alert alert-info"><%= flash[:notice] %></div>
+			<% end %>
+			<% if flash[:success] %>
+				<div class="alert alert-success"><%= flash[:success] %></div>
+			<% end %>
+		</div>
+		<div class="container <%= params[:controller]  %>">
+			<div class="<%= params[:controller] %>">
+				<%= yield %>
+			</div>
+		</div>
+	</div>
+
+	<div id="footer">
+		<div class="container">
+			<p class="text-muted credit text-center">
+				&copy; <%= Time.now.year %> 
+				ImprovCoaches.com
+				<%= mail_to "info@improvcoaches.com", "Contact" %> - 
+				<%= link_to "About", about_url %> - 
+				<%= link_to "Open Source", 'https://github.com/JoeMcB/improvcoaches'%>
+			</p>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,18 @@
+// Place all the styles related to the ratings controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.rating{
+	margin: 5px 0px 10px 5px;
+
+	.smiley {
+	
+	}
+
+	.actions {
+		font-size: 14px;
+		.btn {
+			min-width: 85px;
+		}
+	}
+}

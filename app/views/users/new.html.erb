@@ -1,0 +1,47 @@
+<div id="new">
+	<div class="page-header">
+		<h1>Join ImprovCoaches.com</h1>
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12 col-md-6">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						Create an Account with Facebook
+					</div>
+					<div class="panel-body" id="facebook">
+						<div class="text-center"
+							<%= link_to "/auth/facebook" do%>
+								<button id="fb_login" class="btn btn-lg btn-facebook">
+									<span class="icon-facebook"></span> | Login with Facebook</button>
+							<% end %>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-12 col-md-6">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						Create an Account without Facebook
+					</div>
+					<div class="panel-body">
+						<%= render 'register' %>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					Interested in Coaching?
+				</div>
+				<div class="panel-body">
+					Our real-life improv communities are important.  That's why ImprovCoaches uses an invite system for new coaches.  Any coach currently on the site can invite another user to become a coach.  If you're interested in coaching, talk to coaches you like and see if they've got an invite you can use.
+				</div>
+			</div>
+		  </div>
+		</div>
+	</div>
+</div>

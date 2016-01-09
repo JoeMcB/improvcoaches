@@ -1,0 +1,19 @@
+<tr id="invite_<%= invite.id %>">
+	<td><%= invite.recipient %></td>
+	<td><%= invite.status %></td>
+	<td><!-- empty --></td>
+	<td>
+		<% if invite.status == "pending" %>
+			<%= link_to  profile_invite_resend_path(invite), remote: true do %>
+				<span class="glyphicon glyphicon-refresh" ></span>
+			<% end %>
+		<% end %>
+	</td>
+	<td>
+		<% if invite.status == "pending" %>
+			<%= link_to  profile_invite_cancel_path(invite), remote: true do %>
+				<span class="glyphicon glyphicon-remove" ></span>
+			<% end %>
+		<% end %>
+	</td>
+</tr>

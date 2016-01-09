@@ -1,0 +1,81 @@
+<%= form_tag( {action: :search }, {method: :post, class: 'form form-horizontal' }) do %>
+	<%= hidden_field_tag :commit, :Search %>
+	<div class="form-group">
+		<%= label_tag :name, "Coach Name", class: "col-md-2 control-label" %>
+		<div class="col-md-4 col-md-4">
+			<%= text_field_tag :name, params[:name], class: "form-control" %>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-md-2  control-label">
+			Availability
+		</label>
+
+		<div class="col-md-2">
+			<%= label_tag :day, "", class: "sr-only" %>
+			<%= select_tag :day, options_for_select(days, params[:day]), :prompt => "Day", class: "form-control" %>
+		</div>
+		
+		<div class="col-md-8 form-inline time-select">
+			<%= label_tag :start_hour, "Start Hour", class: "sr-only" %>
+			<%= select_tag :start_hour, options_for_select(searchable_hours, params[:start_hour]), prompt: "Hour", class: "form-control" %>:
+			<%= label_tag :start_minute, "Start Hour", class: "sr-only" %>
+			<%= select_tag :start_minute, options_for_select( [0, 30], params[:start_minute]), prompt: "Minute" , class: "form-control"%>
+			to
+			<%= label_tag :start_minute, "End Hour", class: "sr-only" %>
+			<%= select_tag :end_hour, options_for_select(searchable_hours, params[:end_hour]), prompt: "Hour", class: "form-control" %>:
+			<%= label_tag :start_minute, "End Minute", class: "sr-only" %>
+			<%= select_tag :end_minute, options_for_select( [0, 30], params[:end_minute]), prompt: "Minute", class: "form-control"%>
+	
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<%= label_tag :theatre_id, "Theatre", class: 'col-md-2 control-label' %>
+		<div class="col-md-2">
+			<%= select_tag :theatre_id, options_from_collection_for_select(current_city.theatres, :id, :name, params[:theatre_id] ) , prompt: "Theater", class: "form-control" %>
+		</div>
+		
+		<div class="form-inline col-md-8">
+			<% ExperienceType.all.each do |experience_type, i| %>
+		      <%= label_tag "experience_types[#{i}]", class: 'control-label' do%>
+		      	<span><%= experience_type.name %></span>
+		      	<%= check_box_tag "experience_types[#{i}]", experience_type.id, params[experience_type.name] == experience_type.id, class: "checkbox" %>
+		      <% end %>
+		    <% end %>
+		</div>
+	</div>
+
+	<div class="form-group">
+	    <%= label_tag :sort_by, "Sort By", class: "col-md-2 control-label" %>
+	    <div class="col-md-2">
+			<%= select_tag :sort_by, options_for_select( [ ["Schedule Updated", "updated"], ["Rating", "rating"] ], params[:sort_by] ) , class: "form-control" %>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<%
+			sets = [["All Coaches", ""]]
+			#, ["Top Coaches", "top"]
+			if(current_user)
+				sets.push( ["My Favorites", "favorites"] )
+				sets.push( ["My Recommendations", "recommended"] )
+			end
+		%>
+		<%= label_tag :set, "Search", class: "col-md-2 control-label" %>
+		<div class="col-md-2">
+			<%= select_tag :set, options_for_select( sets, params[:set] ), class: "form-control" %>
+		</div>
+	</div>
+	
+	<div class="col-md-2">
+
+	</div>
+	<div class="form-group col-md-4 pull-center">
+		<%= content_tag :button, type: :submit, class: "btn btn-primary btn-large btn-block" do %>
+			Search
+			<span class="glyphicon glyphicon-search"></span>
+		<% end %>
+	</div>
+<% end %>

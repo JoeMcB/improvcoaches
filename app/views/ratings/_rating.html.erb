@@ -1,0 +1,47 @@
+<div class="container">
+	<div class="row text-center smileys">
+		<div>
+			<% if user.rating >= 0 && user.rating < 20 %>
+				<i class="fa fa-frown-o fa-5x"></i>
+			<% elsif user.rating >= 20  && user.rating < 70 %>
+				<i class="fa fa-meh-o fa-5x"></i>
+			<% elsif user.rating >= 70 %>
+				<i class="fa fa-smile-o fa-5x"></i>
+			<% end %>
+		</div>
+		<div>
+			<% if user.rating < 0 %>
+				<small>No Rating</small>
+			<% else %>
+				<small>Based on <%= user.liked_by_count + user.disliked_by_count%> ratings</small>
+			<% end %>
+		</div>
+	</div>
+
+	<div class="actions row">
+		<div>
+			<% if(current_user.nil? || user.id != current_user.id) %>
+				<%= link_to user_dislike_path(user), remote: true, class: "btn btn-danger btn-medium pull-left"  do %>
+					<span class="glyphicon glyphicon-circle-arrow-down"></span>
+					Dislike
+				<% end %>
+			<% end %>
+			<% if(current_user.nil? || user.id != current_user.id) %>
+				<%= link_to user_like_path(user), remote: true, class: "btn btn-success pull-right"  do %>
+					<span class="glyphicon glyphicon-circle-arrow-up"></span>
+					Like
+				<% end %>
+			<% end %>
+		</div>
+	</div>
+	<div class="text-center row">
+		<% if current_user && current_user.likes?(user) %>
+			You like this coach.
+		<% elsif current_user && current_user.dislikes?(user) %>
+			You don't like this coach.
+		<% end %>
+	</div>
+
+
+	<div class="clearfix"></div>
+</div>

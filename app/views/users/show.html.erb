@@ -1,0 +1,123 @@
+<% set_meta_tags title: @user.name, reverse: true %>
+<% set_meta_tags canonical: user_url(@user) %>
+
+<% content_for :open_graph do %>
+	<meta property="fb:app_id" body="140954086073433" /> 
+	<meta property="og:type" body="website" /> 
+	<meta property="og:title" body="<%= @user.name %>" /> 
+	<meta property="og:image" body="<%= @user.avatar.url(:medium) %>" /> 
+	<meta property="og:description" body="<%= @user.name %> on ImprovCoaches.com" /> 
+	<meta property="og:url" body="<%= user_url @user %>">
+	<meta property="fb:profile" body="<%= @user.uid %>" />
+<% end %>
+
+<div id="show">
+	<div class="container">
+		<h1>
+			<%= @user.name %>
+
+			<% if(params[:from_search]) %>
+				<%= link_to "Back to Results", search_path( { page: params[:page] } ) , { id: :back_to } %>
+			<% end %>
+		</h1>
+		
+		<div class="row">
+			<div class="col-sm-6 col-md-3">
+				<div class="row">
+					<div class="thumbnail">
+						<%= image_tag @user.avatar.url(:medium), { class: :avatar } %>
+					</div>
+				</div>
+				<div class="row">
+					<div id="contact" class="caption">
+						<% if current_user && @user.id == current_user.id && !current_user.is_admin %>
+			    			This is you.  <%= link_to 'Update Your Profile', profile_edit_path %>
+						<% else %>
+							<div class="rating" data-userid="<%= @user.id%>">
+								<%= render partial: "ratings/rating", locals: { user: @user } %>
+							</div>
+							
+							<div class="left-actions btn-block">
+								<% if(current_user) %>
+									<a data-toggle="modal" href="#email" class="btn btn-primary btn-lg btn-block">
+										<span class="glyphicon glyphicon-envelope"></span> Email
+									</a>
+								<% else %>
+									<a href="<%= user_email_path(@user)%>" class="btn btn-primary btn-lg btn-block" data-remote="true">
+										<span class="glyphicon glyphicon-envelope"></span> Email
+									</a>
+								<% end %>
+								
+								<%= link_to  user_bookmark_path(@user), remote: true, class: "btn btn-primary btn-lg btn-block" do %>
+									<% bookmarked = (current_user && current_user.bookmarks?(@user)) %>
+								 	<span class="glyphicon glyphicon-heart <%= !bookmarked ? "-empty" : ""  %>" ></span>&nbsp;<%= bookmarked ? "Remove from" : "Add to" %> Favorites
+								<% end %>
+							<% end %>
+							<div>
+								<div class="fb-share-button" data-href="<%= user_url @user %>" data-type="button"></div>
+								<div id="twitter"><a href="https://twitter.com/share" class="twitter-share-button">Tweet</a></div>
+								<script>
+								!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+								</script>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-6 col-md-9">
+				<div class="user-frames">
+					<div id="bio" class="panel panel-default">
+						<div class="panel-heading">
+							About
+						</div>
+						<div class="panel-body">
+							<div>
+								<%= simple_format @user.bio  %>
+							</div>
+							<div class="experience">
+								<%= render "experience" %>
+							</div>
+						</div>
+					</div>
+
+					<div id="feedback" class="panel panel-default">
+						<div class="panel-heading">
+							Feedback
+						</div>
+						<div class="panel-body">
+							<div class="fb-comments" data-href="<%= user_url @user %>" data-num-posts="10" data-order-by="reverse_time" data-width="100%"></div>
+						</div>
+					</div>
+					
+					<div id="availability" class="panel panel-default">
+						<div class="panel-heading">
+							Availability
+						</div>
+						<div class="panel-body">
+							<%= render 'schedules/mini', schedule: @user.schedule %>
+						</div>
+					</div>
+					
+					<div id="likes" class="panel panel-default">
+						<div class="panel-heading">
+							Recommended Coaches
+						</div>
+						<div class="panel-body">
+							<%= render 'ratings/bookmarks', user: @user %>
+						</div>
+					</div>
+				
+					
+					
+				</div>
+
+			</div>
+		</div>		
+
+		<% #Modal window for email %>
+		<%= render partial: "email", locals: { user: @user } if current_user %>
+	</div>
+</div>
+
+

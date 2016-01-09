@@ -1,0 +1,29 @@
+<h1>Listing time_blocks</h1>
+
+<table>
+  <tr>
+    <th>User</th>
+    <th>Start time</th>
+    <th>End time</th>
+    <th>Day of week</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @time_blocks.each do |time_block| %>
+  <tr>
+    <td><%= time_block.user_id %></td>
+    <td><%= time_block.start_time %></td>
+    <td><%= time_block.end_time %></td>
+    <td><%= time_block.day_of_week %></td>
+    <td><%= link_to 'Show', time_block %></td>
+    <td><%= link_to 'Edit', edit_time_block_path(time_block) %></td>
+    <td><%= link_to 'Destroy', time_block, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Time block', new_time_block_path %>

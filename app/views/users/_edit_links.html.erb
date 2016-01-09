@@ -1,0 +1,9 @@
+<ul class="nav nav-pills nav-stacked">
+	<li <%= current == :basic ? 'class=active' : '' %> ><%= link_to "Basics", profile_edit_path %></li>
+	<% if current_user.is_coach %>
+		<li <%= current == :schedule ? 'class=active' : '' %> ><%= link_to "Schedule", profile_edit_schedule_path %></li>
+		<li <%= current == :improv ? 'class=active' : '' %> > <%= link_to "Experience", profile_edit_improv_path %></li>
+		<li <%= current == :invites ? 'class=active' : '' %> > <%= link_to "Invites (" + current_user.invites.free.count.to_s + ")", profile_invites_path %></li>
+		<li><%= link_to "View Public", user_path(current_user) %></li>
+	<% end %>
+</ul>

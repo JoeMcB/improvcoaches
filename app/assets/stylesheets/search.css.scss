@@ -1,0 +1,15 @@
+// Place all the styles related to the search controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import 'colors';
+
+#search {
+	form{
+		.time-select{
+			select{
+				width: 90px;
+			}
+		}
+	}
+}

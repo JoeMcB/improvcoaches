@@ -1,0 +1,5 @@
+$('#invite textarea').val("");
+<%= render partial: "shared/alert", locals: { level: @level, message: @message} %>
+<% if @level == "success" %>
+	$("#invites tr:last").after("<%= escape_javascript(render partial: 'invite', object: @invite )%>");
+<% end %>

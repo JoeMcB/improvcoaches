@@ -1,0 +1,34 @@
+// Place all the styles related to the Home controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import "colors";
+
+#home{
+	.home_box{
+		&#coachbox{
+			width: inherit;
+			height: 160px;
+			overflow: hidden;
+
+			.float_list{
+				li{
+					width: 160px;
+
+					img{
+						border: 1px solid $light_gray;
+						margin: 0px auto;
+					}
+
+					div.image_box{
+						width: 102px;
+						height: 102px;
+						border: 1px solid $light_gray;
+						padding: 2px;
+						margin: 0px auto;
+					}
+				}
+			}
+		}
+	}
+}

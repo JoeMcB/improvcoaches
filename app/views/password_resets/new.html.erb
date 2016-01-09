@@ -1,0 +1,8 @@
+<%= form_tag password_resets_path, method: :post, class: "form-reset" do %>
+	<div class="form-group">
+		<%= label_tag :email %>
+		<%= text_field_tag :email, params[:email], class: "form-control" %>
+	</div>
+
+	<%= submit_tag "Recover my Password", class: "btn btn-primary btn-lg btn-block" %>
+<% end %>

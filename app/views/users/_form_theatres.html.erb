@@ -1,0 +1,9 @@
+<% Theatre.all.each do |theatre| %>
+  <div class="experience">
+    <strong><%= theatre.name %></strong>
+    <% ExperienceType.all.each do |experience_type| %>
+      <%= label_tag "user_experience[#{theatre.id}][#{experience_type.id}]", experience_type.name %>
+      <%= check_box_tag "user_experience[#{theatre.id}][#{experience_type.id}]",  1, current_user.has_user_experience?( theatre.id, experience_type.id) %>
+    <% end %>
+  </div>
+<% end %>

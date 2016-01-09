@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  theatre_id: 1
+  user_id: 
+  experience_type_id: 1
+
+two:
+  theatre_id: 1
+  user_id: 
+  experience_type_id: 1

@@ -1,0 +1,15 @@
+<%= form_tag :link, class: "form-signin" do %>
+	<h2 class="text-center">Link to Facebook</h2>
+
+	<div class="form-group">
+		<%= label_tag :email, 'Email', class: 'sr-only' %>
+		<%= text_field_tag :email, nil, class: "form-control disabled", placeholder: @email, disabled: true %>
+
+		<%= label_tag :password, 'Password', class: "sr-only" %>
+		<%= password_field_tag :password, '', class: "form-control", placeholder: "Password" %>
+	</div>
+
+	<div class="form-group">
+		<%= submit_tag "Link Accounts", class: "btn btn-primary btn-lg btn-block"  %>
+	</div>
+<% end %>

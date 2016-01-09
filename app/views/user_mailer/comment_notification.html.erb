@@ -1,0 +1,8 @@
+Hey <%= @to_user.name  %>
+<%= @sender %> left a comment on your coach profile!<br>
+<br>
+<div><%= @content %></div>
+You can check out your profile and rest of your comments  <%= link_to "here", user_url(@to_user, subdomain: @to_user.city.subdomain) %>
+<br>
+<br>
+This email sent from <a href="http://www.improvcoaches.com">ImprovCoaches.com</a>

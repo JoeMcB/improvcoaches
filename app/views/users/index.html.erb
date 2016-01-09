@@ -1,0 +1,21 @@
+<% set_meta_tags title: "Coaches" %>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<h1>Coaches</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-10 col-lg-10 col-sm-12 col-xs-12">
+			<div id="users">
+			    <% @users.each do |user| %>
+			      <%= render partial: "users/result", locals: {user: user, options: {}} %>
+			    <% end %>
+			    <%= will_paginate @users %>
+			</div>
+		</div>
+		<div class="col-md-2 col-lg-2">
+			<SCRIPT charset="utf-8" type="text/javascript" src="http://ws-na.amazon-adsystem.com/widgets/q?rt=tf_mfw&ServiceVersion=20070822&MarketPlace=US&ID=V20070822%2FUS%2Fimprovcocom-20%2F8001%2F6787a0a3-a5d7-49bd-99cf-00f300c119f8"> </SCRIPT> <NOSCRIPT><A HREF="http://ws-na.amazon-adsystem.com/widgets/q?rt=tf_mfw&ServiceVersion=20070822&MarketPlace=US&ID=V20070822%2FUS%2Fimprovcocom-20%2F8001%2F6787a0a3-a5d7-49bd-99cf-00f300c119f8&Operation=NoScript">Amazon.com Widgets</A></NOSCRIPT>
+		</div>
+	</div>
+</div>

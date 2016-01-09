@@ -1,0 +1,13 @@
+<% set_meta_tags title: "Spaces" %>
+<h1>Spaces</h1>
+
+<% @spaces.each do |space| %>
+      <%= render partial: "spaces/result", locals: {space: space, options: {}} %>
+<% end %>
+<%= will_paginate @spaces %>
+<br />
+
+<% if current_user && current_user.is_admin? %>
+    <%= link_to 'New Space', new_space_path %>
+<% end %>
+<%= mail_to 'support@improvcoaches.com', 'Suggest a Space' %>

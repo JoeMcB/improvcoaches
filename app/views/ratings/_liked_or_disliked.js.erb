@@ -1,0 +1,1 @@
+$(".rating[data-userid='<%= @user.id %>']").html( "<%= escape_javascript( render partial: "rating", locals: { user: @user } ) %>" );

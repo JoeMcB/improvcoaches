@@ -1,0 +1,46 @@
+
+<%= form_for(@user) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :name, "Your Name", class: "sr-only" %>
+    <%= f.text_field :name, class: "form-control", placeholder: "Full Name" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :email, "Email Address",  class: "sr-only" %>
+    <%= f.text_field :email, class: "form-control", placeholder: "Email Address" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :password, "Password", class: "sr-only" %>
+    <%= f.password_field :password, class: "form-control", placeholder: "Password" %>
+  
+    <%= f.label :password_confirmation, "Password (again)", class: "sr-only" %>
+    <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Confirm Password" %>
+  </div>
+
+  <% if Rails.env.production? %>
+    <div class="form-group">
+      <%= recaptcha_tags %>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.submit "Register", class:"btn btn-large btn-primary btn-block" %>
+  </div>
+
+  <% if(!local_assigns[:invite_code].nil?) %>
+    <%= hidden_field_tag :invite_code, local_assigns[:invite_code] %>
+  <% end %>
+<% end %>

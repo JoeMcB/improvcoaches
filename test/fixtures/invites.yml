@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  code: MyString
+  owner: 1
+  recipient: MyString
+  status: MyString
+
+two:
+  code: MyString
+  owner: 1
+  recipient: MyString
+  status: MyString

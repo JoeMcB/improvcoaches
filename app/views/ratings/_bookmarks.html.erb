@@ -1,0 +1,18 @@
+<div id="bookmarks">
+	<% if !user.bookmarked_users.empty? %>
+		<% user.bookmarked_users.each do |bookmarked_user| %>
+			<div class="col-sm-2 col-md-2">
+				<div class="text-center thumbnail">
+					<%= link_to user_path(bookmarked_user) do %>
+						<%= image_tag bookmarked_user.avatar :thumb %>
+						<div class="caption">
+							<h4><%= bookmarked_user.name %></h4>
+						</div>
+					<% end %>
+				</div>
+			</div>
+		<% end %>
+	<% else %>
+		Hmm, <%= user.name %> doesn't have any favorites.
+	<% end %>
+</div>

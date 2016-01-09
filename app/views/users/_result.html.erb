@@ -1,0 +1,20 @@
+<div class="result">
+	<div class="image_box">
+		<%= link_to user do %>
+			<%= image_tag user.avatar :small %>
+		<% end %>
+	</div>
+	<%= link_to user_path(user, options) do %>
+		<h3><%= user.name %></h3>
+	<% end %>
+	<span class="bio"><%= user.bio.truncate 300, seperator: "..." %></span><br/>
+
+	<span class="updated_at">
+		<% if(user.schedule) %>
+			Schedule updated <%= time_ago_in_words(user.schedule.updated_at) %> ago
+		<% else %>
+			No schedule.
+		<% end %>
+	</span>
+	<div class="clearfix"></div>
+</div>

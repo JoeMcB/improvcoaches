@@ -1,0 +1,35 @@
+<% days = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"] %>
+
+<table class="schedule_editor table table-condensed">
+  <thead>
+    <% for day in days do%>
+      <th><%= day %>
+    <% end %>
+  </thead>
+
+  <% fraction = 0.5 %>
+  <% hour = 8 %>
+  <% end_hour = 23 %>
+  <tbody>
+    <%  for h in hour..end_hour do%>
+      <% (1/fraction).to_i.times do |i| %>
+        <tr>
+          <% m = ((60 / (i+1)) - 60 ).abs %>
+          
+          <% 7.times do |d| %>
+            <td class="time_block <%= schedule.has_block?(d, h, m) ? 'success' : '' %>">
+              <span class="day"><%= days[d] %></span>
+              <span class="hour"><%= h %></span>&#58;<span class="minute"><%= m.to_s.rjust(2, "0") %></span>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    <% end %>
+
+  </tbody>
+</table>
+
+<form class="schedule" method='post'>
+  <%= token_tag form_authenticity_token.to_s %>
+</form>
+<button class="pull-right btn btn-primary btn-large update_schedule" >Update Schedule</button>

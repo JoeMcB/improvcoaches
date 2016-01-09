@@ -1,0 +1,2 @@
+<%= render partial: 'shared/alert', locals: { message: "Your invite has been cancelled.", level: "success"}  %>
+$("#invite_<%= @invite.id %>").remove();

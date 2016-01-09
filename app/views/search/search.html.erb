@@ -1,0 +1,40 @@
+<% set_meta_tags title: "Search" %>
+
+<div id="search">
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			Search Options
+			<div class="pull-right" data-toggle="collapse" data-target="#search-options">
+				<span class="glyphicon glyphicon-collapse-<%= !@searched || @users.nil? ? 'up' : 'down' %>"></span>
+			</div>
+		</div>
+		<div class="panel-body collapse <%= !@searched || @users.nil? ? 'in' : '' %>" id="search-options">
+			<%= render 'advanced' %>
+		</div>
+	</div>
+
+	<% if(@searched) %>
+		<div class="container">
+			<% if(!@users.nil?) then %>
+				<div class="row">
+					<div class="col-md-12">
+						<h1>Search Results</h1>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-10 col-lg-10 col-sm-12">
+						<div class="results">
+							<% @users.each do |user| %>
+								<%= render partial: "users/result", locals: {user: user, options: { from_search: true, page: params[:page]} } %>
+							<% end %>
+
+							<%= will_paginate @users %>
+						</div>
+					</div>
+				</div>
+			<% else %>
+				<h2>No Results Found</h2>
+			<% end %>
+		</div>
+	<% end %>
+</div>
