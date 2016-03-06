@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
   
   before_create :defaults, :generate_auth_token, :create_schedule, :lowercase_email
   
-  scope :coaches, where(is_coach: 't')
+  scope :coaches, -> { where(is_coach: :t).where('is_improv = ? OR is_sketch = ?', true, true) }
   scope :improv_coaches, self.coaches.where(is_improv: 't')
   scope :sketch_coaches, self.coaches.where(is_sketch: 't')
 

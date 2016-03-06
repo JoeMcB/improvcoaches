@@ -24,9 +24,10 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @user = User.find(params[:id])
+
     if request.path != user_path(@user)
       redirect_to @user, status: :moved_permanently
-    elsif(@user && @user.is_coach )
+    elsif(@user && @user.is_coach && (@user.is_improv || @user.is_sketch))
       respond_to do |format|
         format.html # show.html.erb
         format.json { render json: @user }

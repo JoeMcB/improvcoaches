@@ -8,7 +8,7 @@ class SearchController < ApplicationController
         if(params[:commit] == "Search") #Fresh Search
             
             if(params[:set] == "favorites")
-                users = current_user.bookmarked_users.where(is_coach: :t)
+                users = current_user.bookmarked_users.is_coach
             elsif(params[:set] == "recommended")
                 users = current_user.recommended_users.where(is_coach: :t)
             elsif(params[:set] == "top")

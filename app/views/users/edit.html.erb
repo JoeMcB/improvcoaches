@@ -39,18 +39,25 @@
         </div>
 
       <% if(current_user.is_coach) %>
-        <div class="form-group form-control">
-          <div class="form-inline">
+        <div class="form-group">
+          <strong>I coach:</strong>
+          <div class="form-input">
               <%= f.label :is_improv, class: "checkbox" do %>
-                I coach Improv
+                Improv
                 <%= f.check_box :is_improv%>
               <% end %>
-              <%= f.label :is_sketch, class: "checkbox" do  %>
-                I coach Sketch
-                <%= f.check_box :is_sketch %>
-              <% end %> 
+          </div>
+          <div class="form-input">
+            <%= f.label :is_sketch, class: "checkbox" do  %>
+              Sketch
+              <%= f.check_box :is_sketch %>
+            <% end %> 
+          </div>
+          <div class="form-input">
+            Done coaching? Leave both unchecked and you'll no longer appear as a coach.
           </div>
         </div>
+
         <div class="form-group">
           <%= f.label :bio %>
           <%= f.text_area :bio, class: "form-control" %>
