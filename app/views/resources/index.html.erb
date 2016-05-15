@@ -1,0 +1,37 @@
+<h1>Improv <%= @resource_type %> </h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Short description</th>
+    <th>Long description</th>
+    <th>Amazon</th>
+    <th>Url</th>
+    <th>Image url</th>
+    <th>Resource type</th>
+    <th>Price</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @resources.each do |resource| %>
+  <tr>
+    <td><%= resource.name %></td>
+    <td><%= resource.short_description %></td>
+    <td><%= resource.long_description %></td>
+    <td><%= resource.amazon_id %></td>
+    <td><%= resource.url %></td>
+    <td><%= resource.image_url %></td>
+    <td><%= resource.resource_type %></td>
+    <td><%= resource.price %></td>
+    <td><%= link_to 'Show', resource %></td>
+    <td><%= link_to 'Edit', edit_resource_path(resource) %></td>
+    <td><%= link_to 'Destroy', resource, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to('New Resource', new_resource_path) if is_admin? %>

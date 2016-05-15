@@ -85,6 +85,7 @@ GEM
     dotenv-rails (2.0.1)
       dotenv (= 2.0.1)
     erubis (2.7.0)
+    excon (0.49.0)
     execjs (2.0.1)
     faraday (0.8.8)
       multipart-post (~> 1.2.0)
@@ -108,6 +109,8 @@ GEM
       multi_xml (>= 0.5.2)
     httpauth (0.2.0)
     i18n (0.6.11)
+    jeff (1.5.1)
+      excon (>= 0.22.1)
     journey (1.0.4)
     jquery-rails (3.0.4)
       railties (>= 3.0, < 5.0)
@@ -254,6 +257,11 @@ GEM
     unicorn-worker-killer (0.4.2)
       unicorn (~> 4)
     uuidtools (2.1.4)
+    vacuum (1.4.0)
+      jeff (~> 1.0)
+      multi_xml (~> 0.5.0)
+    vacuum-parser (0.0.1)
+      nokogiri
     validates_email_format_of (1.5.3)
     vegas (0.1.11)
       rack (>= 1.0.0)
@@ -293,5 +301,7 @@ DEPENDENCIES
   uglifier (>= 1.0.3)
   unicorn
   unicorn-worker-killer
+  vacuum
+  vacuum-parser
   validates_email_format_of
   will_paginate (~> 3.0.0)

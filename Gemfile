@@ -56,6 +56,10 @@ gem 'newrelic_rpm'
 gem 'friendly_id'
 gem 'open_uri_redirections'
 
+#amazon
+gem 'vacuum'
+gem 'vacuum-parser'
+
 group :development do
   gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger'
   gem 'pry-byebug'

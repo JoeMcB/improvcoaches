@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @resource.name %>
+</p>
+
+<p>
+  <b>Short description:</b>
+  <%= @resource.short_description %>
+</p>
+
+<p>
+  <b>Long description:</b>
+  <%= @resource.long_description %>
+</p>
+
+<p>
+  <b>Amazon:</b>
+  <%= @resource.amazon_id %>
+</p>
+
+<p>
+  <b>Url:</b>
+  <%= @resource.url %>
+</p>
+
+<p>
+  <b>Image url:</b>
+  <%= @resource.image_url %>
+</p>
+
+<p>
+  <b>Resource type:</b>
+  <%= @resource.resource_type %>
+</p>
+
+<p>
+  <b>Price:</b>
+  <%= @resource.price %>
+</p>
+
+
+<%= link_to 'Edit', edit_resource_path(@resource) %> |
+<%= link_to 'Back', resources_path %>
