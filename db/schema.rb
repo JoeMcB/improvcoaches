@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140529023319) do
+ActiveRecord::Schema.define(:version => 20161223230824) do
 
   create_table "cities", :force => true do |t|
     t.string   "name"
@@ -51,6 +51,8 @@ ActiveRecord::Schema.define(:version => 20140529023319) do
     t.datetime "updated_at",         :null => false
   end
 
+  add_index "experiences", ["user_id"], :name => "index_experiences_on_user_id"
+
   create_table "friendly_id_slugs", :force => true do |t|
     t.string   "slug",                         :null => false
     t.integer  "sluggable_id",                 :null => false
@@ -71,6 +73,9 @@ ActiveRecord::Schema.define(:version => 20140529023319) do
     t.datetime "updated_at", :null => false
   end
 
+  add_index "invites", ["code"], :name => "index_invites_on_code"
+  add_index "invites", ["owner_id"], :name => "index_invites_on_owner_id"
+
   create_table "messages", :force => true do |t|
     t.text     "subject"
     t.text     "content"
@@ -82,12 +87,28 @@ ActiveRecord::Schema.define(:version => 20140529023319) do
     t.datetime "updated_at",   :null => false
   end
 
+  create_table "resources", :force => true do |t|
+    t.string   "name"
+    t.string   "short_description"
+    t.text     "long_description"
+    t.string   "amazon_id"
+    t.string   "url"
+    t.string   "image_url"
+    t.string   "resource_type"
+    t.decimal  "price"
+    t.string   "slug"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
   create_table "schedules", :force => true do |t|
     t.integer  "user_id"
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  add_index "schedules", ["user_id"], :name => "index_schedules_on_user_id"
 
   create_table "space_images", :force => true do |t|
     t.integer  "space_id"
@@ -139,6 +160,8 @@ ActiveRecord::Schema.define(:version => 20140529023319) do
     t.integer  "minute"
     t.integer  "schedule_id"
   end
+
+  add_index "time_blocks", ["schedule_id"], :name => "index_time_blocks_on_schedule_id"
 
   create_table "user_theatres", :id => false, :force => true do |t|
     t.integer "user_id"

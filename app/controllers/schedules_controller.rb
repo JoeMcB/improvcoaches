@@ -75,11 +75,13 @@ class SchedulesController < ApplicationController
     
     if(params['time_blocks']) then
       params['time_blocks'].each do |i, param_block|
-        new_blocks << @schedule.time_blocks.create(
-          day: days.index(param_block[:day]),
-          hour: param_block[:hour],
-          minute: param_block[:minute]
-        )
+        @schedule.transaction do
+          new_blocks << @schedule.time_blocks.create(
+            day: days.index(param_block[:day]),
+            hour: param_block[:hour],
+            minute: param_block[:minute]
+          )
+        end
       end
     end
     @schedule.touch
