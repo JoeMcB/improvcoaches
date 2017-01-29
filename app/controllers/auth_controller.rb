@@ -44,7 +44,7 @@ class AuthController < ApplicationController
     if( params['from_facebook'] )
       auth = env["omniauth.auth"]
       
-      if User.where(email: auth.info.email.downcase, provider: nil).first
+      if User.where(email: auth.info.email.downcase).first
         session[:omniauth] = auth.except('extra')
         respond_to do |format|
           format.html { redirect_to link_path, flash: { notice: "We already have an account for that email.  You can link your accounts below." } }
