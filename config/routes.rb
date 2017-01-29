@@ -4,6 +4,7 @@ Improvcoaches::Application.routes.draw do
   match '/about', :to => 'home#about'
   match '/splash', :to => 'home#splash'
   match '/search', :to => 'search#search'
+  match '/improv-books', :to => 'home#resources', as: 'resources'
 
   controller :auth do
     get  'login' => :new
