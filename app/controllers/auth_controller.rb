@@ -12,8 +12,8 @@ class AuthController < ApplicationController
   def confirm_link
       auth = session[:omniauth]
       user = User.find_by_email auth[:info][:email].downcase
-      
-      if(!(user && user.authenticate(params[:password])))    
+
+      if(!(user && user.authenticate(params[:password])))
         user.provider = auth.provider
         user.uid = auth.uid
         user.oauth_token = auth.credentials.token
@@ -21,7 +21,7 @@ class AuthController < ApplicationController
 
         if user.save
           set_authorized_user(user, true)
-          
+
           respond_to do |format|
             format.html { redirect_to return_url, flash: { notice: "Your Facebook account has been linked." } }
             format.js { render partial: 'create' }
@@ -40,11 +40,11 @@ class AuthController < ApplicationController
 
   def create
     return_url = session.delete(:redirect_on_login) || :back
-    
+
     if( params['from_facebook'] )
       auth = env["omniauth.auth"]
-      
-      if User.where(email: auth.info.email.downcase).first
+
+      if User.where(email: auth.info.email.downcase, provider: nil).first
         session[:omniauth] = auth.except('extra')
         respond_to do |format|
           format.html { redirect_to link_path, flash: { notice: "We already have an account for that email.  You can link your accounts below." } }
@@ -60,10 +60,10 @@ class AuthController < ApplicationController
             user.email = auth.info.email
             user.password_digest = SecureRandom.urlsafe_base64
           end
-          
+
           user.oauth_token = auth.credentials.token
           user.oauth_token_expires_at = Time.at(auth.credentials.expires_at)
-          
+
           if !user.save
             session[:omniauth] = auth.except('extra')
             #action = { action: :link } #this is here because it was throwing an error down there (?)
@@ -81,7 +81,7 @@ class AuthController < ApplicationController
               end
             end
           end
-        end 
+        end
       end
     else
       user = User.find_by_email params[:email].downcase
