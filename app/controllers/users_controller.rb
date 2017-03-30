@@ -58,7 +58,7 @@ class UsersController < ApplicationController
     comment_id = params[:comment_id]
     access_token = params[:access_token]
     
-    comment_data = JSON.parse(open("https://graph.facebook.com/#{comment_id}?access_token=#{access_token}").read)
+    comment_data = JSON.parse(open("https://graph.facebook.com/v2.4/#{comment_id}?access_token=#{access_token}").read)
     
     if(comment_data["error"].nil?)
       to_user.send_comment_notification(comment_data)

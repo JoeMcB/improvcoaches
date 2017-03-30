@@ -56,7 +56,7 @@ class AuthController < ApplicationController
             user.provider = auth.provider
             user.uid = auth.uid
             user.name = auth.info.name
-            user.avatar = URI.parse(process_uri("http://graph.facebook.com/#{auth.uid}/picture?height=500&width=500"))
+            user.avatar = URI.parse(process_uri("http://graph.facebook.com/v2.4/#{auth.uid}/picture?height=500&width=500"))
             user.email = auth.info.email
             user.password_digest = SecureRandom.urlsafe_base64
           end
