@@ -7,27 +7,19 @@ Open Source repo for http://www.improvcoaches.com
 I originally built the site as a resource for improv students and coaches while I was involved in the New York City community.  While I can still maintain the site's public deployment, development on it has slowed and as such I've decided to open source it.  This was also a "Learn Rails!" project for myself, so please keep that in mind as you judge my code. :)
 
 ## Requirements
-- Postgres (Available for OSX at http://postgresapp.com/)
-- Redis
+- Docker
 
 
 ## Running
 
-- Run `bundle install`
-- Configure a `.env` file
-	```
-	REDISTOGO_URL='redis://localhost:6379'
-	FACEBOOK_KEY=<Optional for Facebook Login>
-	FACEBOOK_SECRET=<Optional for Facebook Login>
-	```
-- Initialize the Database
-	```
-	rake db:create
-	rake db:seed
-	```
-- Start the server with `foreman start`
-- Create an account either in the via traditional signup.
-- Run `rails c`
+- Run `docker build . -t improvcoaches`
+- Run `docker-compose run web rake db:create`
+- Run `docker-compose run web rake db:seed`
+- Run `docker-compose up`.  Server is available at localhost:300
+- Access the Rails consolt with `docker-compose run web rails c`
+
+## Create an Admin account
+- Open a console.
 - `User.first.update_attributes(is_admin: true)` to set up that account as the admin of your local site.
 
 ## Contributing

@@ -87,12 +87,7 @@ class AuthController < ApplicationController
       user = User.find_by_email params[:email].downcase
 
       if(!user.nil?)
-        if(!user.uid.nil?)
-          respond_to do |format|
-            format.html { redirect_to login_url, flash: { notice: "You've already connected via Facebook.  Please login with that." } }
-            format.js { render partial: 'create' }
-          end
-        elsif(!(user && user.authenticate(params[:password])))
+        if(!(user && user.authenticate(params[:password])))
           respond_to do |format|
             format.html { redirect_to login_url, flash: { notice: "Hmm, that email and password appear to be invalid." } }
             format.js { render partial: 'create' }

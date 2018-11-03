@@ -1,7 +1,7 @@
 # Be sure to restart your server when you modify this file.
 
 if Rails.env.development?
-	domain = "improvcoaches.dev" 
+	domain = "localhost"
 else
 	domain = "improvcoaches.com"
 end
