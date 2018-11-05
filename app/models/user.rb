@@ -4,8 +4,6 @@ class User < ActiveRecord::Base
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true, :email_format => {:message => 'is not a valid email.'}
 
-  attr_accessible :name, :email, :bio, :avatar, :password_field, :password, :is_coach, :is_sketch, :is_improv, :city_id, :password_reset_time
-
   recommends :users
   after_like -> (u) { u.update_rating }
   after_dislike -> (u) { u.update_rating }
@@ -22,7 +20,7 @@ class User < ActiveRecord::Base
   
   has_one :schedule
   has_many :experiences
-  has_many :theatres, through: :experiences, :uniq => true
+  has_many :theatres, -> { uniq }, through: :experiences
   has_many :invites, foreign_key: :owner_id
   belongs_to :invite
   belongs_to :city
@@ -30,8 +28,8 @@ class User < ActiveRecord::Base
   before_create :defaults, :generate_auth_token, :create_schedule, :lowercase_email
   
   scope :coaches, -> { where(is_coach: :t).where('is_improv = ? OR is_sketch = ?', true, true) }
-  scope :improv_coaches, self.coaches.where(is_improv: 't')
-  scope :sketch_coaches, self.coaches.where(is_sketch: 't')
+  scope :improv_coaches, -> { coaches.where(is_improv: 't') }
+  scope :sketch_coaches, -> { coaches.where(is_sketch: 't') }
 
   #Friendly ID
   friendly_id :name, use: [:slugged, :history]

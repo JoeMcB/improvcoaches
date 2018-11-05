@@ -16,7 +16,7 @@ redis:
     - improvcoaches-redis:/var/lib/redis/data
 
 web:
-  image: improvcoaches
+  image: improvcoaches:featuresrails-4
   tty: true
   stdin_open: true
   environment:

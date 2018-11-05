@@ -6,7 +6,7 @@ ENV APP_HOME /improvcoaches
 RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
 
-RUN apt-get update && apt-get install -y build-essential libpq-dev gcc ruby-dev libv8-dev nodejs
+RUN apt-get update && apt-get install -y build-essential libpq-dev gcc ruby-dev libv8-dev nodejs zlib1g-dev
 RUN export LD_LIBRARY_PATH=/usr/lib && gem install bundler
 
 COPY Gemfile* ./

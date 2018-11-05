@@ -1,6 +1,4 @@
 class SpaceImage < ActiveRecord::Base
-  attr_accessible :space_id, :sort_order
-
   belongs_to :space
 
   has_attached_file :photo, 
