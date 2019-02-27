@@ -21,6 +21,7 @@ web:
   stdin_open: true
   environment:
     REDISTOGO_URL: 'redis://redis:6379'
+    EDITOR: "code --wait"
   links:
     - postgres
     - redis

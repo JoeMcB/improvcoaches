@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: time_blocks
+#
+#  id          :integer          not null, primary key
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  day         :integer
+#  hour        :integer
+#  minute      :integer
+#  schedule_id :integer
+#
+
 class TimeBlock < ActiveRecord::Base
   belongs_to :schedule
 

@@ -1,5 +1,42 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                     :integer          not null, primary key
+#  name                   :string(255)
+#  email                  :string(255)
+#  is_coach               :boolean
+#  bio                    :text
+#  password_digest        :string(255)
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  img                    :string(255)
+#  rate                   :integer
+#  last_updated           :datetime
+#  is_admin               :integer
+#  avatar_file_name       :string(255)
+#  avatar_content_type    :string(255)
+#  avatar_file_size       :integer
+#  avatar_updated_at      :datetime
+#  auth_token             :string(255)
+#  password_reset_token   :string(255)
+#  password_reset_time    :datetime
+#  rating                 :integer
+#  uid                    :string(255)
+#  oauth_token            :string(255)
+#  oauth_token_expires_at :datetime
+#  provider               :string(255)
+#  slug                   :string(255)
+#  invite_id              :integer
+#  is_active              :boolean
+#  is_sketch              :boolean
+#  is_improv              :boolean
+#  city_id                :integer
+#
+
 class User < ActiveRecord::Base	
   extend FriendlyId
+  friendly_id :name
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true, :email_format => {:message => 'is not a valid email.'}

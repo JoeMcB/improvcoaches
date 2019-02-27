@@ -6,6 +6,11 @@ Improvcoaches::Application.configure do
   # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
 
+  config.eager_load = false
+
+  config.serve_static_files = true
+
+
   # Log error messages when you accidentally call methods on nil.
   config.whiny_nils = true
 
@@ -30,11 +35,10 @@ Improvcoaches::Application.configure do
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
 
-  # Do not compress assets
-  config.assets.compress = false
-
   # Expands the lines which load the assets
-  config.assets.debug = true
+  config.assets.debug = false
+  config.assets.compile = false
+  config.assets.digest = true
 
   Rails.logger = Logger.new(STDOUT)
   config.log_level = :error
@@ -45,7 +49,6 @@ Improvcoaches::Application.configure do
     :path => ":rails_root/public/system/:class/:attachment/:id/:style/:basename.:extension"
   }
 
-  #RedisToGo
-  ENV["REDISTOGO_URL"] = 'redis://localhost:6379'
-
+  #BetterErrors
+  BetterErrors::Middleware.allow_ip! '127.0.0.1/0'
 end

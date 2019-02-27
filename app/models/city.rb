@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: cities
+#
+#  id         :integer          not null, primary key
+#  name       :string(255)
+#  country_id :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  subdomain  :string(255)
+#  has_spaces :boolean
+#
+
 class City < ActiveRecord::Base
   has_many :users
   has_many :spaces

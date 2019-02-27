@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: invites
+#
+#  id         :integer          not null, primary key
+#  code       :string(255)
+#  owner_id   :integer
+#  recipient  :string(255)
+#  status     :string(255)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 class Invite < ActiveRecord::Base
   validates :owner, presence: true
   validates :code, presence: true, uniqueness: true
