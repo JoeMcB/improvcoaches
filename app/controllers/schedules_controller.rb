@@ -84,10 +84,9 @@ class SchedulesController < ApplicationController
         end
       end
     end
-    @schedule.touch
-
+    
     respond_to do |format|
-      if @schedule.update_attributes(params[:schedule])
+      if @schedule.touch
         format.html { redirect_to :profile_edit_schedule, notice: 'Schedule was successfully updated.' }
         format.json { head :no_content }
       else

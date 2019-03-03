@@ -138,27 +138,30 @@ class UsersController < ApplicationController
   # PUT /users/1.json
   def update
     @user = User.find(current_user.id)
+    updated = false
 
-    #Are we updating experience?
+    # Are we updating experience?
     if( params[:experience_update] )
-      @user.experiences.destroy_all  #Remove all previous experience.
+      @user.experiences.destroy_all  # Remove all previous experience.
 
       if( !params[:experience].nil? )
         params[:experience].each do | theatre_id, experience_types |
           experience_types.each do | experience_type_id, val|
-            experience = Experience.create(
+            Experience.create!(
               theatre_id: theatre_id,
               experience_type_id: experience_type_id,
               user_id:  @user.id
             )
           end
         end
+        updated = true
       end
-
+    else
+      updated = @user.update_attributes(params[:user].permit(user_allowed_attributes))
     end
 
     respond_to do |format|
-      if @user.update_attributes(params[:user])
+      if updated
         format.html { redirect_to request.referer , flash: { success: 'User was successfully updated.' } }
         format.json { head :no_content }
       else
@@ -180,4 +183,7 @@ class UsersController < ApplicationController
     end
   end
 
+  def user_allowed_attributes
+    %i(email password password_confirmation is_improv, is_sketch bio city_id)
+  end
 end

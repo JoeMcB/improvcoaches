@@ -36,8 +36,8 @@ Improvcoaches::Application.configure do
   config.action_dispatch.best_standards_support = :builtin
 
   # Expands the lines which load the assets
-  config.assets.debug = false
-  config.assets.compile = false
+  config.assets.debug = true
+  config.assets.compile = true
   config.assets.digest = true
 
   Rails.logger = Logger.new(STDOUT)

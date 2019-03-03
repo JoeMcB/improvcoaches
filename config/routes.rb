@@ -4,7 +4,7 @@ Improvcoaches::Application.routes.draw do
   root to: 'home#index'
   get '/about', to: 'home#about'
   get '/splash', to: 'home#splash'
-  get '/search', to: 'search#search'
+  match '/search', to: 'search#search', via: %i[post get]
   get '/improv-books', to: 'home#resources', as: 'resources'
 
   controller :auth do
@@ -26,14 +26,13 @@ Improvcoaches::Application.routes.draw do
     get 'profile' => :show, profile: true
     get 'profile/invites' => :invites
     post 'profile/invites' => 'invites#invite_send'
-    get 'profile/invites/:code/resend' => 'invites#resend', as: 'profile_invite_resend'
-    get 'profile/invites/:code/cancel' => 'invites#cancel', as: 'profile_invite_cancel'
+    get 'profile/invites/:code/resend' => 'invites#resend', as: 'profile_invite_resend', defaults: { format: 'js' }
+    get 'profile/invites/:code/cancel' => 'invites#cancel', as: 'profile_invite_cancel', defaults: { format: 'js' }
     get 'profile/edit' => :edit
     get 'profile/edit/improv' => :edit_improv
     get 'profile/edit/schedule' => :edit_schedule
     get 'profile/edit/password' => :edit_password
-    post 'profile/update' => :update
-    put  'profile/update' => :update
+    patch 'profile/update' => :update
     delete 'profile/edit/avatar' => :delete_avatar
   end
 
@@ -59,7 +58,7 @@ Improvcoaches::Application.routes.draw do
   end
 
   resources :spaces do
-    put 'image' => :add_image
+    patch 'image' => :add_image
     delete 'image/:id' => :delete_image
   end
 
