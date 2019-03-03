@@ -6,3 +6,25 @@
 [x] ActiveRecord::Fixtures -> ActiveRecord::FixtureSet
 [x] ActiveRecord::TestCase -> ActiveSupport::TestCase
 [x] asset-url single args
+[ ] Invite Mailer AJAX
+[ ] Coach Email
+[ ] Update images
+[ ] Run Resque via Puma (similar to Unicorn set up)
+
+
+# Needed Updates
+[ ] Unlink from Facebook
+[ ] Delete My Account
+[ ] Remove/Redo Ratings?
+[ ] Bootstrap 3 -> 4
+[ ] Tests (did they ever work?)
+[ ] Mailing List
+[ ] Newsletter
+[ ] Account cleanup
+
+# Future?
+[ ] Integrate Mailboxer? https://github.com/mailboxer/mailboxer
+[ ] Move images to Cloudinary?
+[ ] Build out Spaces with Map, Form
+[ ] Lightweight Admin
+[ ] Premium / Pro?

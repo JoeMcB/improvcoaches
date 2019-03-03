@@ -10,6 +10,31 @@ window.fbAsyncInit = function() {
 		xfbml      : true                                   // Look for social plugins on the page
 	});
 
+
+};
+
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+</script>
+
+
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '140954086073433',
+      cookie     : true,
+      xfbml      : true,
+      version    : '3.2'
+    });
+      
+	FB.AppEvents.logPageView();
+	
+	
 	// Additional initialization code such as adding Event Listeners goes here
 	FB.Event.subscribe('auth.authResponseChange', function(response) {
 		if (response.status === 'connected') {
@@ -26,13 +51,14 @@ window.fbAsyncInit = function() {
 		 	console.log("comment logged");
 		});
 	});
-};
+      
+  };
 
-(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/all.js";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
 </script>
