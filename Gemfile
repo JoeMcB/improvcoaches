@@ -15,6 +15,7 @@ gem 'jquery-ui-rails'
 
 
 gem 'bcrypt-ruby'
+gem 'coffee-rails'
 gem 'dotenv-rails', :groups => [:development, :test]
 
 #Image Processing
@@ -46,7 +47,6 @@ gem 'open_uri_redirections'
 group :development do
   gem 'annotate'
   gem 'sass-rails'
-  gem 'coffee-rails'
   gem 'meta_request'
   gem 'uglifier'
   gem "better_errors"
