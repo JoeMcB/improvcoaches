@@ -1,6 +1,17 @@
-class Invite < ActiveRecord::Base
-  attr_accessible :code, :owner, :recipient, :status
+# == Schema Information
+#
+# Table name: invites
+#
+#  id         :integer          not null, primary key
+#  code       :string(255)
+#  owner_id   :integer
+#  recipient  :string(255)
+#  status     :string(255)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
 
+class Invite < ActiveRecord::Base
   validates :owner, presence: true
   validates :code, presence: true, uniqueness: true
   validates :status, inclusion: { in: ['free', 'pending', 'used'] }
@@ -11,10 +22,10 @@ class Invite < ActiveRecord::Base
 
   after_initialize :defaults
 
-  scope :free, where(status: 'free')
-  scope :pending, where(status: 'pending')
-  scope :used, where(status: 'used')
-  scope :sent, where("status = ? OR status = ?", "pending", "used")
+  scope :free, -> { where(status: 'free') }
+  scope :pending, -> { where(status: 'pending') }
+  scope :used, -> { where(status: 'used') }
+  scope :sent, -> { where("status = ? OR status = ?", "pending", "used") }
 
   def to_param
     code

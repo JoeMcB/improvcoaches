@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  user_id: 1
-  start_time: 2012-10-23 22:47:08
-  end_time: 2012-10-23 22:47:08
-  day_of_week: 1
+  schedule_id: 1
+  day: 1
+  hour: 10
+  minute: 30
 
 two:
-  user_id: 1
-  start_time: 2012-10-23 22:47:08
-  end_time: 2012-10-23 22:47:08
-  day_of_week: 1
+  schedule_id: 1
+  day: 1
+  hour: 10
+  minute: 0
