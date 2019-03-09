@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  before_filter :current_user
+  before_action :current_user
 
   helper_method :current_user
   helper_method :current_city
@@ -25,17 +27,17 @@ class ApplicationController < ActionController::Base
     require 'open-uri'
     require 'open_uri_redirections'
 
-    open(uri, :allow_redirections => :safe) do |r|
+    open(uri, allow_redirections: :safe) do |r|
       r.base_uri.to_s
     end
   end
 
   def current_user
-    @current_user = @current_user || User.find_by_auth_token(cookies[:auth_token]) if cookies[:auth_token]
+    @current_user ||= User.find_by(auth_token: cookies[:auth_token]) if cookies[:auth_token]
   end
 
   def current_city
-    @current_city = @current_city || City.find_by_subdomain(request.subdomain) || City.find(1)
+    @current_city = @current_city || City.find_by(subdomain: request.subdomain) || City.find(1)
   end
 
   def require_login
@@ -54,7 +56,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_admin
-    unless current_user && current_user.is_admin?
+    unless current_user&.is_admin?
       respond_to do |format|
         format.html do
           session[:return_to] = request.url
@@ -62,7 +64,7 @@ class ApplicationController < ActionController::Base
         end
 
         format.js do
-          render 'shared/_alert', locals: { level: "info", message: 'You are not authorized to view that page.' }
+          render 'shared/_alert', locals: { level: 'info', message: 'You are not authorized to view that page.' }
         end
       end
     end

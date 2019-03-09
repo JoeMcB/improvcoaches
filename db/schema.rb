@@ -9,85 +9,88 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20161223230824) do
+ActiveRecord::Schema.define(version: 20161223230824) do
 
-  create_table "cities", :force => true do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "cities", force: :cascade do |t|
     t.string   "name"
     t.integer  "country_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string   "subdomain"
     t.boolean  "has_spaces"
   end
 
-  create_table "cities_theatres", :id => false, :force => true do |t|
+  create_table "cities_theatres", id: false, force: :cascade do |t|
     t.integer "city_id"
     t.integer "theatre_id"
   end
 
-  add_index "cities_theatres", ["city_id", "theatre_id"], :name => "index_cities_theatres_on_city_id_and_theatre_id"
-  add_index "cities_theatres", ["city_id"], :name => "index_cities_theatres_on_city_id"
-  add_index "cities_theatres", ["theatre_id"], :name => "index_cities_theatres_on_theatre_id"
+  add_index "cities_theatres", ["city_id", "theatre_id"], name: "index_cities_theatres_on_city_id_and_theatre_id", using: :btree
+  add_index "cities_theatres", ["city_id"], name: "index_cities_theatres_on_city_id", using: :btree
+  add_index "cities_theatres", ["theatre_id"], name: "index_cities_theatres_on_theatre_id", using: :btree
 
-  create_table "countries", :force => true do |t|
+  create_table "countries", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "experience_types", :force => true do |t|
+  create_table "experience_types", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "experiences", :force => true do |t|
+  create_table "experiences", force: :cascade do |t|
     t.integer  "theatre_id"
     t.integer  "user_id"
     t.integer  "experience_type_id"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
   end
 
-  add_index "experiences", ["user_id"], :name => "index_experiences_on_user_id"
+  add_index "experiences", ["user_id"], name: "index_experiences_on_user_id", using: :btree
 
-  create_table "friendly_id_slugs", :force => true do |t|
-    t.string   "slug",                         :null => false
-    t.integer  "sluggable_id",                 :null => false
-    t.string   "sluggable_type", :limit => 40
+  create_table "friendly_id_slugs", force: :cascade do |t|
+    t.string   "slug",                      null: false
+    t.integer  "sluggable_id",              null: false
+    t.string   "sluggable_type", limit: 40
     t.datetime "created_at"
   end
 
-  add_index "friendly_id_slugs", ["slug", "sluggable_type"], :name => "index_friendly_id_slugs_on_slug_and_sluggable_type", :unique => true
-  add_index "friendly_id_slugs", ["sluggable_id"], :name => "index_friendly_id_slugs_on_sluggable_id"
-  add_index "friendly_id_slugs", ["sluggable_type"], :name => "index_friendly_id_slugs_on_sluggable_type"
+  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", unique: true, using: :btree
+  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
-  create_table "invites", :force => true do |t|
+  create_table "invites", force: :cascade do |t|
     t.string   "code"
     t.integer  "owner_id"
     t.string   "recipient"
     t.string   "status"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_index "invites", ["code"], :name => "index_invites_on_code"
-  add_index "invites", ["owner_id"], :name => "index_invites_on_owner_id"
+  add_index "invites", ["code"], name: "index_invites_on_code", using: :btree
+  add_index "invites", ["owner_id"], name: "index_invites_on_owner_id", using: :btree
 
-  create_table "messages", :force => true do |t|
+  create_table "messages", force: :cascade do |t|
     t.text     "subject"
     t.text     "content"
     t.integer  "to_user_id"
     t.integer  "from_user_id"
     t.text     "status"
     t.datetime "sent_on"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
-  create_table "resources", :force => true do |t|
+  create_table "resources", force: :cascade do |t|
     t.string   "name"
     t.string   "short_description"
     t.text     "long_description"
@@ -97,23 +100,23 @@ ActiveRecord::Schema.define(:version => 20161223230824) do
     t.string   "resource_type"
     t.decimal  "price"
     t.string   "slug"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
-  create_table "schedules", :force => true do |t|
+  create_table "schedules", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_index "schedules", ["user_id"], :name => "index_schedules_on_user_id"
+  add_index "schedules", ["user_id"], name: "index_schedules_on_user_id", using: :btree
 
-  create_table "space_images", :force => true do |t|
+  create_table "space_images", force: :cascade do |t|
     t.integer  "space_id"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.string   "photo_file_name"
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
@@ -121,7 +124,7 @@ ActiveRecord::Schema.define(:version => 20161223230824) do
     t.integer  "sort_order"
   end
 
-  create_table "spaces", :force => true do |t|
+  create_table "spaces", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
     t.integer  "city_id"
@@ -135,48 +138,48 @@ ActiveRecord::Schema.define(:version => 20161223230824) do
     t.string   "real_city"
     t.string   "state"
     t.string   "phone"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.string   "slug"
-    t.boolean  "is_rehearsal",   :default => true
-    t.boolean  "is_performance", :default => false
+    t.boolean  "is_rehearsal",   default: true
+    t.boolean  "is_performance", default: false
     t.string   "email"
   end
 
-  add_index "spaces", ["slug"], :name => "index_spaces_on_slug"
+  add_index "spaces", ["slug"], name: "index_spaces_on_slug", using: :btree
 
-  create_table "theatres", :force => true do |t|
+  create_table "theatres", force: :cascade do |t|
     t.string   "name"
     t.integer  "city_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "time_blocks", :force => true do |t|
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+  create_table "time_blocks", force: :cascade do |t|
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.integer  "day"
     t.integer  "hour"
     t.integer  "minute"
     t.integer  "schedule_id"
   end
 
-  add_index "time_blocks", ["schedule_id"], :name => "index_time_blocks_on_schedule_id"
+  add_index "time_blocks", ["schedule_id"], name: "index_time_blocks_on_schedule_id", using: :btree
 
-  create_table "user_theatres", :id => false, :force => true do |t|
+  create_table "user_theatres", id: false, force: :cascade do |t|
     t.integer "user_id"
     t.integer "theatre_id"
     t.integer "experience_type_id"
   end
 
-  create_table "users", :force => true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
     t.boolean  "is_coach"
     t.text     "bio"
     t.string   "password_digest"
-    t.datetime "created_at",             :null => false
-    t.datetime "updated_at",             :null => false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.string   "img"
     t.integer  "rate"
     t.datetime "last_updated"
@@ -201,6 +204,6 @@ ActiveRecord::Schema.define(:version => 20161223230824) do
     t.integer  "city_id"
   end
 
-  add_index "users", ["slug"], :name => "index_users_on_slug"
+  add_index "users", ["slug"], name: "index_users_on_slug", using: :btree
 
 end

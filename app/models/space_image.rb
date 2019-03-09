@@ -1,6 +1,19 @@
-class SpaceImage < ActiveRecord::Base
-  attr_accessible :space_id, :sort_order
+# == Schema Information
+#
+# Table name: space_images
+#
+#  id                 :integer          not null, primary key
+#  space_id           :integer
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  photo_file_name    :string(255)
+#  photo_content_type :string(255)
+#  photo_file_size    :integer
+#  photo_updated_at   :datetime
+#  sort_order         :integer
+#
 
+class SpaceImage < ActiveRecord::Base
   belongs_to :space
 
   has_attached_file :photo, 

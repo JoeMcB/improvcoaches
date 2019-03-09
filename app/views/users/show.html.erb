@@ -47,11 +47,6 @@
 										<span class="glyphicon glyphicon-envelope"></span> Email
 									</a>
 								<% end %>
-								
-								<%= link_to  user_bookmark_path(@user), remote: true, class: "btn btn-primary btn-lg btn-block" do %>
-									<% bookmarked = (current_user && current_user.bookmarks?(@user)) %>
-								 	<span class="glyphicon glyphicon-heart <%= !bookmarked ? "-empty" : ""  %>" ></span>&nbsp;<%= bookmarked ? "Remove from" : "Add to" %> Favorites
-								<% end %>
 							<% end %>
 							<div>
 								<div class="fb-share-button" data-href="<%= user_url @user %>" data-type="button"></div>

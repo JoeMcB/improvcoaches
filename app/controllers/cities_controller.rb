@@ -1,4 +1,6 @@
 class CitiesController < ApplicationController
+  before_filter :sanitize_params, -> { params.permit(:country_id, :name, :subdomain) }
+  
   # GET /cities
   # GET /cities.json
   def index
