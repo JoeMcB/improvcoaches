@@ -49,7 +49,7 @@ class AuthController < ApplicationController
           format.js { render partial: 'create' }
         end
       else
-        User.where(auth.slice(:provider, :uid)).first_or_initialize.tap do |user|
+        User.where(auth.permit(:provider, :uid)).first_or_initialize.tap do |user|
           if user.id.nil?
             user.provider = auth.provider
             user.uid = auth.uid
@@ -82,10 +82,7 @@ class AuthController < ApplicationController
         end
       end
     else
-      puts params
-      puts params[:email]
       user = User.find_by_email(params[:email].downcase)
-      puts user
       unless user.nil?
         if !(user && user.authenticate(params[:password]))
           respond_to do |format|
