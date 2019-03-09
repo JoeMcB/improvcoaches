@@ -81,15 +81,15 @@ class User < ActiveRecord::Base
   def send_password_reset
     generate_token(:password_reset_token)
     update_attributes(password_reset_time: Time.now)
-    UserMailer.password_reset(self).deliver
+    UserMailer.password_reset(self).deliver_now
   end
 
   def send_coach_contact(to, body)
-    UserMailer.coach_contact(self, to, body).deliver
+    UserMailer.coach_contact(self, to, body).deliver_now
   end
 
   def send_comment_notification(comment_data)
-    UserMailer.comment_notification(self, comment_data['from']['name'], comment_data['message']).deliver
+    UserMailer.comment_notification(self, comment_data['from']['name'], comment_data['message']).deliver_now
   end
 
   # Utility

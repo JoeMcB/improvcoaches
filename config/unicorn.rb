@@ -16,8 +16,6 @@ before_fork do |server, worker|
     Rails.logger.info('Disconnected from Redis')
   end
 
-  # TODO: Get background jobs working in puma
-  # TODO: Remove unicorn
   @resque_pid ||= spawn("bundle exec rake " + \
   "resque:work QUEUES=*")
 end

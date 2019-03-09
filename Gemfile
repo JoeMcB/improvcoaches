@@ -13,6 +13,7 @@ gem 'aws-sdk', '~> 1.3.4'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 
+
 gem 'bcrypt-ruby'
 gem 'dotenv-rails', :groups => [:development, :test]
 
@@ -46,6 +47,7 @@ group :development do
   gem 'annotate'
   gem 'sass-rails'
   gem 'coffee-rails'
+  gem 'meta_request'
   gem 'uglifier'
   gem "better_errors"
   gem "binding_of_caller"

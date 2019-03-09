@@ -6,10 +6,10 @@
 [x] ActiveRecord::Fixtures -> ActiveRecord::FixtureSet
 [x] ActiveRecord::TestCase -> ActiveSupport::TestCase
 [x] asset-url single args
-[ ] Invite Mailer AJAX
-[ ] Coach Email
+[X] Invite Mailer AJAX
+[X] Coach Email
 [ ] Update images
-[ ] Run Resque via Puma (similar to Unicorn set up)
+[X] Run Resque via Puma (similar to Unicorn set up)
 
 
 # Needed Updates

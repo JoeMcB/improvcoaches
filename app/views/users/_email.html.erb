@@ -6,7 +6,8 @@
         <h4 class="modal-title">Email <%= @user.name %></h4>
       </div>
       <div class="modal-body">
-        <%= form_tag user_email_path(@user), method: :post, remote: true, class: "form-email" do %>
+        <%= form_tag user_email_path(@user, format: :js), method: :post, remote: true, class: "form-email" do %>
+          <%= token_tag form_authenticity_token.to_s %>
           <div class="form-group">
             <textarea name="message" class="form-control" rows="8" ></textarea>
           </div>
