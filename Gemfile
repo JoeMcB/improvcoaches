@@ -17,6 +17,8 @@ gem 'jquery-ui-rails'
 gem 'bcrypt-ruby'
 gem 'coffee-rails'
 gem 'dotenv-rails', :groups => [:development, :test]
+gem 'sass-rails'
+gem 'uglifier'
 
 #Image Processing
 gem "paperclip", ">= 5.2.0"
@@ -46,9 +48,7 @@ gem 'open_uri_redirections'
 
 group :development do
   gem 'annotate'
-  gem 'sass-rails'
   gem 'meta_request'
-  gem 'uglifier'
   gem "better_errors"
   gem "binding_of_caller"
 end
