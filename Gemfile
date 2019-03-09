@@ -8,7 +8,7 @@ gem 'puma'
 
 
 gem 'pg', '~> 0.21.0'
-gem 'aws-sdk', '~> 1.3.4'
+gem "aws-sdk-s3", require: false
 
 gem 'jquery-rails'
 gem 'jquery-ui-rails'

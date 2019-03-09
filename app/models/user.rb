@@ -49,13 +49,14 @@ class User < ActiveRecord::Base
 
   has_secure_password
   has_attached_file :avatar,
-                    styles: {
-                      large: '500x500#', medium: '300x300#', small: '100x100#', thumb: '50x50#'
-                    },
-                    default_style: :small,
-                    default_url: '/assets/users/missing_:style.png',
-                    url: '/system/:class/:attachment/:id/:style/:basename.:extension',
-                    path: ':rails_root/public/system/:class/:attachment/:id/:style/:basename.:extension'
+    styles: {
+      large: '500x500#', medium: '300x300#', small: '100x100#', thumb: '50x50#'
+    },
+    default_style: :small,
+    default_url: '/assets/users/missing_:style.png',
+    url: '/system/:class/:attachment/:id/:style/:basename.:extension',
+    path: ':rails_root/public/system/:class/:attachment/:id/:style/:basename.:extension'
+  validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
 
   has_one :schedule
   has_many :experiences
@@ -80,7 +81,7 @@ class User < ActiveRecord::Base
   # Mail Actions
   def send_password_reset
     generate_token(:password_reset_token)
-    update_attributes(password_reset_time: Time.now)
+    update(password_reset_time: Time.now)
     UserMailer.password_reset(self).deliver_now
   end
 

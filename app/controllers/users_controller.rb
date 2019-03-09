@@ -175,6 +175,6 @@ class UsersController < ApplicationController
   end
 
   def user_allowed_attributes
-    %i[email password password_confirmation is_improv is_sketch bio city_id]
+    %i[email avatar password password_confirmation is_improv is_sketch bio city_id]
   end
 end

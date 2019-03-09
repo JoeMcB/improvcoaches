@@ -43,12 +43,6 @@ Improvcoaches::Application.configure do
   Rails.logger = Logger.new(STDOUT)
   config.log_level = :error
 
-  #Paperclip
-  config.paperclip_defaults = {
-    :url => "/system/:class/:attachment/:id/:style/:basename.:extension",
-    :path => ":rails_root/public/system/:class/:attachment/:id/:style/:basename.:extension"
-  }
-
   #BetterErrors
   BetterErrors::Middleware.allow_ip! '127.0.0.1/0'
 end
