@@ -43,14 +43,12 @@ class UsersController < ApplicationController
   end
 
   def email_send
-    puts "1"
     @to_user = User.find(params[:user_id])
 
     if current_user && @to_user
-      puts "2"
       current_user.send_coach_contact(@to_user, params[:message])
     end
-    puts "3"
+
     respond_to do |format|
       format.js
     end
@@ -148,7 +146,7 @@ class UsersController < ApplicationController
         updated = true
       end
     else
-      updated = @user.update_attributes(params[:user].permit(user_allowed_attributes))
+      updated = @user.update(params[:user].permit(user_allowed_attributes))
     end
 
     respond_to do |format|

@@ -1,6 +1,6 @@
 ## Synopsis
 
-Open Source repo for http://www.improvcoaches.com
+Open Source repo for https://www.improvcoaches.com
 
 ## About
 

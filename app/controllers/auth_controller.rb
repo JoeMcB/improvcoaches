@@ -40,7 +40,7 @@ class AuthController < ApplicationController
     return_url = session.delete(:redirect_on_login) || :back
 
     if params['from_facebook']
-      auth = env['omniauth.auth']
+      auth = request.env['omniauth.auth']
 
       if User.where(email: auth.info.email.downcase, provider: nil).first
         session[:omniauth] = auth.except('extra')

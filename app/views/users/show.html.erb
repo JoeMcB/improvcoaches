@@ -81,7 +81,7 @@
 							Feedback
 						</div>
 						<div class="panel-body">
-							<div class="fb-comments" data-href="<%= user_url @user %>" data-num-posts="10" data-order-by="reverse_time" data-width="100%"></div>
+							<div class="fb-comments" data-href="<%= user_url(@user).gsub('s:', ':') %>" data-num-posts="10" data-order-by="reverse_time" data-width="100%"></div>
 						</div>
 					</div>
 					
