@@ -49,7 +49,10 @@ class AuthController < ApplicationController
           format.js { render partial: 'create' }
         end
       else
-        User.where(auth.slice(:provider, :uid)).first_or_initialize.tap do |user|
+        uid = auth['uid']
+        provider = auth['provider']
+        puts auth.inspect
+        User.where(uid: uid, provider: provider).first_or_initialize.tap do |user|
           if user.id.nil?
             user.provider = auth.provider
             user.uid = auth.uid
