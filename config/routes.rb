@@ -32,7 +32,7 @@ Improvcoaches::Application.routes.draw do
     get 'profile/edit/improv' => :edit_improv
     get 'profile/edit/schedule' => :edit_schedule
     get 'profile/edit/password' => :edit_password
-    post 'profile/update' => :update
+    patch 'profile/update' => :update
     delete 'profile/edit/avatar' => :delete_avatar
   end
 

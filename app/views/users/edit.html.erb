@@ -104,7 +104,7 @@
 
               <%= form_for(current_user,
                     url: :profile_update,
-                    method: :post,
+                    method: :POST,
                     html: {:multipart => true},
                 ) do |f| %>
                 <%= f.file_field :avatar, class: "form-control btn-block" %>
