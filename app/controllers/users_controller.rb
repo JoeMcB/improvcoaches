@@ -102,7 +102,7 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    @user = User.new(params[:user].permit(user_allowed_attributes))
+    @user = User.new(params[:user].permit(user_allowed_attributes << 'name'))
 
     if (!Rails.env.production? || verify_recaptcha(model: @user)) && @user.save
       set_authorized_user(@user, false)
