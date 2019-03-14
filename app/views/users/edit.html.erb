@@ -15,7 +15,7 @@
     </div>
 
     <div class="col-sm-6 col-md-6">
-      <%= form_for current_user, url: :profile_update do |f| %>
+      <%= form_for current_user, url: :profile_update, method: :post do |f| %>
         <% if current_user.errors.any? %>
           <div id="error_explanation">
             <h2><%= pluralize(current_user.errors.count, "error") %> prohibited this user from being saved:</h2>
@@ -104,7 +104,7 @@
 
               <%= form_for(current_user,
                     url: :profile_update,
-                    method: :POST,
+                    method: :post,
                     html: {:multipart => true},
                 ) do |f| %>
                 <%= f.file_field :avatar, class: "form-control btn-block" %>
