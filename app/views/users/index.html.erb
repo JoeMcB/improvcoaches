@@ -8,10 +8,14 @@
 	<div class="row">
 		<div class="col-md-10 col-lg-10 col-sm-12 col-xs-12">
 			<div id="users">
-			    <% @users.each do |user| %>
-			      <%= render partial: "users/result", locals: {user: user, options: {}} %>
-			    <% end %>
-			    <%= will_paginate @users %>
+				<% @users.in_groups_of(5) do |user_group| %>
+						<% user_group.each do |user| %>
+							<%= render partial: "users/result", locals: {user: user, options: {}} %>
+						<% end %>
+
+						<%= render partial: "users/feed_ad" %>
+					<% end %>
+				<%= will_paginate @users %>
 			</div>
 		</div>
 		<div class="col-md-2 col-lg-2">
