@@ -15,6 +15,8 @@ gem 'jquery-ui-rails'
 
 
 gem 'bcrypt-ruby'
+gem 'bugsnag'
+gem 'concurrent-ruby'
 gem 'coffee-rails'
 gem 'dotenv-rails', :groups => [:development, :test]
 gem 'sass-rails'
@@ -31,7 +33,7 @@ gem 'will_paginate'
 
 #recommendation
 gem 'recommendable'
-gem 'resque', "~> 1.22.0"
+gem 'resque'
 gem 'resque-loner'
 
 gem 'validates_email_format_of'
