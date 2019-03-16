@@ -58,8 +58,8 @@ class User < ActiveRecord::Base
     path: ':rails_root/public/system/:class/:attachment/:id/:style/:basename.:extension'
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
 
-  has_one :schedule
-  has_many :experiences
+  has_one :schedule, dependent: :destroy
+  has_many :experiences, dependent: :destroy
   has_many :theatres, -> { uniq }, through: :experiences
   has_many :invites, foreign_key: :owner_id
   belongs_to :invite
@@ -123,6 +123,15 @@ class User < ActiveRecord::Base
 
   def has_experience?(theatre_id, experience_type_id)
     !experiences.where(theatre_id: theatre_id, experience_type_id: experience_type_id).empty?
+  end
+
+  def unlink!
+    update!(
+      uid: nil,
+      provider: nil,
+      oauth_token: nil,
+      oauth_token_expires_at: nil
+    )
   end
 
   private

@@ -4,7 +4,7 @@ require 'open-uri'
 require 'json'
 
 class UsersController < ApplicationController
-  before_filter :require_login, only: %i[edit update edit_improv edit_schedule edit_endorsements edit_password delete_avatar email email_send invites]
+  before_action :require_login, only: %i[edit update edit_improv edit_schedule edit_endorsements edit_password delete_avatar email email_send invites unlink destroy]
 
   # GET /users
   # GET /users.json
@@ -52,7 +52,6 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.js
     end
-    
   end
 
   def comment_send
@@ -160,11 +159,21 @@ class UsersController < ApplicationController
     end
   end
 
-  # DELETE /users/1
-  # DELETE /users/1.json
+  def unlink
+    @user = current_user
+    @user.unlink!
+    @user.send_password_reset
+
+    respond_to do |format|
+      msg = "Your facebook account has been unlinked.  A password reset email has been sent to #{@user.email} to make sure you can still log in."
+      format.html { redirect_to profile_edit_path, flash: { success: msg } }
+    end
+  end
+
   def destroy
-    @user = User.find(params[:id])
-    @user.destroy
+    @user = current_user
+    @user.destroy!
+    remove_authorized_user
 
     respond_to do |format|
       format.html { redirect_to users_url }

@@ -1,63 +1,57 @@
-  <div class="page-header">
-    <h1>Profile</h1>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-6 col-md-2">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          Your Profile
-        </div>
-        <div class="panel-body">
-          <%= render "edit_links", current: :basic %>
-        </div>
+  
+<div class="page-header">
+  <h1>Profile</h1>
+</div>
+<div class="row">
+  <div class="col-sm-6 col-md-2">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Your Profile
+      </div>
+      <div class="panel-body">
+        <%= render "edit_links", current: :basic %>
       </div>
     </div>
-
-    <div class="col-sm-6 col-md-6">
-      <%= form_for current_user, url: :profile_update, method: :post do |f| %>
-        <% if current_user.errors.any? %>
-          <div id="error_explanation">
-            <h2><%= pluralize(current_user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
-            <ul>
+  </div>
+  <div class="col-sm-6 col-md-6">
+    <%= form_for current_user, url: :profile_update, method: :post do |f| %>
+      <% if current_user.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(current_user.errors.count, "error") %> prohibited this user from being saved:</h2>
+          <ul>
             <% current_user.errors.full_messages.each do |msg| %>
               <li><%= msg %></li>
             <% end %>
-            </ul>
-          </div>
-        <% end %>
-
-        <div class="form-group">
-          <%= f.label :name, "Name" %>
-          <%= f.text_field :name, class: "form-control" %>
+          </ul>
         </div>
-            
-        <div class="form-group">
-          <%= f.label :email, "Email"%>
-          <%= f.text_field :email, class: "form-control" %>
-        </div>
-
+      <% end %>
+      <div class="form-group">
+        <%= f.label :name, "Name" %>
+        <%= f.text_field :name, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :email, "Email"%>
+        <%= f.text_field :email, class: "form-control" %>
+      </div>
       <% if(current_user.is_coach) %>
         <div class="form-group">
           <strong>I coach:</strong>
           <div class="form-input">
-              <%= f.label :is_improv, class: "checkbox" do %>
-                Improv
-                <%= f.check_box :is_improv%>
-              <% end %>
+            <%= f.label :is_improv, class: "checkbox" do %>
+              Improv
+              <%= f.check_box :is_improv%>
+            <% end %>
           </div>
           <div class="form-input">
             <%= f.label :is_sketch, class: "checkbox" do  %>
               Sketch
               <%= f.check_box :is_sketch %>
-            <% end %> 
+            <% end %>
           </div>
           <div class="form-input">
             Done coaching? Leave both unchecked and you'll no longer appear as a coach.
           </div>
         </div>
-
         <div class="form-group">
           <%= f.label :bio %>
           <%= f.text_area :bio, class: "form-control" %>
@@ -66,7 +60,6 @@
           <%= f .label :city_id, "Current City" %>
           <%= f.collection_select :city_id, City.all, :id, :name, {}, class: "form-control" %>
         </div>
-        
       <% else %>
         <div class="panel panel-default">
           <div class="panel-heading">
@@ -77,50 +70,72 @@
           </div>
         </div>
       <% end %>
-
-       <div class="form-group">
-          <%= f.label :password, "New Password (if changing)" %>
-          <%= f.password_field :password, class: "form-control" %>
-       
-          <%= f.label :password_confirmation, "Confirm New Password" %>
-          <%= f.password_field :password_confirmation, class: "form-control" %>
-        </div>
-    
+      <div class="form-group">
+        <%= f.label :password, "New Password (if changing)" %>
+        <%= f.password_field :password, class: "form-control" %>
+        <%= f.label :password_confirmation, "Confirm New Password" %>
+        <%= f.password_field :password_confirmation, class: "form-control" %>
+      </div>
       <%= f.submit "Update", class: "btn btn-primary btn-lg" %>
-      
-      <% end %>
-    </div>
+    <% end %>
+  </div>
 
-    <div class="col-sm-12 col-md-4">
-      <% if(current_user.is_coach) %>
+  <div class="col-sm-12 col-md-4">
+    <% if(current_user.is_coach) %>
+      <div class=row>
         <div class="panel panel-primary">
           <div class="panel-heading">
             Your Photo
           </div>
-
           <div class="panel-body">
             <p>
               <%= image_tag current_user.avatar.url :medium %>
-
               <%= form_for(current_user,
-                    url: :profile_update,
-                    method: :post,
-                    html: {:multipart => true},
-                ) do |f| %>
+                      url: :profile_update,
+                      method: :post,
+                      html: {:multipart => true},
+                  ) do |f| %>
                 <%= f.file_field :avatar, class: "form-control btn-block" %>
                 <%= f.submit "Update Avatar", class: "btn btn-default btn-large btn-block" %>
               <% end %>
             </p>
           </div>
         </div>
-      <% end %>
-    </div>
-
+      </div>
+      <div class="row">
+        <% if(current_user.uid.present?) %>
+         <div class="panel panel-primary">
+            <div class="panel-heading">
+              Unlink from Facebook?
+            </div>
+            <div class="panel-body">
+              <p>
+                Done with Facebook?  Unlink your account and manually reset your password.
+              </p>
+              <p>
+                <%= link_to "Unlink", :profile_unlink, data: { confirm: "Unlink and reset password?" }, class: 'btn btn-default btn-large btn-block btn-danger'%>
+              </p>
+            </div>
+          </div>
+        <%end%>
+      </div>
+      <div class="row">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+              Delete Account
+            </div>
+            <div class="panel-body">
+              <p>
+                Done with improv? Concerned about your data?  
+              </p>
+              <p>
+                <%= link_to "Delete Account", :profile_destroy, data: { confirm: "Delete your account?  This is forever." }, class: 'btn btn-default btn-large btn-block btn-danger'%>
+              </p>
+            </div>
+          </div>
+      </div>
+    <% end %>
   </div>
-  
- 
- 
 
-    
-  </div>
+
 </div>
