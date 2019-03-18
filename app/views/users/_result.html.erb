@@ -1,6 +1,7 @@
 <div class="result">
 	<div class="image_box">
 		<%= link_to user do %>
+			<% Rails.logger.debug user %>
 			<%= image_tag user.avatar :small %>
 		<% end %>
 	</div>
