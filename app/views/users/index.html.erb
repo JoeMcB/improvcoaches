@@ -10,7 +10,7 @@
 			<div id="users">
 				<% @users.in_groups_of(5) do |user_group| %>
 						<% user_group.each do |user| %>
-							<%= render partial: "users/result", locals: {user: user, options: {}} %>
+							<%= render partial: "users/result", locals: {user: user, options: {}} unless user.nil? %>
 						<% end %>
 
 						<%= render partial: "users/feed_ad" %>
