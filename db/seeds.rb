@@ -8,12 +8,13 @@
 
 #Locations
 USA = Country.create( name: "United States")
-NYC = City.create( name: "New York", country: USA)
+NYC = City.create( name: "New York")
+PDX = City.create( name: "Portland")
 
 #Theatres
-UCB = Theatre.create( name: "Upright Citizens Brigade Theatre", city: NYC)
-PIT = Theatre.create( name: "The PIT", city: NYC)
-Magnet = Theatre.create( name: "Magnet Theater", city: NYC)
+UCB = Theatre.create( name: "Upright Citizens Brigade Theatre")
+PIT = Theatre.create( name: "The PIT")
+Magnet = Theatre.create( name: "Magnet Theater")
 
 #Experience Types
 Student = ExperienceType.create( name: "Student")
