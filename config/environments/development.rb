@@ -41,7 +41,7 @@ Improvcoaches::Application.configure do
   config.assets.digest = true
 
   Rails.logger = Logger.new(STDOUT)
-  config.log_level = :error
+  config.log_level = :debug
 
   #BetterErrors
   BetterErrors::Middleware.allow_ip! '127.0.0.1/0'

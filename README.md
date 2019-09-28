@@ -14,9 +14,10 @@ I originally built the site as a resource for improv students and coaches while 
 
 - Run `docker build . -t improvcoaches`
 - Run `docker-compose run web rake db:create`
+- Run `docker-compose run web rake db:schema:load`
 - Run `docker-compose run web rake db:seed`
 - Run `docker-compose up`.  Server is available at localhost:300
-- Access the Rails consolt with `docker-compose run web rails c`
+- Access the Rails console with `docker-compose run web rails c`
 
 ## Create an Admin account
 - Open a console.

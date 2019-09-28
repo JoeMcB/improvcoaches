@@ -6,17 +6,26 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+User.create(
+  name: 'admin',
+  password: 'admin',
+  password_confirmation: 'admin',
+  email: 'admin@improvcoaches.com',
+  is_admin: true
+)
+
 #Locations
-USA = Country.create( name: "United States")
-NYC = City.create( name: "New York", country: USA)
+usa = Country.create( name: "United States")
+nyc = City.create( name: "New York", country: usa)
+la = City.create( name: "Los Angeles", country: usa)
 
 #Theatres
-UCB = Theatre.create( name: "Upright Citizens Brigade Theatre", city: NYC)
-PIT = Theatre.create( name: "The PIT", city: NYC)
-Magnet = Theatre.create( name: "Magnet Theater", city: NYC)
+Theatre.create( name: "Upright Citizens Brigade Theatre", cities: [nyc, la])
+Theatre.create( name: "The PIT", cities: [nyc])
+Theatre.create( name: "Magnet Theater", cities: [nyc])
 
 #Experience Types
-Student = ExperienceType.create( name: "Student")
-Performer = ExperienceType.create( name: "Peformer")
-HouseTeam = ExperienceType.create( name: "House Team")
-Teacher = ExperienceType.create( name: "Teacher")
+ExperienceType.create( name: "Student")
+ExperienceType.create( name: "Peformer")
+ExperienceType.create( name: "House Team")
+ExperienceType.create( name: "Teacher")
