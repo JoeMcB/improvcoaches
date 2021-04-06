@@ -19,8 +19,8 @@ ActiveRecord::Schema.define(version: 20161223230824) do
   create_table "cities", force: :cascade do |t|
     t.string   "name"
     t.integer  "country_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "subdomain"
     t.boolean  "has_spaces"
   end
@@ -36,22 +36,22 @@ ActiveRecord::Schema.define(version: 20161223230824) do
 
   create_table "countries", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "experience_types", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "experiences", force: :cascade do |t|
     t.integer  "theatre_id"
     t.integer  "user_id"
     t.integer  "experience_type_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "experiences", ["user_id"], name: "index_experiences_on_user_id", using: :btree
@@ -72,54 +72,29 @@ ActiveRecord::Schema.define(version: 20161223230824) do
     t.integer  "owner_id"
     t.string   "recipient"
     t.string   "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "invites", ["code"], name: "index_invites_on_code", using: :btree
   add_index "invites", ["owner_id"], name: "index_invites_on_owner_id", using: :btree
 
-  create_table "messages", force: :cascade do |t|
-    t.text     "subject"
-    t.text     "content"
-    t.integer  "to_user_id"
-    t.integer  "from_user_id"
-    t.text     "status"
-    t.datetime "sent_on"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-  end
-
-  create_table "resources", force: :cascade do |t|
-    t.string   "name"
-    t.string   "short_description"
-    t.text     "long_description"
-    t.string   "amazon_id"
-    t.string   "url"
-    t.string   "image_url"
-    t.string   "resource_type"
-    t.decimal  "price"
-    t.string   "slug"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-  end
-
   create_table "schedules", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "schedules", ["user_id"], name: "index_schedules_on_user_id", using: :btree
 
   create_table "space_images", force: :cascade do |t|
     t.integer  "space_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "photo_file_name"
     t.string   "photo_content_type"
-    t.integer  "photo_file_size"
+    t.integer  "photo_file_size",    limit: 8
     t.datetime "photo_updated_at"
     t.integer  "sort_order"
   end
@@ -138,8 +113,8 @@ ActiveRecord::Schema.define(version: 20161223230824) do
     t.string   "real_city"
     t.string   "state"
     t.string   "phone"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "slug"
     t.boolean  "is_rehearsal",   default: true
     t.boolean  "is_performance", default: false
@@ -151,13 +126,13 @@ ActiveRecord::Schema.define(version: 20161223230824) do
   create_table "theatres", force: :cascade do |t|
     t.string   "name"
     t.integer  "city_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "time_blocks", force: :cascade do |t|
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "day"
     t.integer  "hour"
     t.integer  "minute"
@@ -166,27 +141,21 @@ ActiveRecord::Schema.define(version: 20161223230824) do
 
   add_index "time_blocks", ["schedule_id"], name: "index_time_blocks_on_schedule_id", using: :btree
 
-  create_table "user_theatres", id: false, force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "theatre_id"
-    t.integer "experience_type_id"
-  end
-
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
     t.boolean  "is_coach"
     t.text     "bio"
     t.string   "password_digest"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "img"
     t.integer  "rate"
     t.datetime "last_updated"
     t.integer  "is_admin"
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
-    t.integer  "avatar_file_size"
+    t.integer  "avatar_file_size",       limit: 8
     t.datetime "avatar_updated_at"
     t.string   "auth_token"
     t.string   "password_reset_token"
