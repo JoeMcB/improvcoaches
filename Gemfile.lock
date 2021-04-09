@@ -1,3 +1,14 @@
+GIT
+  remote: https://github.com/sd/paperclip
+  revision: 1d160793e3a511712245604efbe85f95989b81fd
+  branch: remove-mimemagic
+  specs:
+    paperclip (6.1.1)
+      activemodel (>= 4.2.0)
+      activesupport (>= 4.2.0)
+      mime-types
+      terrapin (~> 0.6.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -128,7 +139,7 @@ GEM
     mime-types (3.3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2021.0225)
-    mimemagic (0.3.10)
+    mimemagic (0.4.3)
       nokogiri (~> 1)
       rake
     mini_mime (1.1.0)
@@ -140,7 +151,7 @@ GEM
     multipart-post (2.1.1)
     newrelic_rpm (6.15.0)
     nio4r (2.5.7)
-    nokogiri (1.11.2)
+    nokogiri (1.11.3)
       mini_portile2 (~> 2.5.0)
       racc (~> 1.4)
     oauth2 (1.4.7)
@@ -159,12 +170,6 @@ GEM
       oauth2 (~> 1.4)
       omniauth (>= 1.9, < 3)
     open_uri_redirections (0.2.1)
-    paperclip (6.1.0)
-      activemodel (>= 4.2.0)
-      activesupport (>= 4.2.0)
-      mime-types
-      mimemagic (~> 0.3.0)
-      terrapin (~> 0.6.0)
     pg (0.21.0)
     puma (5.2.2)
       nio4r (~> 2.0)
@@ -282,11 +287,12 @@ DEPENDENCIES
   jquery-ui-rails
   meta-tags
   meta_request
+  mimemagic (> 0.4)
   newrelic_rpm
   omniauth
   omniauth-facebook
   open_uri_redirections
-  paperclip (>= 5.2.0)
+  paperclip!
   pg (~> 0.21.0)
   puma
   rails (= 4.2.11)
@@ -303,7 +309,7 @@ DEPENDENCIES
   yard (>= 0.9.11)
 
 RUBY VERSION
-   ruby 2.7.2p137
+   ruby 2.7.0p0
 
 BUNDLED WITH
    1.17.3
