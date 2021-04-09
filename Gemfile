@@ -22,6 +22,8 @@ gem 'dotenv-rails', :groups => [:development, :test]
 gem 'sass-rails'
 gem 'uglifier'
 gem 'mimemagic', '> 0.4'
+gem 'bigdecimal', '1.4.2'
+
 
 #Image Processing
 gem 'paperclip', git: 'https://github.com/sd/paperclip', branch: 'remove-mimemagic'

@@ -9,6 +9,7 @@ RUN apt-get update -qq  && apt-get install -y \
     gcc \
     libv8-dev \
     nodejs \
+    ruby2.7-dev \
     zlib1g-dev \
     vim \
     git
