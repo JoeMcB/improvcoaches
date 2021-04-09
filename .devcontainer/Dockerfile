@@ -15,10 +15,10 @@ RUN apt-get update -qq  && apt-get install -y \
     git
 
 RUN apt remove -y --purge ruby \
-  && curl -s --retry 3 -L https://heroku-buildpack-ruby.s3.amazonaws.com/heroku-18/ruby-2.5.5.tgz | tar -xz \
+  && curl -s --retry 3 -L https://heroku-buildpack-ruby.s3.amazonaws.com/heroku-18/ruby-2.7.2.tgz | tar -xz \
   && gem uninstall bundler rake
 
-RUN gem install bundler -v 1.17.3
+RUN gem install bundler -v 1.17.3 --force
 RUN gem install rake  -v 12.3.3
 
 EXPOSE 3000
