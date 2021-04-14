@@ -4,9 +4,13 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "echo",
+            "label": "Puma",
             "type": "shell",
-            "command": "echo Hello"
+            "command": "bundle exec puma -C config/puma.rb",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always"
+            }
         }
     ]
 }
