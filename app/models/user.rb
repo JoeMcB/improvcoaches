@@ -43,9 +43,10 @@ class User < ActiveRecord::Base
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true, email_format: { message: 'is not a valid email.' }
 
-  recommends :users
-  after_like ->(u) { u.update_rating }
-  after_dislike ->(u) { u.update_rating }
+  # Old recommendation system, removed for local editing.
+  # recommends :users
+  # after_like ->(u) { u.update_rating }
+  # after_dislike ->(u) { u.update_rating }
 
   has_secure_password
   has_attached_file :avatar,

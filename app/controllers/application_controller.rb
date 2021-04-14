@@ -37,7 +37,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_city
-    @current_city = @current_city || City.find_by(subdomain: request.subdomain) || City.find(1)
+    @current_city = @current_city || City.find_by(subdomain: request.subdomain) || City.find_by_name("New York") || City.first
   end
 
   def require_login
