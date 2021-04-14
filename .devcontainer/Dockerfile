@@ -7,6 +7,10 @@ RUN apt-get update -qq  && apt-get install -y \
     build-essential \
     libpq-dev \
     gcc \
+<<<<<<< Updated upstream
+=======
+    zsh \
+>>>>>>> Stashed changes
     libv8-dev \
     nodejs \
     ruby2.7-dev \
@@ -14,6 +18,11 @@ RUN apt-get update -qq  && apt-get install -y \
     vim \
     git
 
+<<<<<<< Updated upstream
+=======
+RUN wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
+
+>>>>>>> Stashed changes
 # RUN apt remove -y --purge ruby \
 #   && curl -s --retry 3 -L https://heroku-buildpack-ruby.s3.amazonaws.com/heroku-20/ruby-2.7.3.tgz | tar -xz \
 #   && gem uninstall bundler rake
