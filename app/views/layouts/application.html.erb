@@ -62,10 +62,7 @@
 				<ul class="nav navbar-nav navbar-right">
 					<% if(current_user.nil?) %>
 						<li>
-							<%= link_to "/auth/facebook" do%>
-								<button id="fb_login" class="btn btn-xs btn-facebook">
-									<span class="icon-facebook"></span> | Login with Facebook</button>
-							<% end %>
+							<fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
 						</li>
 						<li><%= link_to "Login", login_path %></li>
 						<li><%= link_to "Join", join_path %></li>
