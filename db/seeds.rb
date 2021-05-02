@@ -7,17 +7,30 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 #Locations
-USA = Country.create( name: "United States")
-NYC = City.create( name: "New York")
-PDX = City.create( name: "Portland")
+united_states = Country.create!( name: "United States")
+new_york = City.create!( name: "New York", country: united_states)
+los_angeles = City.create!( name: "Los Angeles", country: united_states)
 
 #Theatres
-UCB = Theatre.create( name: "Upright Citizens Brigade Theatre")
-PIT = Theatre.create( name: "The PIT")
-Magnet = Theatre.create( name: "Magnet Theater")
+ucb = Theatre.create!( name: "Upright Citizens Brigade Theatre", cities: [ new_york, los_angeles])
+pit = Theatre.create!( name: "The PIT", cities: [ new_york ])
+magnet = Theatre.create!( name: "Magnet Theater", cities: [ new_york ])
 
 #Experience Types
-Student = ExperienceType.create( name: "Student")
-Performer = ExperienceType.create( name: "Peformer")
-HouseTeam = ExperienceType.create( name: "House Team")
-Teacher = ExperienceType.create( name: "Teacher")
+student = ExperienceType.create!( name: "Student")
+performer = ExperienceType.create!( name: "Peformer")
+house_team = ExperienceType.create!( name: "House Team")
+teacher = ExperienceType.create!( name: "Teacher")
+
+#Admin User
+admin = User.create!(
+  name: 'Improv Admin',
+  email: 'admin@improvcoaches.com',
+  password: 'adminpass',
+  is_admin: true
+)
+
+# Coaches
+5.times do |i|
+  User.create!(name: "Coach #{i}", email: "coache_#{i}@improvcoaches.com", password: 'pass', is_coach: true, is_improv: true, is_sketch: true, city: new_york)
+end

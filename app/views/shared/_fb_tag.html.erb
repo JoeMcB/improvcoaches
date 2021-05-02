@@ -1,62 +1,34 @@
 <div id="fb-root"></div>
-<script>
-
-window.fbAsyncInit = function() {
-	// init the FB JS SDK
-	FB.init({
-		appId      : '140954086073433',                     // App ID from the app dashboard
-		channelUrl : '//www.improvcoaches.com/channel.html', 	// Channel file for x-domain comms
-		status     : true,                                  // Check Facebook Login status
-		xfbml      : true                                   // Look for social plugins on the page
-	});
-
-
-};
-
-(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/all.js";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
-</script>
-
 
 <script>
   window.fbAsyncInit = function() {
     FB.init({
-      appId      : '140954086073433',
+      appId      : '<%= ENV['FACEBOOK_APP_ID'] %>',
       cookie     : true,
       xfbml      : true,
-      version    : '3.2'
+      oauth      : true,
+      version    : 'v10.0'
     });
       
-	
-	// Additional initialization code such as adding Event Listeners goes here
-	FB.Event.subscribe('auth.authResponseChange', function(response) {
-		if (response.status === 'connected') {
-			console.log(response);
-		} else {
-			window.location = "/auth/facebook";
-		}
-	});
-
-	FB.Event.subscribe('comment.create', function(request){
-		var authRepsonse =  FB.getAuthResponse();
-
-		$.post(request.href+"/comment", { comment_id: request.commentID, access_token: authRepsonse.accessToken }, function(data, textStatus, jqXHR){
-		 	console.log("comment logged");
-		});
-	});
-      
+    FB.AppEvents.logPageView();
   };
 
   (function(d, s, id){
      var js, fjs = d.getElementsByTagName(s)[0];
      if (d.getElementById(id)) {return;}
      js = d.createElement(s); js.id = id;
-     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     js.src = "https://connect.facebook.net/en_US/sdk/debug.js";
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
+
+  function FBLogin(){
+    FB.getLoginStatus(function(response) {
+      console.log(response);
+      if(response.status == 'connected'){
+        window.location = "/auth/facebook/callback"
+      }else{
+        FB.login();
+      }
+    })
+  }
 </script>
