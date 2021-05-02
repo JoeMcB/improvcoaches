@@ -62,7 +62,7 @@
 				<ul class="nav navbar-nav navbar-right">
 					<% if(current_user.nil?) %>
 						<li>
-							<fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
+							<div style="padding-top: 12px" class="fb-login-button" data-width="" data-size="medium" data-onlogin="FBLogin();" data-button-type="login_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"></div>
 						</li>
 						<li><%= link_to "Login", login_path %></li>
 						<li><%= link_to "Join", join_path %></li>

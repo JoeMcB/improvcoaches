@@ -53,6 +53,8 @@ gem 'open_uri_redirections'
 
 group :development do
   gem 'annotate'
+  gem 'pry'
+  gem 'pry-byebug'
   gem 'meta_request'
   gem "better_errors"
   gem "binding_of_caller"

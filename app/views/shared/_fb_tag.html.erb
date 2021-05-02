@@ -6,28 +6,29 @@
       appId      : '<%= ENV['FACEBOOK_APP_ID'] %>',
       cookie     : true,
       xfbml      : true,
+      oauth      : true,
       version    : 'v10.0'
     });
       
     FB.AppEvents.logPageView();
-    
-    FB.getLoginStatus(function(response) {
-        if(response.status == 'connected'){
-
-        }else{
-          FB.login()
-        }
-    });
-
-        // FB.Event.subscribe('comment.create', function(request){
-    //   var authRepsonse =  FB.getAuthResponse();
-
-    //   $.post(request.href+"/comment", { comment_id: request.commentID, access_token: authRepsonse.accessToken }, function(data, textStatus, jqXHR){
-    //     console.log("comment logged");
-    //   });
-    // });
-     
-      
   };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk/debug.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+
+  function FBLogin(){
+    FB.getLoginStatus(function(response) {
+      console.log(response);
+      if(response.status == 'connected'){
+        window.location = "/auth/facebook/callback"
+      }else{
+        FB.login();
+      }
+    })
+  }
 </script>
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
