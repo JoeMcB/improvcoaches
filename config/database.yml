@@ -2,7 +2,7 @@ development:
   adapter: postgresql
   encoding: unicode
   database: improvcoaches_development
-  host: postgres
+  url: <%= ENV['DATABASE_URL'] %>
   username: improvcoaches
   password: improvcoaches
 
@@ -21,6 +21,6 @@ test:
   adapter: postgresql
   encoding: unicode
   database: improvcoaches_test
-  host: postgres
+  url: <%= ENV['DATABASE_URL'] %>
   username: improvcoaches
   password: improvcoaches

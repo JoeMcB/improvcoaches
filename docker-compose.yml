@@ -1,0 +1,54 @@
+version: "3"
+services:
+
+  postgres:
+    image: postgres:9.6
+    environment:
+      POSTGRES_USER:     improvcoaches
+      POSTGRES_PASSWORD: improvcoaches
+    ports:
+      - '5432:5432'
+    volumes:
+      - improvcoaches-postgres:/var/lib/postgresql/data
+
+  redis:
+    image: redis:6
+    ports:
+      - '6379:6379'
+    volumes:
+      - improvcoaches-redis:/var/lib/redis/data
+
+  # web:
+  #   image: heroku/heroku:18-build
+  #   tty: true
+  #   stdin_open: true
+    
+  #   environment:
+  #     - BUNDLE_PATH=/bundle/vendor
+  #     - SPROCKETS_CACHE=/cache
+  #     - REDISTOGO_URL=redis://redis:6379
+
+  #   depends_on:
+  #     - postgres
+  #     - redis
+
+  #   volumes:
+  #     # Update this to wherever you want VS Code to mount the folder of your project
+  #     - ../:/
+  #     # Forwards the local Docker socket to the container.
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #     # [Custom] Add a volume to cache gem bundles.
+  #     - improvcoaches-bundle-path:/bundle
+  #     # [Custom] Add asset cache.
+  #     - improvcoaches-asset-cache:/cache
+      
+  #   ports:
+  #     - '3000:3000'
+
+  #   command: bundle exec rails s
+  
+volumes:
+  improvcoaches-bundle-path:
+  improvcoaches-asset-cache:
+  improvcoaches-postgres:
+  improvcoaches-redis:
