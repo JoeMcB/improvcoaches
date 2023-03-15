@@ -18,7 +18,7 @@ magnet = Theatre.create!( name: "Magnet Theater", cities: [ new_york ])
 
 #Experience Types
 student = ExperienceType.create!( name: "Student")
-performer = ExperienceType.create!( name: "Peformer")
+performer = ExperienceType.create!( name: "Performer")
 house_team = ExperienceType.create!( name: "House Team")
 teacher = ExperienceType.create!( name: "Teacher")
 
