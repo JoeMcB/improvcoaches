@@ -87,22 +87,21 @@ class AuthController < ApplicationController
       end
     else
       user = User.find_by_email(params[:email].downcase)
-      unless user.nil?
-        if !(user && user.authenticate(params[:password]))
-          respond_to do |format|
-            format.html { redirect_to login_url, flash: { notice: 'Hmm, that email and password appear to be invalid.' } }
-            format.js { render partial: 'create' }
-          end
-        else
-          set_authorized_user(user, params[:remember_me])
+      
+      if user.nil? || !(user && user.authenticate(params[:password]))
+        respond_to do |format|
+          format.html { redirect_to login_url, flash: { notice: 'Hmm, that email and password appear to be invalid.' } }
+          format.js { render partial: 'create' }
+        end
+      else
+        set_authorized_user(user, params[:remember_me])
 
-          if params[:invite_code]
-            session[:redirect_on_login] = invite_accept_url(code: params[:invite_code])
-          else
-            respond_to do |format|
-              format.html { redirect_to return_url, flash: { success: "Welcome back #{user.name}" } }
-              format.js { render partial: 'create' }
-            end
+        if params[:invite_code]
+          session[:redirect_on_login] = invite_accept_url(code: params[:invite_code])
+        else
+          respond_to do |format|
+            format.html { redirect_to return_url, flash: { success: "Welcome back #{user.name}" } }
+            format.js { render partial: 'create' }
           end
         end
       end
