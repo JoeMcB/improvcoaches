@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
-ruby '2.7.0'
+ruby '2.7.1'
 
-gem 'rails', '4.2.11'
+gem 'rails', '5.0'
 gem "sprockets", ">= 2.12.5"
 gem "yard", ">= 0.9.11"
 gem 'puma'
@@ -53,12 +53,17 @@ gem 'open_uri_redirections'
 
 group :development do
   gem 'annotate'
+  gem 'byebug'
   gem 'pry'
   gem 'pry-rails'
   gem 'pry-byebug'
   gem 'meta_request'
   gem "better_errors"
   gem "binding_of_caller"
+
+  # Editor Gems
+  gem 'reek'
+  gem 'rubocop'
 end
 
 
