@@ -65,9 +65,4 @@ Improvcoaches::Application.configure do
 
 
   config.action_mailer.default_url_options = { :host => "www.improvcoaches.com" }
-
-
-  #Google Analytics
-  GA.tracker = "UA-3600281-5"
-
 end

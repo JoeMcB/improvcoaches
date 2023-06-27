@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <%= render 'shared/ga' if Rails.env.production? %>
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <%= analytics_init if Rails.env.production? %>
-  
   <%= display_meta_tags :site => ('ImprovCoaches.com - '+current_city.name) %>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
