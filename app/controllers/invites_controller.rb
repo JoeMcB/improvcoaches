@@ -1,5 +1,5 @@
 class InvitesController < ApplicationController
-  before_filter :require_login, except: [:landing]
+  before_action :require_login, except: [:landing]
 
   def landing
     @invite = Invite.find_by_code(params[:code])

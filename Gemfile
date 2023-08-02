@@ -1,13 +1,13 @@
 source 'http://rubygems.org'
 ruby '2.7.1'
 
-gem 'rails', '5.0'
+gem 'rails', '5.2.8.1'
 gem "sprockets", ">= 2.12.5"
 gem "yard", ">= 0.9.11"
 gem 'puma'
 
 
-gem 'pg', '~> 0.21.0'
+gem 'pg', '~> 1.0'
 gem "aws-sdk-s3", require: false
 
 gem 'jquery-rails'

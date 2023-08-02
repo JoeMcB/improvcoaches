@@ -2,7 +2,7 @@ class SpacesController < ApplicationController
   # GET /spaces
   # GET /spaces.json
 
-  before_filter :require_admin, except: [:index, :show]
+  before_action :require_admin, except: [:index, :show]
 
   def index
     @spaces = current_city.spaces.paginate(page: params[:page], per_page: 10)

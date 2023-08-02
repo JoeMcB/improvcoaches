@@ -1,5 +1,5 @@
 class RatingsController < ApplicationController
-  before_filter :require_login
+  before_action :require_login
   def like
     @user = User.find(params[:user_id])
     current_user.like @user

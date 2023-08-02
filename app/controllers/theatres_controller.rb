@@ -1,6 +1,6 @@
 class TheatresController < ApplicationController
 
-  before_filter :require_admin
+  before_action :require_admin
 
   # GET /theatres
   # GET /theatres.json

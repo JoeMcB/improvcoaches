@@ -1,5 +1,5 @@
 class CitiesController < ApplicationController
-  before_filter :sanitize_params, -> { params.permit(:country_id, :name, :subdomain) }
+  before_action :sanitize_params, -> { params.permit(:country_id, :name, :subdomain) }
   
   # GET /cities
   # GET /cities.json

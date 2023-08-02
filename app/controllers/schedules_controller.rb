@@ -1,6 +1,6 @@
 class SchedulesController < ApplicationController
 
-  before_filter :require_login, only: [:edit, :update]
+  before_action :require_login, only: [:edit, :update]
   
   # GET /schedules
   # GET /schedules.json
