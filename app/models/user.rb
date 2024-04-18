@@ -63,7 +63,7 @@ class User < ActiveRecord::Base
   has_many :experiences, dependent: :destroy
   has_many :theatres, -> { uniq }, through: :experiences
   has_many :invites, foreign_key: :owner_id
-  belongs_to :invite
+  belongs_to :invite, optional: true
   belongs_to :city
 
   before_create :defaults, :generate_auth_token, :create_schedule, :lowercase_email

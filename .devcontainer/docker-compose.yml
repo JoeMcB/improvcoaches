@@ -12,11 +12,11 @@ services:
       - improvcoaches-postgres:/var/lib/postgresql/data
 
   redis:
-    image: redis:2.8.21
+    image: redis:2.8
     ports:
       - '6379:6379'
-    volumes:
-      - improvcoaches-redis:/var/lib/redis/data
+    # volumes:
+    #   - improvcoaches-redis:/var/lib/redis/data
 
   web:
     build:
@@ -30,6 +30,7 @@ services:
       - BUNDLE_PATH=/bundle/vendor
       - SPROCKETS_CACHE=/cache
       - REDISTOGO_URL=redis://redis:6379
+      - DATABASE_URL=postgres://improvcoaches:improvcoaches@postgres:5432/improvcoaches_development
 
     depends_on:
       - postgres

@@ -1,13 +1,12 @@
 source 'http://rubygems.org'
-ruby '2.7.1'
+ruby '2.7.0'
 
-gem 'rails', '5.2.8.1'
+gem 'rails', '6.0.2'
 gem "sprockets", ">= 2.12.5"
 gem "yard", ">= 0.9.11"
 gem 'puma'
+gem 'pg', '~>1.1.3'
 
-
-gem 'pg', '~> 1.0'
 gem "aws-sdk-s3", require: false
 
 gem 'jquery-rails'
@@ -19,14 +18,15 @@ gem 'bugsnag'
 gem 'concurrent-ruby'
 gem 'coffee-rails'
 gem 'dotenv-rails', :groups => [:development, :test]
+gem 'listen', groups: [:development, :test]
 gem 'sass-rails'
 gem 'uglifier'
-gem 'mimemagic', '> 0.4'
-gem 'bigdecimal', '1.4.2'
+gem 'mimemagic'
+gem 'bigdecimal'
 
 
 #Image Processing
-gem 'paperclip', git: 'https://github.com/sd/paperclip', branch: 'remove-mimemagic'
+gem 'paperclip'
 gem 'font-awesome-rails'
 
 gem "recaptcha", require: "recaptcha/rails"

@@ -32,5 +32,5 @@ admin = User.create!(
 
 # Coaches
 5.times do |i|
-  User.create!(name: "Coach #{i}", email: "coache_#{i}@improvcoaches.com", password: 'pass', is_coach: true, is_improv: true, is_sketch: true, city: new_york)
+  User.create(name: "Coach #{i}", email: "coache_#{i}@improvcoaches.com", password: 'pass', is_coach: true, is_improv: true, is_sketch: true, is_active: true, city: new_york)
 end
