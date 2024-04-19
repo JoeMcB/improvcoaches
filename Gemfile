@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 ruby '2.7.0'
 
-gem 'rails', '6.0.2'
+gem 'rails', '6.1'
 gem "sprockets", ">= 2.12.5"
 gem "yard", ">= 0.9.11"
 gem 'puma'
