@@ -15,13 +15,13 @@ services:
     image: redis:2.8
     ports:
       - '6379:6379'
-    # volumes:
-    #   - improvcoaches-redis:/var/lib/redis/data
+    volumes:
+      - improvcoaches-redis:/var/lib/redis/data
 
   web:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ../
+      dockerfile: .devcontainer/Dockerfile
     
     tty: true
     stdin_open: true
@@ -41,8 +41,6 @@ services:
       - ../:/workspace:cached
       # Forwards the local Docker socket to the container.
       - /var/run/docker.sock:/var/run/docker.sock
-      # [Custom] Add a volume to cache gem bundles.
-      - improvcoaches-bundle-path:/bundle
       # [Custom] Add asset cache.
       - improvcoaches-asset-cache:/cache
       
@@ -52,7 +50,6 @@ services:
     command: sleep infinity
   
 volumes:
-  improvcoaches-bundle-path:
   improvcoaches-asset-cache:
   improvcoaches-postgres:
   improvcoaches-redis:
