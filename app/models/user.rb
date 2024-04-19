@@ -61,7 +61,7 @@ class User < ActiveRecord::Base
 
   has_one :schedule, dependent: :destroy
   has_many :experiences, dependent: :destroy
-  has_many :theatres, -> { uniq }, through: :experiences
+  has_many :theatres, -> { distinct }, through: :experiences
   has_many :invites, foreign_key: :owner_id
   belongs_to :invite, optional: true
   belongs_to :city
