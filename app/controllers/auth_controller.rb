@@ -87,7 +87,7 @@ class AuthController < ApplicationController
       end
     else
       user = User.find_by_email(params[:email].downcase)
-      
+
       if user.nil? || !(user && user.authenticate(params[:password]))
         respond_to do |format|
           format.html { redirect_to login_url, flash: { notice: 'Hmm, that email and password appear to be invalid.' } }
@@ -106,23 +106,17 @@ class AuthController < ApplicationController
         end
       end
     end
-  rescue ActionController::RedirectBackError
-    redirect_to root_path
   end
 
   def destroy
     return_url = session.delete(:redirect_on_login) || :back
     remove_authorized_user
     redirect_to return_url, notice: 'You have been logged out.  See ya!'
-  rescue ActionController::RedirectBackError
-    redirect_to root_path
   end
 
   def failure
     return_url = session.delete(:redirect_on_login) || :back
     message = params[:message] || ''
     redirect_to return_url, flash: { notice: "There was an error logging you in via Facebook: #{message} " }
-  rescue ActionController::RedirectBackError
-    redirect_to root_path
   end
 end

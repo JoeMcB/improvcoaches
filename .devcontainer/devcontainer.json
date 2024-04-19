@@ -14,11 +14,9 @@
 				"terminal.integrated.shell.linux": "/bin/zsh"
 			},
 			"extensions": [
-				// "Shopify.ruby-lsp",
-				// "Shopify.ruby-extensions-pack",
-				// "KoichiSasada.vscode-rdbg",
 				"ms-azuretools.vscode-docker",
-				"GitHub.copilot"
+				"GitHub.copilot",
+				"Shopify.ruby-lsp"
 			]
 		}
 	},

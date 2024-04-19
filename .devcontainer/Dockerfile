@@ -7,7 +7,7 @@ ENV PATH="$GEM_HOME/bin:$PATH"
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt-get update && \
-    apt-get install -y zsh git fonts-font-awesome libpq-dev build-essential libssl-dev libreadline-dev zlib1g-dev curl
+    apt-get install -y vim zsh git fonts-font-awesome libpq-dev build-essential libssl-dev libreadline-dev zlib1g-dev curl
 
 # Install Node.js and npm
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
@@ -29,6 +29,8 @@ RUN bundle config set --local path "$GEM_HOME" && \
 
 # Install Yarn
 RUN npm install -g yarn
+
+RUN git config --global --add safe.directory /workspace
 
 EXPOSE 3000
 
