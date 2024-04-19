@@ -26,3 +26,5 @@ dump.rdb
 /log/*.log
 /tmp
 .DS_store
+
+/config/master.key

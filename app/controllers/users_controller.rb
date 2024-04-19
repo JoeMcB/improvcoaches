@@ -103,6 +103,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user].permit(user_allowed_attributes << 'name'))
 
+    @user.city = current_city
+
     if (!Rails.env.production? || verify_recaptcha(model: @user)) && @user.save
       set_authorized_user(@user, false)
 
