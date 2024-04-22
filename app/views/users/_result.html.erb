@@ -1,7 +1,7 @@
 <div class="result">
 	<div class="image_box">
 		<%= link_to user do %>
-			<%= image_tag user.avatar :small %>
+			<%= image_tag avatar_image(user, '100x100'), { class: :avatar } %>
 		<% end %>
 	</div>
 	<%= link_to user_path(user, options) do %>

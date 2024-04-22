@@ -25,7 +25,7 @@
 			<% @user_list.each do |user| %>
 				<div class="col-lg-4 col-md-4 text-center">
 					<%= link_to user do %>
-						<%= image_tag user.avatar :medium %>
+						<%= image_tag avatar_image(user), { class: :avatar } %>
 						<div class="caption">
 							<h4><%= user.name %></h4>
 						</div>

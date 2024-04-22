@@ -4,7 +4,7 @@
 			<div class="col-sm-2 col-md-2">
 				<div class="text-center thumbnail">
 					<%= link_to user_path(bookmarked_user) do %>
-						<%= image_tag bookmarked_user.avatar :thumb %>
+						<%= image_tag avatar_image(bookmarked_user, '100x100'), { class: :avatar } %>
 						<div class="caption">
 							<h4><%= bookmarked_user.name %></h4>
 						</div>

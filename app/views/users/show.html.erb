@@ -5,7 +5,7 @@
 	<meta property="fb:app_id" body="140954086073433" /> 
 	<meta property="og:type" body="website" /> 
 	<meta property="og:title" body="<%= @user.name %>" /> 
-	<meta property="og:image" body="<%= @user.avatar.url(:medium) %>" /> 
+	<meta property="og:image" body="<%= avatar_image(@user) %>"/>
 	<meta property="og:description" body="<%= @user.name %> on ImprovCoaches.com" /> 
 	<meta property="og:url" body="<%= user_url @user %>">
 	<meta property="fb:profile" body="<%= @user.uid %>" />
@@ -25,7 +25,7 @@
 			<div class="col-sm-6 col-md-3">
 				<div class="row">
 					<div class="thumbnail">
-						<%= image_tag @user.avatar.url(:medium), { class: :avatar } %>
+						<%= image_tag avatar_image(@user), { class: :avatar } %>
 					</div>
 				</div>
 				<div class="row">

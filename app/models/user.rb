@@ -59,6 +59,9 @@ class User < ActiveRecord::Base
     path: ':rails_root/public/system/:class/:attachment/:id/:style/:basename.:extension'
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
 
+  # New Active Storage Image
+  has_one_attached :avatar_new
+
   has_one :schedule, dependent: :destroy
   has_many :experiences, dependent: :destroy
   has_many :theatres, -> { distinct }, through: :experiences

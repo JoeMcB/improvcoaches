@@ -27,4 +27,6 @@ dump.rdb
 /tmp
 .DS_store
 
+# Rails
 /config/master.key
+/storage
