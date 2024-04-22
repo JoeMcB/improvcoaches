@@ -1,7 +1,8 @@
 module UsersHelper
   def avatar_image(user, size = '300x300')
     if user.avatar_new.attached?
-      url_for(user.avatar_new.variant(resize_to_fill: size))
+      width, height = size.split('x').map(&:to_i)
+      url_for(user.avatar_new.variant(resize_to_fill: [width, height]))
     else
       size == '300x300' ? asset_path('users/missing_medium.png') : asset_path('users/missing_thumb.png')
     end
