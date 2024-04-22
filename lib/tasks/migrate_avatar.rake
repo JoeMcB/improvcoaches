@@ -7,7 +7,7 @@ namespace :migrate do
       next unless user.avatar.exists?  # Check if the Paperclip attachment exists
 
       # Open the file and create an Active Storage attachment
-      file = open(user.avatar.url(:large))
+      file = open("https://#{user.avatar.url(:original)}")
       user.avatar_new.attach(
         io: file,
         filename: user.avatar_file_name,
