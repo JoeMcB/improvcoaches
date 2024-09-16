@@ -36,7 +36,7 @@ class SearchController < ApplicationController
 
 
             if(!users.empty?)
-                filtered_user_ids = users.uniq.pluck("users.id")
+                filtered_user_ids = users.distinct.pluck("users.id")
 
                 if(!params[:day].empty? || !params[:start_hour].empty?) #Schedule based search
                     time_block = { }
