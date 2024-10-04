@@ -1,14 +1,18 @@
 {
     "files.eol": "\n",
-    "ruby.useBundler": true, //run non-lint commands with bundle exec
-    "ruby.useLanguageServer": true, // use the internal language server (see below)
+    "ruby.useBundler": true,
+    "ruby.lscodeServer.enabled": true, // Ensure the use of language server
     "ruby.lint": {
         "rubocop": {
-            "useBundler": true // enable rubocop via bundler
+            "useBundler": true
         },
         "reek": {
-            "useBundler": true // enable reek via bundler
+            "useBundler": true
         }
     },
-    "ruby.format": "rubocop" // use rubocop for formatting
+    "ruby.format": "rubocop",
+    "editor.formatOnSave": true, // Automatically format on save
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "explicit"
+    }
 }
