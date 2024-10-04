@@ -1,11 +1,11 @@
 source 'http://rubygems.org'
-ruby '2.7.1'
+ruby '3.3.5'
 
 gem 'rails', '6.1'
 gem "sprockets", ">= 2.12.5"
 gem "yard", ">= 0.9.11"
 gem 'puma'
-gem 'pg', '~>1.1.3'
+gem 'pg', '~>1.5'
 
 gem "aws-sdk-s3", require: false
 
