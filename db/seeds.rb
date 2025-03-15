@@ -27,7 +27,8 @@ admin = User.create!(
   name: 'Improv Admin',
   email: 'admin@improvcoaches.com',
   password: 'adminpass',
-  is_admin: true
+  is_admin: true,
+  city: new_york
 )
 
 # Coaches
