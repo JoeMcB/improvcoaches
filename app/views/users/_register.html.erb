@@ -32,7 +32,7 @@
 
   <% if Rails.env.production? %>
     <div class="form-group">
-      <%= recaptcha_tags %>
+      <%= recaptcha_v3(action: 'registration') %>
     </div>
   <% end %>
 

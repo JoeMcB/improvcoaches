@@ -105,7 +105,7 @@ class UsersController < ApplicationController
 
     @user.city = current_city
 
-    if (!Rails.env.production? || verify_recaptcha(model: @user)) && @user.save
+    if (!Rails.env.production? || verify_recaptcha(model: @user, action: 'registration', minimum_score: 0.5)) && @user.save
       set_authorized_user(@user, false)
 
       if params[:invite_code]

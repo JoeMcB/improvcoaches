@@ -9,6 +9,17 @@ I originally built the site as a resource for improv students and coaches while 
 ## Requirements
 - Docker
 
+## Environment Variables
+The application uses the following environment variables:
+
+- `FACEBOOK_APP_ID` - Facebook App ID for OAuth
+- `FACEBOOK_SECRET` - Facebook App Secret for OAuth
+- `DATABASE_URL` - Database connection URL
+- `REDISTOGO_URL` - Redis connection URL
+- `GOOGLE_TAG_ID` - Google Analytics tag ID
+- `RECAPTCHA_SITE_KEY` - Google reCAPTCHA v3 site key
+- `RECAPTCHA_SECRET_KEY` - Google reCAPTCHA v3 secret key
+
 
 ## Running
 
