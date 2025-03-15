@@ -30,7 +30,8 @@ gem 'paperclip'
 gem 'font-awesome-rails'
 gem 'image_processing', '~> 1.2'
 
-gem "recaptcha", require: "recaptcha/rails"
+gem "recaptcha", "~> 5.12", require: "recaptcha/rails"
+gem 'mutex_m'
 
 #pagination
 gem 'will_paginate'
