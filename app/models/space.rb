@@ -28,13 +28,38 @@ class Space < ActiveRecord::Base
   extend FriendlyId
   friendly_id :name, use: [:history]
 
-  has_many :space_images
+  has_many :space_images, dependent: :destroy
   belongs_to :city
 
   validates :name, presence: true, uniqueness: true
 
-  
   def compiled_address
     "#{address} #{address_2}  #{real_city}  #{state} #{zip}"
+  end
+  
+  # Helper method to get primary image
+  def primary_image
+    space_images.order(:sort_order).first
+  end
+  
+  # Helper methods for Active Storage variants
+  def image_thumb
+    primary_image&.image&.variant(resize_to_fill: [75, 50])
+  end
+  
+  def image_small
+    primary_image&.image&.variant(resize_to_fill: [200, 150])
+  end
+  
+  def image_medium
+    primary_image&.image&.variant(resize_to_fit: [400, 300])
+  end
+  
+  def image_large
+    primary_image&.image&.variant(resize_to_fill: [800, 600])
+  end
+  
+  def image_xlarge
+    primary_image&.image&.variant(resize_to_fill: [1200, 900])
   end
 end
