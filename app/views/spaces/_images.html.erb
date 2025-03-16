@@ -4,11 +4,7 @@
   <% @space.space_images.order(:sort_order).each do |space_image| %>
     <div class="col-md-4 mb-3">
       <div class="card">
-        <% if space_image.image.attached? %>
-          <%= image_tag space_image.image.variant(resize_to_fill: [300, 200]), class: "card-img-top" %>
-        <% else %>
-          <%= image_tag space_image.photo.url(:small), class: "card-img-top" %>
-        <% end %>
+        <%= image_tag space_image.small, class: "card-img-top" %>
         <div class="card-body">
           <p class="card-text">Sort Order: <%= space_image.sort_order %></p>
           <%= link_to 'Delete', delete_image_space_path(@space, image_id: space_image.id), 

@@ -78,15 +78,7 @@ class SpacesController < ApplicationController
     respond_to do |format|
       space_image = SpaceImage.new
       space_image.space_id = @space.id
-      
-      # Handle both Active Storage and legacy Paperclip uploads
-      if params[:image].present?
-        # Active Storage upload
-        space_image.image = params[:image]
-      elsif params[:photo].present?
-        # Legacy Paperclip upload
-        space_image.photo = params[:photo]
-      end
+      space_image.image = params[:image]
 
       if space_image.save
         format.html { redirect_to edit_space_url(@space), notice: 'Image added.' }

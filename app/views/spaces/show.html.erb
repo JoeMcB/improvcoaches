@@ -109,11 +109,7 @@
                   <div class="carousel-inner">
                     <% @space.space_images.order(:sort_order).each_with_index do |space_image, index| %>
                       <div class="carousel-item <%= 'active' if index == 0 %>">
-                        <% if space_image.image.attached? %>
-                          <%= image_tag space_image.image.variant(resize_to_fit: [800, 600]), class: "d-block w-100" %>
-                        <% else %>
-                          <%= image_tag space_image.photo.url(:large), class: "d-block w-100" %>
-                        <% end %>
+                        <%= image_tag space_image.large, class: "d-block w-100" %>
                       </div>
                     <% end %>
                   </div>

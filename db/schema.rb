@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_04_19_164253) do
+ActiveRecord::Schema.define(version: 2025_03_16_021704) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -114,10 +114,6 @@ ActiveRecord::Schema.define(version: 2024_04_19_164253) do
     t.integer "space_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string "photo_file_name"
-    t.string "photo_content_type"
-    t.bigint "photo_file_size"
-    t.datetime "photo_updated_at"
     t.integer "sort_order"
   end
 
@@ -173,10 +169,6 @@ ActiveRecord::Schema.define(version: 2024_04_19_164253) do
     t.integer "rate"
     t.datetime "last_updated"
     t.integer "is_admin"
-    t.string "avatar_file_name"
-    t.string "avatar_content_type"
-    t.bigint "avatar_file_size"
-    t.datetime "avatar_updated_at"
     t.string "auth_token"
     t.string "password_reset_token"
     t.datetime "password_reset_time"
