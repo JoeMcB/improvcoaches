@@ -49,18 +49,41 @@ class User < ActiveRecord::Base
   after_dislike ->(u) { u.update_rating }
 
   has_secure_password
-  has_attached_file :avatar,
-    styles: {
-      large: '500x500#', medium: '300x300#', small: '100x100#', thumb: '50x50#'
-    },
-    default_style: :small,
-    default_url: '/assets/users/missing_:style.png',
-    url: '/system/:class/:attachment/:id/:style/:basename.:extension',
-    path: ':rails_root/public/system/:class/:attachment/:id/:style/:basename.:extension'
-  validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
-
-  # New Active Storage Image
-  has_one_attached :avatar_new
+  
+  # Active Storage Image
+  has_one_attached :avatar
+  
+  # Avatar variant helpers
+  def avatar_large
+    avatar.variant(resize_to_fill: [500, 500])
+  end
+  
+  def avatar_medium
+    avatar.variant(resize_to_fill: [300, 300])
+  end
+  
+  def avatar_small
+    avatar.variant(resize_to_fill: [100, 100])
+  end
+  
+  def avatar_thumb
+    avatar.variant(resize_to_fill: [50, 50])
+  end
+  
+  # Avatar validation
+  validate :acceptable_avatar, if: -> { avatar.attached? }
+  
+  def acceptable_avatar
+    return unless avatar.attached?
+    
+    unless avatar.blob.content_type.start_with?('image/')
+      errors.add(:avatar, 'must be an image')
+    end
+    
+    unless avatar.blob.byte_size <= 5.megabytes
+      errors.add(:avatar, 'is too big (maximum is 5MB)')
+    end
+  end
 
   has_one :schedule, dependent: :destroy
   has_many :experiences, dependent: :destroy

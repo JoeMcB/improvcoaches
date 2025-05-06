@@ -60,8 +60,10 @@ Improvcoaches::Application.routes.draw do
   end
 
   resources :spaces do
-    patch 'image' => :add_image
-    delete 'image/:id' => :delete_image
+    member do
+      post 'image' => :add_image, as: :add_image
+      delete 'image/:image_id' => :delete_image, as: :delete_image
+    end
   end
 
   resources :password_resets

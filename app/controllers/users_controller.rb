@@ -147,7 +147,7 @@ class UsersController < ApplicationController
         updated = true
       end
     else
-      @user.avatar_new.attach(params[:user][:avatar_new]) if params[:user][:avatar_new].present?
+      @user.avatar.attach(params[:user][:avatar]) if params[:user][:avatar].present?
       updated = @user.update(params[:user].permit(user_allowed_attributes))
     end
 
@@ -185,6 +185,6 @@ class UsersController < ApplicationController
   end
 
   def user_allowed_attributes
-    %i[email avatar_new password password_confirmation is_improv is_sketch bio city_id]
+    %i[email avatar password password_confirmation is_improv is_sketch bio city_id]
   end
 end

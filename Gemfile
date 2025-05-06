@@ -26,7 +26,6 @@ gem 'bigdecimal'
 
 
 #Image Processing
-gem 'paperclip'
 gem 'font-awesome-rails'
 gem 'image_processing', '~> 1.2'
 

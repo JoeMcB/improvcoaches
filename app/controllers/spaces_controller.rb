@@ -78,7 +78,7 @@ class SpacesController < ApplicationController
     respond_to do |format|
       space_image = SpaceImage.new
       space_image.space_id = @space.id
-      space_image.photo = params[:photo]
+      space_image.image = params[:image]
 
       if space_image.save
         format.html { redirect_to edit_space_url(@space), notice: 'Image added.' }
@@ -92,7 +92,15 @@ class SpacesController < ApplicationController
   end
 
   def delete_image
-
+    @space_image = SpaceImage.find(params[:image_id])
+    @space = @space_image.space
+    
+    @space_image.destroy
+    
+    respond_to do |format|
+      format.html { redirect_to edit_space_url(@space), notice: 'Image removed.' }
+      format.json { head :no_content }
+    end
   end
 
   # DELETE /spaces/1

@@ -99,6 +99,33 @@
       </div>
 
       <div class="col-sm-12 col-md-9">
+          <% if @space.space_images.any? %>
+            <div id="images" class="panel panel-default">
+              <div class="panel-heading">
+                Photos
+              </div>
+              <div class="panel-body">
+                <div id="space-images-carousel" class="carousel slide" data-ride="carousel">
+                  <div class="carousel-inner">
+                    <% @space.space_images.order(:sort_order).each_with_index do |space_image, index| %>
+                      <div class="carousel-item <%= 'active' if index == 0 %>">
+                        <%= image_tag space_image.large, class: "d-block w-100" %>
+                      </div>
+                    <% end %>
+                  </div>
+                  <a class="carousel-control-prev" href="#space-images-carousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  <a class="carousel-control-next" href="#space-images-carousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          <% end %>
+
           <div id="bio" class="panel panel-default">
             <div class="panel-heading">
               About <%= @space.name %>
