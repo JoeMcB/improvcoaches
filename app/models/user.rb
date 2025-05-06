@@ -70,8 +70,8 @@ class User < ActiveRecord::Base
     avatar.variant(resize_to_fill: [50, 50])
   end
   
-  # Avatar validation
-  validate :acceptable_avatar, if: -> { avatar.attached? }
+  # Avatar validation - only run when avatar is being changed
+  validate :acceptable_avatar, if: -> { avatar.attached? && avatar.changed_for_autosave? }
   
   def acceptable_avatar
     return unless avatar.attached?
@@ -80,9 +80,7 @@ class User < ActiveRecord::Base
       errors.add(:avatar, 'must be an image')
     end
     
-    unless avatar.blob.byte_size <= 5.megabytes
-      errors.add(:avatar, 'is too big (maximum is 5MB)')
-    end
+    # Removed 5MB file size restriction
   end
 
   has_one :schedule, dependent: :destroy
