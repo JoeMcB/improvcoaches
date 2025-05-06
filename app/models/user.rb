@@ -108,7 +108,7 @@ class User < ActiveRecord::Base
   # Mail Actions
   def send_password_reset
     generate_token(:password_reset_token)
-    update(password_reset_time: Time.now)
+    update!(password_reset_time: Time.now)
     UserMailer.password_reset(self).deliver_now
   end
 
