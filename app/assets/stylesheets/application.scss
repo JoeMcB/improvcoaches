@@ -1,0 +1,37 @@
+// Main stylesheet entry for the application.
+// This file is compiled by Dart Sass (via cssbundling-rails) and then passed
+// through the Tailwind CLI so that `@tailwind` directives are expanded.
+
+// ---------------------------------------------------------------------------
+// 1. Tailwind – directives are left as-is for the post-processing step.
+// ---------------------------------------------------------------------------
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// ---------------------------------------------------------------------------
+// 2. Legacy SCSS imports – converted from the former sprockets pipeline.
+//    These keep the order that existed in the previous combined file.
+// ---------------------------------------------------------------------------
+
+@import "colors";
+@import "defaults";
+@import "shared";
+@import "noty";
+
+// Feature-specific styles
+@import "auth";
+@import "cities";
+@import "countries";
+@import "home";
+@import "invites";
+@import "password_resets";
+@import "ratings";
+@import "scaffolds";
+@import "schedules";
+@import "search";
+@import "spaces";
+@import "theatres";
+@import "time_blocks";
+@import "users";

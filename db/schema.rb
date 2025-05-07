@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_03_16_021704) do
-
+ActiveRecord::Schema[7.1].define(version: 2025_05_07_031139) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,7 +19,7 @@ ActiveRecord::Schema.define(version: 2025_03_16_021704) do
     t.string "record_type", null: false
     t.bigint "record_id", null: false
     t.bigint "blob_id", null: false
-    t.datetime "created_at", null: false
+    t.datetime "created_at", precision: nil, null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
@@ -32,8 +31,8 @@ ActiveRecord::Schema.define(version: 2025_03_16_021704) do
     t.text "metadata"
     t.string "service_name", null: false
     t.bigint "byte_size", null: false
-    t.string "checksum", null: false
-    t.datetime "created_at", null: false
+    t.string "checksum"
+    t.datetime "created_at", precision: nil, null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
@@ -46,8 +45,8 @@ ActiveRecord::Schema.define(version: 2025_03_16_021704) do
   create_table "cities", force: :cascade do |t|
     t.string "name"
     t.integer "country_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.string "subdomain"
     t.boolean "has_spaces"
   end
@@ -62,22 +61,22 @@ ActiveRecord::Schema.define(version: 2025_03_16_021704) do
 
   create_table "countries", force: :cascade do |t|
     t.string "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
   end
 
   create_table "experience_types", force: :cascade do |t|
     t.string "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
   end
 
   create_table "experiences", force: :cascade do |t|
     t.integer "theatre_id"
     t.integer "user_id"
     t.integer "experience_type_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.index ["user_id"], name: "index_experiences_on_user_id"
   end
 
@@ -85,7 +84,7 @@ ActiveRecord::Schema.define(version: 2025_03_16_021704) do
     t.string "slug", null: false
     t.integer "sluggable_id", null: false
     t.string "sluggable_type", limit: 40
-    t.datetime "created_at"
+    t.datetime "created_at", precision: nil
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", unique: true
     t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
@@ -96,8 +95,8 @@ ActiveRecord::Schema.define(version: 2025_03_16_021704) do
     t.integer "owner_id"
     t.string "recipient"
     t.string "status"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.index ["code"], name: "index_invites_on_code"
     t.index ["owner_id"], name: "index_invites_on_owner_id"
   end
@@ -105,15 +104,15 @@ ActiveRecord::Schema.define(version: 2025_03_16_021704) do
   create_table "schedules", force: :cascade do |t|
     t.integer "user_id"
     t.string "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.index ["user_id"], name: "index_schedules_on_user_id"
   end
 
   create_table "space_images", force: :cascade do |t|
     t.integer "space_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "sort_order"
   end
 
@@ -131,8 +130,8 @@ ActiveRecord::Schema.define(version: 2025_03_16_021704) do
     t.string "real_city"
     t.string "state"
     t.string "phone"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.string "slug"
     t.boolean "is_rehearsal", default: true
     t.boolean "is_performance", default: false
@@ -143,13 +142,13 @@ ActiveRecord::Schema.define(version: 2025_03_16_021704) do
   create_table "theatres", force: :cascade do |t|
     t.string "name"
     t.integer "city_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
   end
 
   create_table "time_blocks", force: :cascade do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "day"
     t.integer "hour"
     t.integer "minute"
@@ -163,19 +162,19 @@ ActiveRecord::Schema.define(version: 2025_03_16_021704) do
     t.boolean "is_coach"
     t.text "bio"
     t.string "password_digest"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.string "img"
     t.integer "rate"
-    t.datetime "last_updated"
+    t.datetime "last_updated", precision: nil
     t.integer "is_admin"
     t.string "auth_token"
     t.string "password_reset_token"
-    t.datetime "password_reset_time"
+    t.datetime "password_reset_time", precision: nil
     t.integer "rating"
     t.string "uid"
     t.string "oauth_token"
-    t.datetime "oauth_token_expires_at"
+    t.datetime "oauth_token_expires_at", precision: nil
     t.string "provider"
     t.integer "invite_id"
     t.string "slug"

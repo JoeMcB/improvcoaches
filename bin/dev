@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+
+# Install foreman if not already installed
+if ! gem list -i "^foreman$" >/dev/null 2>&1; then
+  echo "Installing foreman..."
+  gem install foreman
+fi
+
+# Default to port 3000 if not specified
+export PORT="${PORT:-3000}"
+
+# Clean up any asset manifest to ensure fresh assets
+rm -f public/assets/.manifest.json 2>/dev/null
+
+# Run the initial asset build
+echo "Building initial assets..."
+yarn build
+
+# Start the dev server with foreman
+echo "Starting development server..."
+exec foreman start -f Procfile.dev "$@"

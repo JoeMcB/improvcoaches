@@ -1,12 +1,13 @@
 # Be sure to restart your server when you modify this file.
 
-# Version of your assets, change this if you want to expire all your assets.
-Rails.application.config.assets.version = '1.0'
+# This initializer is for Propshaft configuration
+# Propshaft's versioning strategy is different from Sprockets
 
-# Add additional assets to the asset load path.
-# Rails.application.config.assets.paths << Emoji.images_path
+# Configure the asset paths for Propshaft
+Rails.application.config.assets.paths << Rails.root.join("app/assets/builds")
+Rails.application.config.assets.paths << Rails.root.join("app/assets/stylesheets")
+Rails.application.config.assets.paths << Rails.root.join("app/assets/images")
+Rails.application.config.assets.paths << Rails.root.join("app/assets/fonts") if Dir.exist?(Rails.root.join("app/assets/fonts"))
 
-# Precompile additional assets.
-# application.js, application.css, and all non-JS/CSS in the app/assets
-# folder are already added.
-# Rails.application.config.assets.precompile += %w( admin.js admin.css )
+# Set up custom Propshaft configurations 
+Rails.application.config.assets.prefix = "/assets"

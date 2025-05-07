@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+/* This file includes Tailwind CSS, but we're not using Tailwind-specific utilities yet.
+   Our custom styles from the existing CSS files will be migrated here gradually.
+   For now, we'll maintain backward compatibility with our existing CSS. */
+
+@layer base {
+  /* You can add base styles here */
+}
+
+@layer components {
+  /* You can add component styles here */
+}
+
+@layer utilities {
+  /* You can add utility styles here */
+}

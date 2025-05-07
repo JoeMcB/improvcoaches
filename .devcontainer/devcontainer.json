@@ -15,7 +15,8 @@
 			"extensions": [
 				"ms-azuretools.vscode-docker",
 				"GitHub.copilot",
-				"Shopify.ruby-lsp"
+				"Shopify.ruby-lsp",
+				"sleistner.vscode-fileutils"
 			]
 		}
 	},

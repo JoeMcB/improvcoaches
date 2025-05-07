@@ -1,8 +1,8 @@
 source 'http://rubygems.org'
 ruby '3.3.5'
 
-gem 'rails', '6.1'
-gem "sprockets", ">= 2.12.5"
+gem 'rails', '~> 7.1.3'
+gem 'propshaft', '>= 1.1.0'
 gem "yard", ">= 0.9.11"
 gem 'puma'
 gem 'pg', '~>1.5'
@@ -16,11 +16,10 @@ gem 'jquery-ui-rails'
 gem 'bcrypt-ruby'
 gem 'bugsnag'
 gem 'concurrent-ruby'
-gem 'coffee-rails'
 gem 'dotenv-rails', :groups => [:development, :test]
 gem 'listen', groups: [:development, :test]
-gem 'sass-rails'
-gem 'uglifier'
+gem 'cssbundling-rails', '~> 1.4'
+gem 'jsbundling-rails', '~> 1.2'
 gem 'mimemagic'
 gem 'bigdecimal'
 

@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative "../config/application"
+require "propshaft"
+
+ARGV.each do |command|
+  case command
+  when "compile"
+    Rails.application.load_tasks
+    Rake::Task["propshaft:compile"].invoke
+  when "clean"
+    Rails.application.load_tasks
+    Rake::Task["propshaft:clean"].invoke
+  when "clobber"
+    Rails.application.load_tasks
+    Rake::Task["propshaft:clobber"].invoke
+  else
+    puts "Unknown command: #{command}"
+    puts "Available commands: compile, clean, clobber"
+    exit 1
+  end
+end
