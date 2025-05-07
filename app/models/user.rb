@@ -49,37 +49,37 @@ class User < ActiveRecord::Base
   after_dislike ->(u) { u.update_rating }
 
   has_secure_password
-  
+
   # Active Storage Image
   has_one_attached :avatar
-  
+
   # Avatar variant helpers
   def avatar_large
     avatar.variant(resize_to_fill: [500, 500])
   end
-  
+
   def avatar_medium
     avatar.variant(resize_to_fill: [300, 300])
   end
-  
+
   def avatar_small
     avatar.variant(resize_to_fill: [100, 100])
   end
-  
+
   def avatar_thumb
     avatar.variant(resize_to_fill: [50, 50])
   end
-  
+
   # Avatar validation - only run when avatar is being changed
   validate :acceptable_avatar, if: -> { avatar.attached? && avatar.changed_for_autosave? }
-  
+
   def acceptable_avatar
     return unless avatar.attached?
-    
+
     unless avatar.blob.content_type.start_with?('image/')
       errors.add(:avatar, 'must be an image')
     end
-    
+
     # Removed 5MB file size restriction
   end
 
@@ -88,7 +88,7 @@ class User < ActiveRecord::Base
   has_many :theatres, -> { distinct }, through: :experiences
   has_many :invites, foreign_key: :owner_id
   belongs_to :invite, optional: true
-  belongs_to :city
+  belongs_to :city, optional: true
 
   before_create :defaults, :generate_auth_token, :create_schedule, :lowercase_email
 
