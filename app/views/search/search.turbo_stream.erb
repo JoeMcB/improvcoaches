@@ -1,0 +1,29 @@
+<%# Allow the controller to render a Turbo Stream response if needed %>
+<% if @searched %>
+  <%= turbo_stream.update "search-results" do %>
+    <% if @users && @users.any? %>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1>Search Results</h1>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-10 col-lg-10 col-sm-12">
+            <div class="results">
+              <% @users.each do |user| %>
+                <%= render partial: "users/result", locals: {user: user, options: { from_search: true, page: params[:page]} } %>
+              <% end %>
+              
+              <%= will_paginate @users %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% else %>
+      <div class="container">
+        <h2>No Results Found</h2>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

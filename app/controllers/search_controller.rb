@@ -30,7 +30,6 @@ class SearchController < ApplicationController
 
             #Experiences
             if(params[:experience_types])
-                puts "lol"
                 users = users.joins(:experiences).where( "experiences.experience_type_id IN (?)", params[:experience_types])
             end
 
@@ -38,11 +37,11 @@ class SearchController < ApplicationController
             if(!users.empty?)
                 filtered_user_ids = users.distinct.pluck("users.id")
 
-                if(!params[:day].empty? || !params[:start_hour].empty?) #Schedule based search
+                if(!params[:day].nil? && !params[:day].empty? || !params[:start_hour].nil? && !params[:start_hour].empty?) #Schedule based search
                     time_block = { }
-                    time_block[:day] = params[:day] unless params[:day].empty?
+                    time_block[:day] = params[:day] unless params[:day].nil? || params[:day].empty?
 
-                    time_block[:hour] = params[:start_hour] unless params[:start_hour].empty?
+                    time_block[:hour] = params[:start_hour] unless params[:start_hour].nil? || params[:start_hour].empty?
                     time_block[:minute] = params[:start_minute] unless ( params[:start_minute].nil? || params[:start_minute].empty?)
 
                     schedules = Schedule.where(user_id: filtered_user_ids)
@@ -73,8 +72,6 @@ class SearchController < ApplicationController
                     end
                 end
 
-
-
                 session[:last_search_user_ids] = user_ids
             end
         else
@@ -94,5 +91,14 @@ class SearchController < ApplicationController
         end
     end
 
+    # Always render the search template
+    respond_to do |format|
+      format.html # renders search.html.erb
+      format.turbo_stream # for Turbo Drive compatibility
+    end
+  end
+
+  def index
+    # Just render the index template
   end
 end
