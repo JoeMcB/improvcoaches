@@ -20,6 +20,33 @@
 @import "shared";
 @import "noty";
 
+// Base layout styles from old application.css.scss
+body {
+  height: 100%;
+
+  .icon-bar {
+    background-color: #428bca;
+  }
+
+  #wrap {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -60px;
+    padding: 0 0 60px;
+  }
+
+  #footer {
+    height: 60px;
+
+    .credit {
+      margin: 20px;
+    }
+  }
+}
+
+// Use default Bootstrap styles
+
 // Feature-specific styles
 @import "auth";
 @import "cities";

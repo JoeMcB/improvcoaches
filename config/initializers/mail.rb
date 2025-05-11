@@ -7,3 +7,9 @@ ActionMailer::Base.smtp_settings = {
   :domain         => 'heroku.com'
 }
 ActionMailer::Base.delivery_method ||= :smtp
+
+# Set default URL options for mailers
+Rails.application.config.action_mailer.default_url_options = {
+  host: 'improvcoaches.com',
+  protocol: 'https'
+}

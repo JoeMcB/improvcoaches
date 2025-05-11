@@ -409,3 +409,82 @@ You are now running Rails 7 🥳.
 ---
 
 *Document generated — 2025-05-07*
+
+---
+
+## Appendix B - Modern JavaScript Architecture
+
+As part of the Rails 7 modernization, we've completely restructured our JavaScript approach:
+
+### 1. Removing jQuery Dependency
+
+All jQuery code has been converted to pure vanilla JavaScript:
+
+- Changed `$(document).ready()` to `document.addEventListener('DOMContentLoaded')`
+- Replaced jQuery selectors (`$('.element')`) with vanilla equivalents (`document.querySelector()`, `document.querySelectorAll()`)
+- Converted jQuery events to native event listeners (`addEventListener()`)
+- Implemented custom polyfills for Bootstrap functionality that relied on jQuery
+- For the selectable functionality (previously using jQuery UI), a simple vanilla JavaScript implementation was added
+
+### 2. Modular JavaScript Architecture
+
+We've completely refactored the JavaScript to use a modular ES6 pattern:
+
+- **Directory Structure**:
+  ```
+  app/javascript/
+  ├── application.js        # Main entry point
+  ├── components/           # Reusable UI components
+  │   └── tabs.js
+  ├── pages/                # Page-specific functionality
+  │   ├── schedules.js
+  │   ├── search.js
+  │   ├── spaces.js
+  │   └── users.js
+  └── utils/                # Shared utilities
+      └── bootstrap-polyfills.js
+  ```
+
+- **Module Pattern**: Each file exports specific functionality that's imported where needed:
+  ```javascript
+  // pages/users.js
+  export function initializeUserForms() {
+    // Implementation details...
+  }
+
+  // application.js
+  import { initializeUserForms } from './pages/users';
+  ```
+
+### 3. Build Pipeline
+
+Modern bundling with esbuild:
+
+- **Single Entry Point**: All JavaScript is loaded through the main application.js
+- **Asset Pipeline**: No more direct serving of files from app/assets/javascripts
+- **Simplified Build**: Added consolidated npm scripts:
+  ```json
+  "scripts": {
+    "build:js": "esbuild app/javascript/application.js --bundle --sourcemap --format=esm --outdir=app/assets/builds --minify",
+    "watch:js": "esbuild app/javascript/application.js --bundle --sourcemap --format=esm --outdir=app/assets/builds --watch",
+    "start": "concurrently \"yarn watch:css\" \"yarn watch:js\""
+  }
+  ```
+
+### 4. Integration with Rails
+
+- Updated application layout to load one optimized bundle
+- Removed inline JavaScript from application.html.erb
+- Ensured Bootstrap compatibility with custom polyfills
+
+### 5. Benefits
+
+This migration provides numerous advantages:
+
+- **Performance**: Smaller bundle size, optimized loading
+- **Maintainability**: Clear organization, modular code
+- **Modern Development**: ES6 modules, proper bundling
+- **Simplicity**: Single source of truth, simplified configuration
+- **Future-Proof**: Aligns with Rails 7's preferred JavaScript approach
+
+The overall result is a clean, well-organized, maintainable JavaScript codebase that follows modern best practices.

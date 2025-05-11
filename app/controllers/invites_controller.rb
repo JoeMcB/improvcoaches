@@ -1,5 +1,6 @@
 class InvitesController < ApplicationController
   before_action :require_login, except: [:landing]
+  skip_before_action :verify_authenticity_token, if: :valid_turbo_request?
 
   def landing
     @invite = Invite.find_by_code(params[:code])
@@ -45,6 +46,7 @@ class InvitesController < ApplicationController
 
     respond_to do |format|
       format.js
+      format.turbo_stream
     end
   end
   
@@ -93,6 +95,7 @@ class InvitesController < ApplicationController
 
     respond_to do |format|
       format.js
+      format.turbo_stream
     end
   end
 
@@ -106,6 +109,13 @@ class InvitesController < ApplicationController
 
     respond_to do |format|
       format.js
+      format.turbo_stream
     end
+  end
+
+  private
+
+  def valid_turbo_request?
+    request.format.turbo_stream? || request.accept.include?('text/vnd.turbo-stream.html')
   end
 end

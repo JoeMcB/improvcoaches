@@ -16,18 +16,9 @@ module Improvcoaches
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w(assets tasks))
 
-    # Propshaft configuration
-    # Rails 7.1 uses Propshaft by default, no need to set pipeline explicitly
-    
-    # Set up asset paths
-    config.assets.paths << Rails.root.join("app/assets/images")
-    config.assets.paths << Rails.root.join("app/assets/fonts") if Dir.exist?(Rails.root.join("app/assets/fonts"))
-    config.assets.paths << Rails.root.join("app/assets/javascripts")
-    config.assets.paths << Rails.root.join("app/assets/builds")
-    config.assets.paths << Rails.root.join("app/assets/stylesheets")
-    
-    # Set the asset prefix (default is /assets)
-    config.assets.prefix = "/assets"
+    # Asset configuration
+    # All asset configuration is centralized in config/initializers/assets.rb
+    # This ensures we don't have conflicting configurations
 
     # Configuration for the application, engines, and railties goes here.
     #

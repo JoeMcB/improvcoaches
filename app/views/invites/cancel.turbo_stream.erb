@@ -1,0 +1,7 @@
+<%= turbo_stream.replace "alerts" do %>
+  <div id="alerts" class="container">
+    <div class="alert alert-success">Your invite has been cancelled.</div>
+  </div>
+<% end %>
+
+<%= turbo_stream.remove "invite_#{@invite.id}" %>

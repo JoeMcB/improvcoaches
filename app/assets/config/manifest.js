@@ -1,8 +1,7 @@
 //= link_tree ../images
 //= link_tree ../builds
-//= link_tree ../javascripts .js
-//= link_tree ../stylesheets .css
+//= link application.css
+//= link application.js
 
-// CSS files served directly from app/assets/builds 
-//= link application.css 
-//= link all-combined-legacy.css
+// JavaScript is now fully managed by esbuild and all compiled assets
+// go into the app/assets/builds directory

@@ -1,0 +1,17 @@
+<%# Runs when an invite is sent successfully %>
+<%= turbo_stream.append "invites" do %>
+  <% if @level == "success" %>
+    <%= render partial: 'invite', object: @invite %>
+  <% end %>
+<% end %>
+
+<%= turbo_stream.replace "alerts" do %>
+  <div id="alerts" class="container">
+    <div class="alert alert-<%= @level %>"><%= @message %></div>
+  </div>
+<% end %>
+
+<%# Clear the input field %>
+<%= turbo_stream.replace "email" do %>
+  <%= text_field_tag :email, "", class: "form-control", placeholder: "mypal@gmail.com", autofocus: "" %>
+<% end %>

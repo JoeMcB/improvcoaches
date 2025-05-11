@@ -26,7 +26,7 @@
 		    			<p>You have <%= current_user.invites.free.count %> invite<%= current_user.invites.free.count != 1 ? "s" : "" %> available.</p>
 		    		<% end %>
 		    		<% if(current_user.invites.free.count > 0 || current_user.is_admin?) %>
-			    		<%= form_tag profile_invites_path, method: :post, remote: true, class: "form-email" do %>
+			    		<%= form_tag profile_invites_path, method: :post, class: "form-email", data: { turbo: true } do %>
 			    			<div class="form-group">
 			    				<%= label_tag :email, "Email" %>
 			    				<%= text_field_tag :email, "", class: "form-control", placeholder: "mypal@gmail.com", autofocus: "" %>

@@ -26,8 +26,8 @@ Improvcoaches::Application.routes.draw do
     get 'profile' => :show, profile: true
     get 'profile/invites' => :invites
     post 'profile/invites' => 'invites#invite_send'
-    get 'profile/invites/:code/resend' => 'invites#resend', as: 'profile_invite_resend', defaults: { format: 'js' }
-    get 'profile/invites/:code/cancel' => 'invites#cancel', as: 'profile_invite_cancel', defaults: { format: 'js' }
+    post 'profile/invites/:code/resend' => 'invites#resend', as: 'profile_invite_resend'
+    delete 'profile/invites/:code/cancel' => 'invites#cancel', as: 'profile_invite_cancel'
     get 'profile/edit' => :edit
     get 'profile/unlink' => :unlink
     get 'profile/destroy' => :destroy

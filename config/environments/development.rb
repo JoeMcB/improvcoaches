@@ -41,6 +41,9 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
+  # Configure mail server for development
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
@@ -60,7 +63,17 @@ Rails.application.configure do
   config.active_job.verbose_enqueue_logs = true
 
   # Suppress logger output for asset requests.
-  # config.assets.quiet = true # This is a Sprockets setting, not needed with Propshaft
+  # Note: The config.assets.quiet setting is a Sprockets setting and not needed with Propshaft
+  
+  # Asset configuration
+  config.public_file_server.enabled = true
+  
+  # Explicitly set asset path to exclude app/javascript
+  config.assets.paths = [
+    Rails.root.join("app/assets/builds"),
+    Rails.root.join("app/assets/stylesheets"),
+    Rails.root.join("app/assets/images"),
+  ]
 
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true

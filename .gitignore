@@ -36,3 +36,4 @@ dump.rdb
 /node_modules
 
 public/assets/*
+**/.claude/settings.local.json

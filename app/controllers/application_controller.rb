@@ -3,6 +3,9 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  # Add support for Turbo Stream requests
+  before_action :set_turbo_request_variant
+
   before_action :current_user
 
   helper_method :current_user
@@ -87,5 +90,9 @@ class ApplicationController < ActionController::Base
 
   def remove_authorized_user
     cookies.delete(:auth_token)
+  end
+
+  def set_turbo_request_variant
+    request.variant = :turbo_stream if request.format.turbo_stream?
   end
 end

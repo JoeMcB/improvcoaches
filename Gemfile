@@ -9,8 +9,10 @@ gem 'pg', '~>1.5'
 
 gem "aws-sdk-s3", require: false
 
-gem 'jquery-rails'
-gem 'jquery-ui-rails'
+# jQuery gems removed as part of migration to vanilla JavaScript
+# If needed, uncomment these gems and update application.html.erb
+# gem 'jquery-rails'
+# gem 'jquery-ui-rails'
 
 
 gem 'bcrypt-ruby'
@@ -20,6 +22,7 @@ gem 'dotenv-rails', :groups => [:development, :test]
 gem 'listen', groups: [:development, :test]
 gem 'cssbundling-rails', '~> 1.4'
 gem 'jsbundling-rails', '~> 1.2'
+gem 'turbo-rails'
 gem 'mimemagic'
 gem 'bigdecimal'
 
