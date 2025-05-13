@@ -13,5 +13,10 @@ module.exports = {
   plugins: [],
   corePlugins: {
     preflight: false, // Keep Bootstrap resets intact
+  },
+  // Disable future API changes that might not be compatible
+  future: {
+    disableColorOpacityUtilitiesByDefault: false,
+    respectDefaultRingColorOpacity: false,
   }
 }

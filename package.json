@@ -6,22 +6,18 @@
     "yarn": ">=1.22.0"
   },
   "scripts": {
-    "build:css": "sass ./app/assets/stylesheets/application.scss ./app/assets/builds/application.pre.css --no-source-map && tailwindcss -c ./tailwind.config.js -i ./app/assets/builds/application.pre.css -o ./app/assets/builds/application.css --minify && rm ./app/assets/builds/application.pre.css",
-    "watch:css": "concurrently \"sass --watch --no-source-map ./app/assets/stylesheets/application.scss:./app/assets/builds/application.pre.css\" \"tailwindcss -c ./tailwind.config.js -i ./app/assets/builds/application.pre.css -o ./app/assets/builds/application.css --watch --poll\"",
-    "build:js": "esbuild app/javascript/application.js --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets --external:/assets/* --minify",
-    "watch:js": "esbuild app/javascript/application.js --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets --external:/assets/* --watch",
+    "build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules",
+    "build:js": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=/assets",
     "build": "yarn build:css && yarn build:js",
-    "start": "concurrently \"yarn watch:css\" \"yarn watch:js\"",
     "heroku-postbuild": "yarn build"
   },
   "dependencies": {
     "@hotwired/turbo-rails": "^8.0.13",
     "autoprefixer": "^10.4.21",
-    "concurrently": "^8.2.2",
     "esbuild": "^0.25.4",
     "jquery": "^3.7.1",
     "postcss": "^8.4.38",
     "sass": "^1.87.0",
-    "tailwindcss": "^4.1.5"
+    "tailwindcss": "3.3.3"
   }
 }
