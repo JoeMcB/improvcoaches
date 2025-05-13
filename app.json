@@ -1,0 +1,35 @@
+{
+  "name": "ImprovCoaches",
+  "description": "Connecting improv teachers and students with rehearsal spaces",
+  "scripts": {
+    "postdeploy": "bundle exec rake db:migrate"
+  },
+  "env": {
+    "RAILS_ENV": "production",
+    "RACK_ENV": "production",
+    "RAILS_SERVE_STATIC_FILES": "enabled",
+    "RAILS_MASTER_KEY": {
+      "description": "Rails master key for decrypting credentials",
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "basic"
+    }
+  },
+  "buildpacks": [
+    { "url": "heroku/nodejs" },
+    { "url": "heroku/ruby" }
+  ],
+  "addons": [
+    "heroku-postgresql",
+    {
+      "plan": "heroku-redis",
+      "options": {
+        "version": 6
+      }
+    }
+  ]
+}

@@ -8,6 +8,8 @@
 - Run single test: `docker-compose run web ruby -Itest test/path/to/test_file.rb -n test_method_name`
 - Run rubocop: `docker-compose run web rubocop`
 - Compile assets: `docker-compose run web bin/propshaft compile`
+- Build assets: `yarn build`
+- Install frontend dependencies: `yarn install`
 
 ## Technology Stack
 - **Ruby Version**: 3.3.5
@@ -17,6 +19,7 @@
 - **JavaScript**: ES6 modules via jsbundling-rails + esbuild
 - **Frontend Enhancements**: Turbo (Hotwire)
 - **Storage**: Active Storage for file uploads
+- **Package Manager**: Yarn (must be used for all JavaScript dependencies)
 
 ## Code Style Guidelines
 - **Formatting**:
