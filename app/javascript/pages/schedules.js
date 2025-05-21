@@ -14,13 +14,8 @@ export function initializeScheduleEditor() {
   // Get all time blocks
   const timeBlocks = scheduleEditor.querySelectorAll('.time_block');
   
-  // Add mouse event listeners to each time block
+  // Add mouse and touch event listeners to each time block
   timeBlocks.forEach(block => {
-    // Single click toggles the selection
-    block.addEventListener('click', function(e) {
-      this.classList.toggle('success');
-    });
-    
     // Handle mouse interactions for drag selection
     block.addEventListener('mousedown', function(e) {
       isMouseDown = true;
@@ -30,6 +25,13 @@ export function initializeScheduleEditor() {
       // Prevent text selection
       e.preventDefault();
       return false;
+    });
+    
+    // Touch start event (for mobile)
+    block.addEventListener('touchstart', function(e) {
+      this.classList.toggle('success');
+      startedSelection = this.classList.contains('success');
+      e.preventDefault();
     });
     
     block.addEventListener('mouseenter', function(e) {
@@ -42,10 +44,30 @@ export function initializeScheduleEditor() {
         }
       }
     });
+    
+    // Touch move/drag support
+    block.addEventListener('touchmove', function(e) {
+      const touch = e.touches[0];
+      const elementAtTouch = document.elementFromPoint(touch.clientX, touch.clientY);
+      
+      if (elementAtTouch && elementAtTouch.classList.contains('time_block')) {
+        if (startedSelection) {
+          elementAtTouch.classList.add('success');
+        } else {
+          elementAtTouch.classList.remove('success');
+        }
+      }
+      
+      e.preventDefault();
+    });
   });
   
-  // Stop selection on mouseup anywhere on the document
+  // Stop selection on mouseup or touchend anywhere on the document
   document.addEventListener('mouseup', function() {
+    isMouseDown = false;
+  });
+  
+  document.addEventListener('touchend', function() {
     isMouseDown = false;
   });
   

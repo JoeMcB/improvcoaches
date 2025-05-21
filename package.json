@@ -6,8 +6,12 @@
     "yarn": ">=1.22.0"
   },
   "scripts": {
-    "build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules",
-    "build:js": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=/assets",
+    "css:base": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --load-path=node_modules",
+    "build:css": "yarn css:base --no-source-map",
+    "watch:css": "yarn css:base --watch",
+    "js:base": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=/assets",
+    "build:js": "yarn js:base",
+    "watch:js": "yarn js:base --watch",
     "build": "yarn build:css && yarn build:js",
     "heroku-postbuild": "yarn build"
   },
