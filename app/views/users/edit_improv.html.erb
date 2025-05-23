@@ -1,72 +1,113 @@
-<div class="page-header">
-  <h1>Profile</h1>
-</div>
-
-  <div class="row">
-    <div class="col-sm-1 col-md-2">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          Your Profile
-        </div>
-        <div class="panel-body">
-          <%= render "edit_links", current: :improv %>
-        </div>
-      </div>
+<!-- Edit Experience Page Container -->
+<div class="min-h-screen py-4 lg:py-6">
+  <div class="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
+    
+    <!-- Page Header -->
+    <div class="mb-6 lg:mb-8">
+      <h1 class="text-2xl lg:text-3xl font-bold text-heading">Edit Experience</h1>
+      <p class="mt-2 text-sm lg:text-base text-gray-600">Update your experience at various theatres and venues.</p>
     </div>
 
-    <div class="col-sm-6 col-md-6" id="experience_list">
-      <%= form_for(current_user) do |f| %>
-        <%= hidden_field_tag :experience_update, 1 %>
+    <%= render 'shared/profile_navigation', current: :experience %>
+    
+    <div class="space-y-6 lg:space-y-0 lg:grid lg:grid-cols-12 lg:gap-8">
 
-        <% current_city.theatres.each do |theatre| %>
-          <div class="form-group">
-            <h3><%= theatre.name %></h3>
-          
-            <% ExperienceType.all.each do |experience_type| %>
-              <%= label_tag "experience[#{theatre.id}][#{experience_type.id}]", experience_type.name do%>
-                <%= check_box_tag "experience[#{theatre.id}][#{experience_type.id}]",  1, current_user.has_experience?( theatre.id, experience_type.id)%>
-                <%= experience_type.name %>
+      <!-- Experience Form -->
+      <div class="lg:col-span-8" id="experience_list">
+      <div class="card">
+        <div class="card-body">
+          <%= form_for(current_user, class: "space-y-8") do |f| %>
+            <%= hidden_field_tag :experience_update, 1 %>
+
+            <!-- Current City Theatres -->
+            <div class="space-y-6">
+              <% current_city.theatres.each do |theatre| %>
+                <div class="border-b border-gray-200 pb-6 last:border-b-0 last:pb-0">
+                  <h3 class="text-lg font-medium text-heading mb-4"><%= theatre.name %></h3>
+                
+                  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <% ExperienceType.all.each do |experience_type| %>
+                      <div class="flex items-center">
+                        <%= check_box_tag "experience[#{theatre.id}][#{experience_type.id}]", 1, current_user.has_experience?(theatre.id, experience_type.id), class: "h-5 w-5 text-purple-600 focus:ring-purple-500 focus:ring-2 border-2 border-gray-400 rounded bg-white checked:bg-purple-600 checked:border-purple-600" %>
+                        <%= label_tag "experience[#{theatre.id}][#{experience_type.id}]", experience_type.name, class: "ml-3 text-sm font-medium text-gray-900 cursor-pointer" %>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
               <% end %>
-            <% end %>
-          </div>
-        <% end %>
-        <div>
-          <a data-toggle="collapse" data-parent="#experience_list" href="#other_cities">
-            View Other Theatres
-          </a>
-        </div>
-        <div class="form-group collapse" id="other_cities">
-          <% current_city.other_theatres.each do |theatre| %>
-            <div class="form-group">
-              <h3><%= theatre.name %></h3>
-            
-              <% ExperienceType.all.each do |experience_type| %>
-                <%= label_tag "experience[#{theatre.id}][#{experience_type.id}]", experience_type.name do%>
-                  <%= check_box_tag "experience[#{theatre.id}][#{experience_type.id}]",  1, current_user.has_experience?( theatre.id, experience_type.id)%>
-                  <%= experience_type.name %>
+            </div>
+            <!-- Other Theatres Collapsible Section -->
+            <div class="border-t border-gray-200 pt-6">
+              <button type="button" 
+                      id="other-theatres-toggle"
+                      onclick="toggleOtherTheatres()"
+                      class="flex items-center text-purple-600 hover:text-purple-700 font-medium transition-colors duration-200">
+                <svg id="chevron-icon" class="w-4 h-4 mr-2 transform transition-transform duration-200" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                </svg>
+                <span id="toggle-text">View Other Theatres</span>
+              </button>
+              
+              <div class="hidden mt-6 space-y-6" id="other_cities">
+                <% current_city.other_theatres.each do |theatre| %>
+                  <div class="border-b border-gray-200 pb-6 last:border-b-0 last:pb-0">
+                    <h3 class="text-lg font-medium text-heading mb-4"><%= theatre.name %></h3>
+                  
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                      <% ExperienceType.all.each do |experience_type| %>
+                        <div class="flex items-center">
+                          <%= check_box_tag "experience[#{theatre.id}][#{experience_type.id}]", 1, current_user.has_experience?(theatre.id, experience_type.id), class: "h-5 w-5 text-purple-600 focus:ring-purple-500 focus:ring-2 border-2 border-gray-400 rounded bg-white checked:bg-purple-600 checked:border-purple-600" %>
+                          <%= label_tag "experience[#{theatre.id}][#{experience_type.id}]", experience_type.name, class: "ml-3 text-sm font-medium text-gray-900 cursor-pointer" %>
+                        </div>
+                      <% end %>
+                    </div>
+                  </div>
                 <% end %>
-              <% end %>
+              </div>
+            </div>
+
+            <div class="mt-8">
+              <%= f.submit "Save", class: "btn-primary w-full sm:w-auto" %>
             </div>
           <% end %>
         </div>
+      </div>
 
-        <%= f.submit "Save", class: "btn btn-primary btn-lg" %>
-      <% end %>
-    </div>
-
-    <div class="col-sm-12 col-md-4">
-      <div class="panel panel-warning">
-        <div class="panel-heading">
-          Explanation of Roles
-        </div>
-
-        <div class="panel-body">
-          <strong>Students</strong> take classes at a theatre.<br/>
-          <strong>Performers</strong> are listed as performers by the theatre.<br/>
-          <strong>Teachers</strong> teach full-length classes or workshops for the theatre.</br>
-          <strong>House Team</strong> members are currently on a house team created by the theatre.</br>
+      <!-- Explanation Sidebar -->
+      <div class="lg:col-span-4">
+        <div class="card border-yellow-200">
+          <div class="card-header bg-yellow-50 border-yellow-200">
+            <h3 class="text-lg font-medium text-yellow-800">Explanation of Roles</h3>
+          </div>
+          <div class="card-body text-sm space-y-3">
+            <div><strong>Students</strong> take classes at a theatre.</div>
+            <div><strong>Performers</strong> are listed as performers by the theatre.</div>
+            <div><strong>Teachers</strong> teach full-length classes or workshops for the theatre.</div>
+            <div><strong>House Team</strong> members are currently on a house team created by the theatre.</div>
+          </div>
         </div>
       </div>
+      
     </div>
   </div>
 </div>
+
+<script>
+function toggleOtherTheatres() {
+  const content = document.getElementById('other_cities');
+  const chevron = document.getElementById('chevron-icon');
+  const toggleText = document.getElementById('toggle-text');
+  
+  if (content.classList.contains('hidden')) {
+    // Show content
+    content.classList.remove('hidden');
+    chevron.classList.add('rotate-180');
+    toggleText.textContent = 'Hide Other Theatres';
+  } else {
+    // Hide content
+    content.classList.add('hidden');
+    chevron.classList.remove('rotate-180');
+    toggleText.textContent = 'View Other Theatres';
+  }
+}
+</script>

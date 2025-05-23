@@ -1,4 +1,27 @@
-<div class="page-header">
-	<h1>Sign In</h1>
+<!-- Login Page Container -->
+<div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md w-full space-y-8">
+    
+    <!-- Header -->
+    <div class="text-center">
+      <h1 class="text-4xl font-bold text-heading mb-2">Welcome Back</h1>
+      <p class="text-gray-600">Sign in to your account to continue</p>
+    </div>
+    
+    <!-- Login Form Card -->
+    <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+      <div class="px-8 py-10">
+        <%= render partial: 'login' %>
+      </div>
+    </div>
+    
+    <!-- Footer Text -->
+    <div class="text-center">
+      <p class="text-sm text-gray-600">
+        Don't have an account? 
+        <%= link_to "Join ImprovCoaches", join_path, class: "font-medium text-purple-600 hover:text-purple-700 transition-colors duration-200" %>
+      </p>
+    </div>
+    
+  </div>
 </div>
-<%= render partial: 'login' %>

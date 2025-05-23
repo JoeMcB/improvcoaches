@@ -1,58 +1,95 @@
-<div id="home">
-	<div class="container">
-		<div class="row">
-			<%= render partial: 'home_ad' %>
-		</div>
-	</div>
-	
-	<div class="jumbotron">
-			<div class="container">
-				<h1>Welcome to ImprovCoaches</h1>
-			
-				<p>A website for improv coaches and students (that isn't a message board.)</p>
-				<br/>
-				<div class="panel panel-default">
-					<div class="panel-body form-inline">
-						<%= render "search/basic" %>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+<div class="min-h-screen bg-gray-50">
+  <!-- Hero Section -->
+  <div class="bg-white border-b border-gray-200">
+    <div class="container mx-auto px-4 py-20 lg:py-32">
+      <div class="text-center">
+        <h1 class="text-4xl lg:text-6xl font-bold mb-6 leading-tight text-gray-800">
+          Welcome to <span class="text-purple-600">ImprovCoaches</span>
+        </h1>
+        <p class="text-xl lg:text-2xl mb-8 text-gray-600 max-w-3xl mx-auto">
+          A website for improv coaches and students (that isn't a message board.)
+        </p>
+        
+        <!-- Search Panel -->
+        <div class="bg-gray-50 rounded-2xl shadow-lg p-6 lg:p-8 max-w-4xl mx-auto border">
+          <%= render "search/basic" %>
+        </div>
+      </div>
+    </div>
+  </div>
 
-	<div class="container">
-		<div class="coaches row">
-			<% @user_list.each do |user| %>
-				<div class="col-lg-4 col-md-4 text-center">
-					<%= link_to user do %>
-						<%= image_tag avatar_image(user), { class: :avatar } %>
-						<div class="caption">
-							<h4><%= user.name %></h4>
-						</div>
-					<% end %>
-				</div>
-			<% end %>
-		</div>
-	</div>
+  <!-- Featured Coaches Section -->
+  <div class="py-16 lg:py-24">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 mb-4">
+          Featured Coaches
+        </h2>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+          Connect with experienced improv coaches in your area
+        </p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <% @user_list.each do |user| %>
+          <div class="group">
+            <%= link_to user, class: "block" do %>
+              <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 text-center group-hover:scale-105">
+                <div class="mb-4">
+                  <%= image_tag avatar_image(user), 
+                      class: "w-24 h-24 rounded-full mx-auto object-cover border-4 border-purple-200 group-hover:border-purple-400 transition-colors duration-300" %>
+                </div>
+                <h4 class="text-xl font-semibold text-gray-800 group-hover:text-purple-600 transition-colors duration-300">
+                  <%= user.name %>
+                </h4>
+                <% if user.city %>
+                  <p class="text-gray-500 mt-2"><%= user.city.name %></p>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+      
+      <div class="text-center mt-12">
+        <%= link_to "/search", 
+            class: "inline-flex items-center px-8 py-4 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors duration-200 shadow-md hover:shadow-lg" do %>
+          <span>Find More Coaches</span>
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        <% end %>
+      </div>
+    </div>
+  </div>
 
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12 col-md-12">
-				<H3>Top Improv Resources</H3>
-				<script type="text/javascript">
-					amzn_assoc_placement = "adunit0";
-					amzn_assoc_tracking_id = "improvcocom-20";
-					amzn_assoc_ad_mode = "manual";
-					amzn_assoc_ad_type = "smart";
-					amzn_assoc_marketplace = "amazon";
-					amzn_assoc_region = "US";
-					amzn_assoc_title = "";
-					amzn_assoc_linkid = "9b7221ee3ab8fd2dd5f70e32e15c09bd";
-					amzn_assoc_asins = "1566081122,0989387801,0982625723,1566080037";
-					amzn_assoc_search_bar = "false";
-				</script>
-				<script src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US"></script>
-			</div>
-		</div>
-	</div>
+  <!-- Resources Section -->
+  <div class="bg-white py-16 lg:py-24">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h3 class="text-3xl lg:text-4xl font-bold text-gray-800 mb-4">
+          Top Improv Resources
+        </h3>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+          Discover books, tools, and materials to enhance your improv journey
+        </p>
+      </div>
+      
+      <div class="bg-white rounded-2xl shadow-lg p-8 max-w-4xl mx-auto">
+        <script type="text/javascript">
+          amzn_assoc_placement = "adunit0";
+          amzn_assoc_tracking_id = "improvcocom-20";
+          amzn_assoc_ad_mode = "manual";
+          amzn_assoc_ad_type = "smart";
+          amzn_assoc_marketplace = "amazon";
+          amzn_assoc_region = "US";
+          amzn_assoc_title = "";
+          amzn_assoc_linkid = "9b7221ee3ab8fd2dd5f70e32e15c09bd";
+          amzn_assoc_asins = "1566081122,0989387801,0982625723,1566080037";
+          amzn_assoc_search_bar = "false";
+        </script>
+        <script src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US"></script>
+      </div>
+    </div>
+  </div>
 </div>

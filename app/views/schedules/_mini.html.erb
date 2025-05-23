@@ -1,47 +1,97 @@
-<% days = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"] %>
-
+<% days = [ "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] %>
 <% fraction = 0.5 %>
 
 <% if !schedule.nil? && 
       first_hour = schedule.first_hour_available && 
       last_hour  = schedule.last_hour_available then %>
-  <div class="table-responsive">
-    <table class="table table-condensed table-bordered table-hover">
-      <thead>
-        <th></th>
-        <% for day in days do%>
-          <th><%= day %>
-        <% end %>
-      </thead>
-
-      <tbody>
-        
-        <%  for h in schedule.first_hour_available..schedule.last_hour_available do%>
+  
+  <!-- Schedule Table Container -->
+  <div class="overflow-x-auto">
+    <div class="min-w-full bg-white rounded-xl border border-gray-200 shadow-sm">
+      
+      <!-- Table Header -->
+      <div class="bg-gray-50 border-b border-gray-200 rounded-t-xl">
+        <div class="grid grid-cols-8 gap-0">
+          <div class="p-3 text-center">
+            <span class="text-sm font-medium text-gray-600">Time</span>
+          </div>
+          <% days.each do |day| %>
+            <div class="p-3 text-center border-l border-gray-200">
+              <span class="text-sm font-medium text-gray-700"><%= day %></span>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      
+      <!-- Table Body -->
+      <div class="divide-y divide-gray-100">
+        <% for h in schedule.first_hour_available..schedule.last_hour_available do %>
           <% (1/fraction).to_i.times do |i| %>
-            <tr>
-              <% m = ((60 / (i+1)) - 60 ).abs %>
-              <% if(i == 0 ) then %>
-                <% suffix = ( h >= 12) ? 'pm' : 'am' %>
-                <% display_h = ( h > 12) ? h-12 : h %>
-                <td class='time_of_day hour'><%= display_h.to_s + ":00" + suffix %></td>
-              <% else %>
-                <td class='time_of_day half'> :<%= m %> &nbsp;&nbsp;&nbsp; </td>
-              <% end %>
-            
+            <div class="grid grid-cols-8 gap-0 hover:bg-gray-50 transition-colors duration-150">
+              
+              <!-- Time Column -->
+              <div class="p-3 bg-gray-25 border-r border-gray-200">
+                <% m = ((60 / (i+1)) - 60 ).abs %>
+                <% if i == 0 %>
+                  <% suffix = (h >= 12) ? 'pm' : 'am' %>
+                  <% display_h = (h > 12) ? h-12 : h %>
+                  <% display_h = 12 if display_h == 0 %>
+                  <span class="text-sm font-medium text-gray-700">
+                    <%= display_h.to_s %>:00<span class="text-xs text-gray-500"><%= suffix %></span>
+                  </span>
+                <% else %>
+                  <span class="text-sm text-gray-500 ml-4">:30</span>
+                <% end %>
+              </div>
+              
+              <!-- Day Columns -->
               <% 7.times do |d| %>
-                <td class="time_block <%= schedule.has_block?(d, h, m) ? 'success' : 'error' %>">
-                  
-                </td>
+                <div class="p-2 text-center border-l border-gray-100">
+                  <% is_available = schedule.has_block?(d, h, m) %>
+                  <div class="w-full h-6 rounded-md transition-all duration-200 <%= is_available ? 'bg-green-400 hover:bg-green-500' : 'bg-gray-200 hover:bg-gray-300' %> <%= is_available ? 'shadow-sm' : '' %>">
+                    <% if is_available %>
+                      <div class="w-full h-full flex items-center justify-center">
+                        <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
               <% end %>
-            </tr>
+            </div>
           <% end %>
         <% end %>
-
-      </tbody>
-    </table>
-    <small class="pull-right">Green = Available</small>
-    <span id="last_updated">Last updated <%= time_ago_in_words(schedule.updated_at) %> ago</span>
+      </div>
+    </div>
+    
+    <!-- Legend and Last Updated -->
+    <div class="flex justify-between items-center mt-4 text-sm">
+      <div class="flex items-center space-x-4">
+        <div class="flex items-center space-x-2">
+          <div class="w-4 h-4 bg-green-400 rounded shadow-sm"></div>
+          <span class="text-gray-600">Available</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <div class="w-4 h-4 bg-gray-200 rounded"></div>
+          <span class="text-gray-600">Unavailable</span>
+        </div>
+      </div>
+      <span class="text-gray-500">
+        Last updated <%= time_ago_in_words(schedule.updated_at) %> ago
+      </span>
+    </div>
   </div>
+  
 <% else %>
-    <h3>No Availability Listed</h3>
+  <!-- No Schedule Available -->
+  <div class="text-center py-12">
+    <div class="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4">
+      <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+      </svg>
+    </div>
+    <h3 class="text-lg font-medium text-gray-900 mb-2">No Schedule Available</h3>
+    <p class="text-gray-500">This coach hasn't set up their availability yet.</p>
+  </div>
 <% end %>

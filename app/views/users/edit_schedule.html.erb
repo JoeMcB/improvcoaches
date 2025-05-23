@@ -1,19 +1,30 @@
-<div class="page-header">
-	<h1>Profile</h1>
-</div>
-
-<div class="row">
-    <div class="col-sm-6 col-md-2">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          Your Profile
-        </div>
-        <div class="panel-body">
-          <%= render "edit_links", current: :schedule %>
-        </div>
-      </div>
+<!-- Edit Schedule Page Container -->
+<div class="min-h-screen py-4 lg:py-6">
+  <div class="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
+    
+    <!-- Page Header -->
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-heading">Edit Schedule</h1>
+      <p class="mt-2 text-gray-600">Set your availability for coaching sessions.</p>
     </div>
 
-<div class="col-sm-12 col-md-10">
-	<%= render "schedules/form", schedule: current_user.schedule %>
+    <%= render 'shared/profile_navigation', current: :schedule %>
+    
+    <div class="space-y-6 lg:space-y-0 lg:grid lg:grid-cols-12 lg:gap-8">
+
+      <!-- Schedule Editor -->
+      <div class="lg:col-span-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="text-lg font-medium text-heading">Weekly Availability</h3>
+            <p class="text-sm text-gray-600 mt-1">Click time slots to toggle your availability</p>
+          </div>
+          <div class="card-body">
+            <%= render "schedules/form", schedule: current_user.schedule %>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </div>

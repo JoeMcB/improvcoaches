@@ -1,30 +1,36 @@
-<%= form_tag '/search', method: :post, data: { turbo: false } do %>
-	<div class="form-group">
-		I need a coach
-		<div class="form-group">
-			<%= label_tag( :day, "Day of Week", class: 'sr-only' ) %>
-			<%= select_tag( :day, options_for_select(days, (params[:day] || Date.tomorrow.strftime('%w'))), class: 'form-control' ) %>
-		</div>
-		from
-		<div class="form-group">
-			<%= label_tag( :start_hour, "Start Hour", class: "sr-only") %>
-			<%= select_tag( :start_hour, options_for_select(searchable_hours, (params[:start_hour] || "19")), class: 'form-control' ) %>
-		</div>
-		<div class="form-group">
-			<%#= label_tag( :start_minute, "Start Minute", class: "sr-only") %>
-			<%#= select_tag( :start_minute, options_for_select( [0, 30], (params[:start_minute] || 0)), class: 'form-control'  )%>
-		</div>
-		to
-		<div class="form-group">
-			<%= label_tag( :end_hour, "End Hour", class: "sr-only") %>
-			<%= select_tag( :end_hour, options_for_select(searchable_hours, (params[:end_hour] || "22")), class: 'form-control' ) %>
-		</div>
-		<div class="form-group">
-			<%#= label_tag( :end_minute, "End Minute", class: "sr-only") %>
-			<%#= select_tag( :end_minute, options_for_select( [0, 30], (params[:end_minute] || 0)), class: 'form-control' )%>
-		</div>
-
-		<%= hidden_field_tag :commit, :Search %>
-		<%= submit_tag "Search", class: 'btn btn-primary' %>
-	</div>
+<%= form_tag '/search', method: :post, data: { turbo: false }, class: "space-y-6" do %>
+  <div class="text-center">
+    <p class="text-lg font-medium text-gray-700 mb-6">I need a coach</p>
+    
+    <div class="flex flex-wrap items-center justify-center gap-4 text-lg">
+      <div class="flex items-center gap-2">
+        <%= label_tag( :day, "Day of Week", class: 'sr-only' ) %>
+        <%= select_tag( :day, options_for_select(days, (params[:day] || Date.tomorrow.strftime('%w'))), 
+            class: 'rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 text-base' ) %>
+      </div>
+      
+      <span class="text-gray-600">from</span>
+      
+      <div class="flex items-center gap-2">
+        <%= label_tag( :start_hour, "Start Hour", class: "sr-only") %>
+        <%= select_tag( :start_hour, options_for_select(searchable_hours, (params[:start_hour] || "19")), 
+            class: 'rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 text-base' ) %>
+      </div>
+      
+      <span class="text-gray-600">to</span>
+      
+      <div class="flex items-center gap-2">
+        <%= label_tag( :end_hour, "End Hour", class: "sr-only") %>
+        <%= select_tag( :end_hour, options_for_select(searchable_hours, (params[:end_hour] || "22")), 
+            class: 'rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 text-base' ) %>
+      </div>
+    </div>
+    
+    <%= hidden_field_tag :commit, :Search %>
+    
+    <div class="mt-8">
+      <%= submit_tag "Search for Coaches", 
+          class: 'inline-flex items-center px-8 py-4 bg-purple-600 text-white text-lg font-semibold rounded-lg hover:bg-purple-700 transition-colors duration-200 shadow-md hover:shadow-lg cursor-pointer' %>
+    </div>
+  </div>
 <% end %>

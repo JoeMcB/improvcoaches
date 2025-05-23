@@ -1,25 +1,80 @@
-<div class="modal" id="email" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Email <%= @user.name %></h4>
+<!-- Modal Background Overlay -->
+<div id="email" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden" onclick="closeEmailModal()">
+  <!-- Modal Content -->
+  <div class="flex items-center justify-center min-h-screen p-4">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-auto" onclick="event.stopPropagation()">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between p-6 border-b border-gray-200">
+        <h3 class="text-xl font-semibold text-heading">Send Message to <%= @user.name %></h3>
+        <button onclick="closeEmailModal()" class="text-gray-400 hover:text-gray-600 transition-colors duration-200">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
       </div>
-      <div class="modal-body">
-        <%= form_tag user_email_path(@user, format: :js), method: :post, remote: true, class: "form-email" do %>
+      
+      <!-- Modal Body -->
+      <div class="p-6">
+        <%= form_tag user_email_path(@user, format: :js), method: :post, remote: true, class: "space-y-4" do %>
           <%= token_tag form_authenticity_token.to_s %>
-          <div class="form-group">
-            <textarea name="message" class="form-control" rows="8" ></textarea>
+          
+          <div>
+            <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Your Message</label>
+            <textarea 
+              name="message" 
+              id="message"
+              rows="6" 
+              class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors duration-200 resize-none"
+              placeholder="Write your message here..."
+              required
+            ></textarea>
           </div>
-          <div class="pull-right">
-            <%= submit_tag "Send", class: "btn btn-success btn-lg btn-block"  %>
+          
+          <div class="flex gap-3">
+            <button 
+              type="button" 
+              onclick="closeEmailModal()"
+              class="btn-secondary flex-1"
+            >
+              Cancel
+            </button>
+            <button 
+              type="submit" 
+              class="btn-primary flex-1"
+            >
+              Send Message
+            </button>
           </div>
-          <div class="clearfix"/>
         <% end %>
       </div>
-      <div class="modal-footer">
-        Any replies will be sent to <%= current_user.email %>
+      
+      <!-- Modal Footer -->
+      <div class="px-6 pb-6">
+        <p class="text-sm text-gray-500 text-center">
+          Replies will be sent to <span class="font-medium"><%= current_user.email %></span>
+        </p>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  function openEmailModal() {
+    document.getElementById('email').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+  
+  function closeEmailModal() {
+    document.getElementById('email').classList.add('hidden');
+    document.body.style.overflow = 'auto';
+    document.getElementById('message').value = '';
+  }
+  
+  // Close modal on Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeEmailModal();
+    }
+  });
+</script>

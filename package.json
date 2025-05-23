@@ -7,8 +7,9 @@
   },
   "scripts": {
     "css:base": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --load-path=node_modules",
-    "build:css": "yarn css:base --no-source-map",
-    "watch:css": "yarn css:base --watch",
+    "css:tailwind": "tailwindcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.tailwind.css",
+    "build:css": "yarn css:base --no-source-map && yarn css:tailwind --minify",
+    "watch:css": "yarn css:base --watch & yarn css:tailwind --watch",
     "js:base": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=/assets",
     "build:js": "yarn js:base",
     "watch:js": "yarn js:base --watch",
@@ -17,6 +18,7 @@
   },
   "dependencies": {
     "@hotwired/turbo-rails": "^8.0.13",
+    "@tailwindcss/forms": "^0.5.10",
     "autoprefixer": "^10.4.21",
     "esbuild": "^0.25.4",
     "jquery": "^3.7.1",

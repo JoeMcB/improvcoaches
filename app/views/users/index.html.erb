@@ -1,25 +1,134 @@
 <% set_meta_tags title: "Coaches" %>
-<div class="container">
-	<div class="row">
-		<div class="col-md-12">
-			<h1>Coaches</h1>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-10 col-lg-10 col-sm-12 col-xs-12">
-			<div id="users">
-				<% @users.in_groups_of(5) do |user_group| %>
-						<% user_group.each do |user| %>
-							<%= render partial: "users/result", locals: {user: user, options: {}} unless user.nil? %>
-						<% end %>
 
-						<%= render partial: "users/feed_ad" %>
-					<% end %>
-				<%= will_paginate @users %>
-			</div>
-		</div>
-		<div class="col-md-2 col-lg-2">
-			<SCRIPT charset="utf-8" type="text/javascript" src="http://ws-na.amazon-adsystem.com/widgets/q?rt=tf_mfw&ServiceVersion=20070822&MarketPlace=US&ID=V20070822%2FUS%2Fimprovcocom-20%2F8001%2F6787a0a3-a5d7-49bd-99cf-00f300c119f8"> </SCRIPT> <NOSCRIPT><A HREF="http://ws-na.amazon-adsystem.com/widgets/q?rt=tf_mfw&ServiceVersion=20070822&MarketPlace=US&ID=V20070822%2FUS%2Fimprovcocom-20%2F8001%2F6787a0a3-a5d7-49bd-99cf-00f300c119f8&Operation=NoScript">Amazon.com Widgets</A></NOSCRIPT>
-		</div>
-	</div>
+<div class="min-h-screen bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Header Section -->
+    <div class="text-center mb-12">
+      <h1 class="text-3xl lg:text-4xl font-bold text-gray-800 mb-4">
+        Browse All Coaches
+      </h1>
+      <p class="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
+        Discover talented improv coaches in <%= current_city.name %>. Connect with experienced instructors to take your improvisation skills to the next level.
+      </p>
+      
+      <!-- Quick Actions -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <%= link_to search_path, 
+            class: "inline-flex items-center px-6 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors duration-200 shadow-md hover:shadow-lg" do %>
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+          Advanced Search
+        <% end %>
+        
+        <% unless current_user %>
+          <%= link_to join_path, 
+              class: "inline-flex items-center px-6 py-3 bg-white text-purple-600 font-semibold rounded-lg border border-purple-300 hover:bg-purple-50 transition-colors duration-200" do %>
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+            </svg>
+            Join as Coach
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="lg:grid lg:grid-cols-12 lg:gap-8">
+      
+      <!-- Coaches List -->
+      <div class="lg:col-span-9">
+        <% if @users.any? %>
+          <div class="space-y-6" id="users">
+            <% @users.each_with_index do |user, index| %>
+              <%= render partial: "users/result", locals: {user: user, options: {}} %>
+              
+              <!-- Insert ad every 5 coaches -->
+              <% if (index + 1) % 5 == 0 && index < @users.count - 1 %>
+                <div class="bg-white rounded-xl shadow-sm border p-6">
+                  <div class="text-center text-sm text-gray-500 mb-4">Advertisement</div>
+                  <%= render partial: "users/feed_ad" %>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+
+          <!-- Pagination -->
+          <div class="mt-12 flex justify-center">
+            <%= will_paginate @users, 
+                class: "flex items-center space-x-1",
+                previous_label: raw('<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>'),
+                next_label: raw('<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>'),
+                inner_window: 2,
+                outer_window: 1 %>
+          </div>
+        <% else %>
+          <!-- Empty State -->
+          <div class="text-center py-16">
+            <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"/>
+            </svg>
+            <h3 class="text-xl font-medium text-gray-900 mb-2">No Coaches Found</h3>
+            <p class="text-gray-500 mb-6 max-w-md mx-auto">
+              There are currently no coaches available in <%= current_city.name %>.
+            </p>
+            <%= link_to join_path, 
+                class: "inline-flex items-center px-6 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors duration-200" do %>
+              Be the First Coach
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="lg:col-span-3 mt-8 lg:mt-0">
+        <div class="space-y-6">
+          
+          <!-- Quick Filters -->
+          <div class="bg-white rounded-xl shadow-sm border p-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">Quick Filters</h3>
+            <div class="space-y-3">
+              <%= link_to users_path, 
+                  class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors duration-200 #{'bg-purple-50 text-purple-700' unless params[:filter]}" do %>
+                All Coaches
+              <% end %>
+              <%= link_to users_path(filter: 'recent'), 
+                  class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors duration-200 #{'bg-purple-50 text-purple-700' if params[:filter] == 'recent'}" do %>
+                Recently Updated
+              <% end %>
+              <%= link_to users_path(filter: 'rated'), 
+                  class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors duration-200 #{'bg-purple-50 text-purple-700' if params[:filter] == 'rated'}" do %>
+                Top Rated
+              <% end %>
+            </div>
+          </div>
+
+          <!-- Resources -->
+          <div class="bg-white rounded-xl shadow-sm border p-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">Recommended Resources</h3>
+            <div class="space-y-4">
+              <SCRIPT charset="utf-8" type="text/javascript" src="http://ws-na.amazon-adsystem.com/widgets/q?rt=tf_mfw&ServiceVersion=20070822&MarketPlace=US&ID=V20070822%2FUS%2Fimprovcocom-20%2F8001%2F6787a0a3-a5d7-49bd-99cf-00f300c119f8"> </SCRIPT> 
+              <NOSCRIPT><A HREF="http://ws-na.amazon-adsystem.com/widgets/q?rt=tf_mfw&ServiceVersion=20070822&MarketPlace=US&ID=V20070822%2FUS%2Fimprovcocom-20%2F8001%2F6787a0a3-a5d7-49bd-99cf-00f300c119f8&Operation=NoScript">Amazon.com Widgets</A></NOSCRIPT>
+            </div>
+          </div>
+
+          <!-- Help Text -->
+          <div class="bg-purple-50 rounded-xl border border-purple-200 p-6">
+            <h3 class="text-lg font-semibold text-purple-800 mb-4">New to Improv?</h3>
+            <p class="text-sm text-purple-700 leading-relaxed mb-4">
+              Looking for your first improv coach? Use our advanced search to find coaches based on your schedule and experience level.
+            </p>
+            <%= link_to search_path, 
+                class: "inline-flex items-center text-sm font-medium text-purple-600 hover:text-purple-800 transition-colors duration-200" do %>
+              Get Started
+              <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

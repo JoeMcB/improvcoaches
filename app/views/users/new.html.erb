@@ -1,47 +1,62 @@
-<div id="new">
-	<div class="page-header">
-		<h1>Join ImprovCoaches.com</h1>
-	</div>
+<div class="min-h-screen bg-gray-50 py-12">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <h1 class="text-3xl lg:text-4xl font-bold text-gray-800 mb-4">
+        Join ImprovCoaches.com
+      </h1>
+      <p class="text-lg text-gray-600">
+        Connect with improv coaches and fellow performers
+      </p>
+    </div>
 
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-12 col-md-6">
-				<div class="panel panel-primary">
-					<div class="panel-heading">
-						Create an Account with Facebook
-					</div>
-					<div class="panel-body" id="facebook">
-						<div class="text-center"
-							<%= link_to "/auth/facebook" do%>
-								<button id="fb_login" class="btn btn-lg btn-facebook">
-									<span class="icon-facebook"></span> | Login with Facebook</button>
-							<% end %>
-						</div>
-					</div>
-				</div>
-			</div>
+    <!-- Registration Cards -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+      <!-- Facebook Registration -->
+      <div class="bg-white rounded-xl shadow-lg border">
+        <div class="p-6 border-b border-gray-200">
+          <h2 class="text-xl font-semibold text-gray-800">
+            Create an Account with Facebook
+          </h2>
+        </div>
+        <div class="p-6">
+          <div class="max-w-xs mx-auto">
+            <%= link_to "/auth/facebook", 
+                class: "inline-flex items-center justify-center w-full px-4 py-2.5 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200 shadow-sm text-sm" do %>
+              <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M20 10C20 4.477 15.523 0 10 0S0 4.477 0 10c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V10h2.54V7.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V10h2.773l-.443 2.89h-2.33v6.988C16.343 19.128 20 14.991 20 10z" clip-rule="evenodd"></path>
+              </svg>
+              Login with Facebook
+            <% end %>
+          </div>
+        </div>
+      </div>
 
-			<div class="col-sm-12 col-md-6">
-				<div class="panel panel-primary">
-					<div class="panel-heading">
-						Create an Account without Facebook
-					</div>
-					<div class="panel-body">
-						<%= render 'register' %>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					Interested in Coaching?
-				</div>
-				<div class="panel-body">
-					Our real-life improv communities are important.  That's why ImprovCoaches uses an invite system for new coaches.  Any coach currently on the site can invite another user to become a coach.  If you're interested in coaching, talk to coaches you like and see if they've got an invite you can use.
-				</div>
-			</div>
-		  </div>
-		</div>
-	</div>
+      <!-- Manual Registration -->
+      <div class="bg-white rounded-xl shadow-lg border">
+        <div class="p-6 border-b border-gray-200">
+          <h2 class="text-xl font-semibold text-gray-800">
+            Create an Account
+          </h2>
+        </div>
+        <div class="p-6">
+          <%= render 'register' %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Coaching Info -->
+    <div class="bg-white rounded-xl shadow-lg border">
+      <div class="p-4 sm:p-6 border-b border-gray-200">
+        <h2 class="text-xl font-semibold text-gray-800">
+          Interested in Coaching?
+        </h2>
+      </div>
+      <div class="p-4 sm:p-6">
+        <p class="text-gray-600 leading-relaxed">
+          Our real-life improv communities are important. That's why ImprovCoaches uses an invite system for new coaches. Any coach currently on the site can invite another user to become a coach. If you're interested in coaching, talk to coaches you like and see if they've got an invite you can use.
+        </p>
+      </div>
+    </div>
+  </div>
 </div>

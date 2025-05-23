@@ -1,137 +1,235 @@
-  
-<div class="page-header">
-  <h1>Profile</h1>
-</div>
-<div class="row">
-  <div class="col-sm-6 col-md-2">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        Your Profile
+<!-- Settings Page Container -->
+<div class="min-h-screen py-4 lg:py-6">
+  <div class="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
+    
+    <!-- Page Header -->
+    <div class="mb-6 lg:mb-8">
+      <h1 class="text-2xl lg:text-3xl font-bold text-heading">Profile Settings</h1>
+      <p class="mt-2 text-sm lg:text-base text-gray-600">Manage your account settings and profile information.</p>
+    </div>
+
+    <%= render 'shared/profile_navigation', current: :basics %>
+    
+    <div class="space-y-6 lg:space-y-0 lg:grid lg:grid-cols-12 lg:gap-12">
+
+      <!-- Main Form Content -->
+      <div class="lg:col-span-9 min-w-0">
+        <div class="max-w-full overflow-hidden">
+          <%= form_for current_user, url: :profile_update, method: :post, class: "space-y-6 lg:space-y-8" do |f| %>
+          
+          <!-- Error Messages -->
+          <% if current_user.errors.any? %>
+            <div class="bg-red-50 border border-red-200 rounded-xl p-4">
+              <div class="flex">
+                <div class="flex-shrink-0">
+                  <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+                  </svg>
+                </div>
+                <div class="ml-3">
+                  <h3 class="text-sm font-medium text-red-800">
+                    <%= pluralize(current_user.errors.count, "error") %> prohibited this user from being saved:
+                  </h3>
+                  <div class="mt-2 text-sm text-red-700">
+                    <ul class="list-disc list-inside space-y-1">
+                      <% current_user.errors.full_messages.each do |msg| %>
+                        <li><%= msg %></li>
+                      <% end %>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+
+          <!-- Basic Information -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="text-lg font-medium text-heading">Basic Information</h3>
+            </div>
+            <div class="card-body space-y-6">
+              
+              <!-- Name Field -->
+              <div>
+                <%= f.label :name, "Full Name", class: "block text-sm font-medium text-gray-700 mb-2" %>
+                <div class="w-full">
+                  <%= f.text_field :name, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm" %>
+                </div>
+              </div>
+
+              <!-- Email Field -->
+              <div>
+                <%= f.label :email, "Email Address", class: "block text-sm font-medium text-gray-700 mb-2" %>
+                <div class="w-full">
+                  <%= f.email_field :email, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm" %>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Coach-specific Settings -->
+          <% if current_user.is_coach %>
+            <div class="card">
+              <div class="card-header">
+                <h3 class="text-lg font-medium text-heading">Coaching Information</h3>
+              </div>
+              <div class="card-body space-y-6">
+                
+                <!-- Coaching Types -->
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-3">What do you coach?</label>
+                  <div class="space-y-3">
+                    <div class="flex items-center">
+                      <%= f.check_box :is_improv, class: "h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded" %>
+                      <%= f.label :is_improv, "Improv", class: "ml-3 text-sm font-medium text-gray-700" %>
+                    </div>
+                    <div class="flex items-center">
+                      <%= f.check_box :is_sketch, class: "h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded" %>
+                      <%= f.label :is_sketch, "Sketch", class: "ml-3 text-sm font-medium text-gray-700" %>
+                    </div>
+                  </div>
+                  <p class="mt-2 text-sm text-gray-500">
+                    Tip: Leave both unchecked if you're done coaching to remove yourself from coach listings.
+                  </p>
+                </div>
+
+                <!-- Bio Field -->
+                <div>
+                  <%= f.label :bio, "Bio", class: "block text-sm font-medium text-gray-700 mb-2" %>
+                  <div class="w-full">
+                    <%= f.text_area :bio, rows: 6, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm", placeholder: "Tell potential students about your coaching style, experience, and what makes you unique..." %>
+                  </div>
+                  <p class="mt-2 text-sm text-gray-500">This will be visible on your public profile.</p>
+                </div>
+
+                <!-- City Selection -->
+                <div>
+                  <%= f.label :city_id, "Current City", class: "block text-sm font-medium text-gray-700 mb-2" %>
+                  <div class="w-full">
+                    <%= f.collection_select :city_id, City.all, :id, :name, {}, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm" %>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          <% else %>
+            <!-- Non-coach Info -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="text-lg font-medium text-heading">Become a Coach</h3>
+              </div>
+              <div class="card-body">
+                <div class="text-center py-6">
+                  <div class="inline-flex items-center justify-center w-12 h-12 bg-purple-100 rounded-full mb-4">
+                    <svg class="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                  </div>
+                  <h4 class="text-lg font-medium text-gray-900 mb-2">Looking for Coach Options?</h4>
+                  <p class="text-gray-600 mb-4">
+                    Coach registration is currently invite only. Coaches already on ImprovCoaches can invite new people to be coaches.
+                  </p>
+                  <p class="text-sm text-gray-500">
+                    Questions? <%= mail_to "support@improvcoaches.com", "Email us", class: "text-purple-600 hover:text-purple-700" %>
+                  </p>
+                </div>
+              </div>
+            </div>
+          <% end %>
+
+          <!-- Password Section -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="text-lg font-medium text-heading">Change Password</h3>
+            </div>
+            <div class="card-body space-y-6">
+              
+              <div>
+                <%= f.label :password, "New Password", class: "block text-sm font-medium text-gray-700 mb-2" %>
+                <div class="w-full">
+                  <%= f.password_field :password, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm", placeholder: "Leave blank to keep current password" %>
+                </div>
+              </div>
+
+              <div>
+                <%= f.label :password_confirmation, "Confirm New Password", class: "block text-sm font-medium text-gray-700 mb-2" %>
+                <div class="w-full">
+                  <%= f.password_field :password_confirmation, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm" %>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="flex justify-end pt-4">
+            <%= f.submit "Update Profile", class: "btn-primary w-full sm:w-auto" %>
+          </div>
+
+          <% end %>
+        </div>
       </div>
-      <div class="panel-body">
-        <%= render "edit_links", current: :basic %>
+
+      <!-- Right Sidebar -->
+      <div class="lg:col-span-3">
+        <div class="space-y-6">
+          
+          <% if current_user.is_coach %>
+            <!-- Profile Photo -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="text-lg font-medium text-heading">Profile Photo</h3>
+              </div>
+              <div class="card-body text-center">
+                <div class="mb-4">
+                  <%= image_tag avatar_image(current_user), class: "w-24 h-24 rounded-full object-cover mx-auto border-4 border-gray-100 shadow-sm" %>
+                </div>
+                <%= form_with(model: current_user, url: :profile_update, method: :post, local: true, class: "space-y-4") do |f| %>
+                  <div class="w-full">
+                    <%= f.file_field :avatar, class: "block w-full text-sm text-gray-500 file:mr-2 file:py-2 file:px-3 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100 border border-gray-300 rounded-md" %>
+                  </div>
+                  <%= f.submit "Update Photo", class: "btn-secondary w-full text-sm py-2" %>
+                <% end %>
+              </div>
+            </div>
+
+            <!-- Facebook Section -->
+            <% if current_user.uid.present? %>
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="text-lg font-medium text-heading">Facebook Account</h3>
+                </div>
+                <div class="card-body">
+                  <p class="text-sm text-gray-600 mb-4">
+                    Done with Facebook? Unlink your account and manually reset your password.
+                  </p>
+                  <%= link_to "Unlink from Facebook", :profile_unlink, 
+                      data: { confirm: "Unlink and reset password?" }, 
+                      class: "w-full inline-flex items-center justify-center px-3 py-2 border border-red-300 rounded-lg text-sm font-medium text-red-700 bg-red-50 hover:bg-red-100 transition-colors duration-200" %>
+                </div>
+              </div>
+            <% end %>
+
+            <!-- Danger Zone -->
+            <div class="card border-red-200">
+              <div class="card-header bg-red-50 border-red-200">
+                <h3 class="text-lg font-medium text-red-800">Danger Zone</h3>
+              </div>
+              <div class="card-body">
+                <p class="text-sm text-gray-600 mb-4">
+                  Done with improv? Concerned about your data? Account deletion is permanent.
+                </p>
+                <%= link_to "Delete Account", :profile_destroy, 
+                    data: { confirm: "Delete your account? This action cannot be undone." }, 
+                    class: "inline-flex items-center justify-center px-3 py-2 border border-red-300 rounded-lg text-sm font-medium text-red-700 bg-red-50 hover:bg-red-100 transition-colors duration-200" %>
+              </div>
+            </div>
+          <% end %>
+
+        </div>
       </div>
+
     </div>
   </div>
-  <div class="col-sm-6 col-md-6">
-    <%= form_for current_user, url: :profile_update, method: :post do |f| %>
-      <% if current_user.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(current_user.errors.count, "error") %> prohibited this user from being saved:</h2>
-          <ul>
-            <% current_user.errors.full_messages.each do |msg| %>
-              <li><%= msg %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
-      <div class="form-group">
-        <%= f.label :name, "Name" %>
-        <%= f.text_field :name, class: "form-control" %>
-      </div>
-      <div class="form-group">
-        <%= f.label :email, "Email"%>
-        <%= f.text_field :email, class: "form-control" %>
-      </div>
-      <% if(current_user.is_coach) %>
-        <div class="form-group">
-          <strong>I coach:</strong>
-          <div class="form-input">
-            <%= f.label :is_improv, class: "checkbox" do %>
-              Improv
-              <%= f.check_box :is_improv%>
-            <% end %>
-          </div>
-          <div class="form-input">
-            <%= f.label :is_sketch, class: "checkbox" do  %>
-              Sketch
-              <%= f.check_box :is_sketch %>
-            <% end %>
-          </div>
-          <div class="form-input">
-            Done coaching? Leave both unchecked and you'll no longer appear as a coach.
-          </div>
-        </div>
-        <div class="form-group">
-          <%= f.label :bio %>
-          <%= f.text_area :bio, class: "form-control" %>
-        </div>
-        <div class="form-group">
-          <%= f .label :city_id, "Current City" %>
-          <%= f.collection_select :city_id, City.all, :id, :name, {}, class: "form-control" %>
-        </div>
-      <% else %>
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3>Looking for Coach Options?</h3>
-          </div>
-          <div class="panel-body">
-            Coach registration is currently invite only.  Coaches already on ImprovCoaches can invite new people to be coaches.  Questions?  <%= mail_to "support@improvcoaches.com", "Email us" %>
-          </div>
-        </div>
-      <% end %>
-      <div class="form-group">
-        <%= f.label :password, "New Password (if changing)" %>
-        <%= f.password_field :password, class: "form-control" %>
-        <%= f.label :password_confirmation, "Confirm New Password" %>
-        <%= f.password_field :password_confirmation, class: "form-control" %>
-      </div>
-      <%= f.submit "Update", class: "btn btn-primary btn-lg" %>
-    <% end %>
-  </div>
-
-  <div class="col-sm-12 col-md-4">
-    <% if(current_user.is_coach) %>
-      <div class=row>
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-            Your Photo
-          </div>
-          <div class="panel-body">
-            <p>
-              <%= image_tag avatar_image(current_user) %>
-              <%= form_with(model: current_user, url: :profile_update, method: :post, local: true) do |f| %>
-                <%= f.file_field :avatar, class: "form-control btn-block" %>
-                <%= f.submit "Update Avatar", class: "btn btn-default btn-large btn-block" %>
-              <% end %>
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <% if(current_user.uid.present?) %>
-         <div class="panel panel-primary">
-            <div class="panel-heading">
-              Unlink from Facebook?
-            </div>
-            <div class="panel-body">
-              <p>
-                Done with Facebook?  Unlink your account and manually reset your password.
-              </p>
-              <p>
-                <%= link_to "Unlink", :profile_unlink, data: { confirm: "Unlink and reset password?" }, class: 'btn btn-default btn-large btn-block btn-danger'%>
-              </p>
-            </div>
-          </div>
-        <%end%>
-      </div>
-      <div class="row">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-              Delete Account
-            </div>
-            <div class="panel-body">
-              <p>
-                Done with improv? Concerned about your data?  
-              </p>
-              <p>
-                <%= link_to "Delete Account", :profile_destroy, data: { confirm: "Delete your account?  This is forever." }, class: 'btn btn-default btn-large btn-block btn-danger'%>
-              </p>
-            </div>
-          </div>
-      </div>
-    <% end %>
-  </div>
-
-
 </div>

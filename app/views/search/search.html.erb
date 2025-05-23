@@ -1,42 +1,85 @@
 <% set_meta_tags title: "Search" %>
 
-<div id="search">
-	<div class="panel panel-primary">
-		<div class="panel-heading">
-			Search Options
-			<div class="pull-right">
-				<span class="glyphicon glyphicon-collapse-up"></span>
-			</div>
-		</div>
-		<div class="panel-body" id="search-options">
-			<%= render 'advanced' %>
-		</div>
-	</div>
+<div class="min-h-screen bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Search Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-3xl lg:text-4xl font-bold text-gray-800 mb-4">
+        Find Your Perfect Coach
+      </h1>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+        Search for improv coaches based on availability, experience, and location
+      </p>
+    </div>
 
-	<div id="search-results">
-		<% if(@searched) %>
-			<div class="container">
-				<% if(!@users.nil? && @users.any?) then %>
-					<div class="row">
-						<div class="col-md-12">
-							<h1>Search Results</h1>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-10 col-lg-10 col-sm-12">
-							<div class="results">
-								<% @users.each do |user| %>
-									<%= render partial: "users/result", locals: {user: user, options: { from_search: true, page: params[:page]} } %>
-								<% end %>
+    <% unless @searched %>
+      <!-- Search Options Card -->
+      <div class="bg-white rounded-2xl shadow-lg border mb-8">
+        <div class="p-6 lg:p-8">
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="text-xl font-semibold text-gray-800">Search Options</h2>
+          </div>
+          
+          <div id="search-options">
+            <%= render 'advanced' %>
+          </div>
+        </div>
+      </div>
+    <% else %>
+      <!-- New Search Button -->
+      <div class="text-center mb-8">
+        <%= link_to search_path, 
+            class: "inline-flex items-center px-6 py-3 bg-white text-purple-600 font-semibold rounded-lg border border-purple-300 hover:bg-purple-50 transition-colors duration-200 shadow-sm" do %>
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+          New Search
+        <% end %>
+      </div>
+    <% end %>
 
-								<%= will_paginate @users %>
-							</div>
-						</div>
-					</div>
-				<% else %>
-					<h2>No Results Found</h2>
-				<% end %>
-			</div>
-		<% end %>
-	</div>
+    <!-- Search Results -->
+    <div id="search-results">
+      <% if(@searched) %>
+        <% if(!@users.nil? && @users.any?) then %>
+          <div class="mb-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">Search Results</h2>
+            <p class="text-gray-600"><%= pluralize(@users.total_entries, 'coach') %> found</p>
+          </div>
+          
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <% @users.each do |user| %>
+              <%= render partial: "users/result", locals: {user: user, options: { from_search: true, page: params[:page]} } %>
+            <% end %>
+          </div>
+
+          <div class="flex justify-center">
+            <%= will_paginate @users, class: "flex space-x-1" %>
+          </div>
+        <% else %>
+          <div class="text-center py-12">
+            <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+            <h3 class="text-xl font-medium text-gray-900 mb-2">No Results Found</h3>
+            <p class="text-gray-500 mb-6">Try adjusting your search criteria to find more coaches.</p>
+            <button onclick="document.getElementById('search-options').scrollIntoView({behavior: 'smooth'})" 
+                    class="inline-flex items-center px-4 py-2 bg-purple-600 text-white font-medium rounded-lg hover:bg-purple-700 transition-colors duration-200">
+              Modify Search
+            </button>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="text-center py-12">
+          <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+          <h3 class="text-xl font-medium text-gray-900 mb-2">Ready to Search</h3>
+          <p class="text-gray-500">Use the search options above to find coaches that match your needs.</p>
+        </div>
+      <% end %>
+    </div>
+  </div>
 </div>
+

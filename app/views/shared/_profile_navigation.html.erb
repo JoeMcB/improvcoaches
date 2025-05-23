@@ -1,0 +1,91 @@
+<!-- Profile Navigation -->
+<div class="lg:col-span-3">
+  <!-- Desktop Navigation -->
+  <div class="hidden lg:block">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="text-lg font-medium text-heading">Your Profile</h3>
+      </div>
+      <div class="p-0">
+        <nav class="space-y-1">
+          <a href="<%= profile_edit_path %>" class="flex items-center px-4 py-3 text-sm font-medium <%= current == :basics ? 'text-purple-600 bg-purple-50 border-r-2 border-purple-600' : 'text-gray-700 hover:text-purple-600 hover:bg-purple-50' %> transition-colors duration-200">
+            <svg class="mr-3 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+            </svg>
+            Basics
+          </a>
+          <% if current_user.is_coach %>
+            <a href="<%= profile_edit_schedule_path %>" class="flex items-center px-4 py-3 text-sm font-medium <%= current == :schedule ? 'text-purple-600 bg-purple-50 border-r-2 border-purple-600' : 'text-gray-700 hover:text-purple-600 hover:bg-purple-50' %> transition-colors duration-200">
+              <svg class="mr-3 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+              </svg>
+              Schedule
+            </a>
+            <a href="<%= profile_edit_improv_path %>" class="flex items-center px-4 py-3 text-sm font-medium <%= current == :experience ? 'text-purple-600 bg-purple-50 border-r-2 border-purple-600' : 'text-gray-700 hover:text-purple-600 hover:bg-purple-50' %> transition-colors duration-200">
+              <svg class="mr-3 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2h2zM6 8H4v6h12V8h-2v1a1 1 0 11-2 0V8H8v1a1 1 0 11-2 0V8zm2-2V5a1 1 0 011-1h2a1 1 0 011 1v1H8z" clip-rule="evenodd"></path>
+              </svg>
+              Experience
+            </a>
+            <a href="<%= profile_invites_path %>" class="flex items-center px-4 py-3 text-sm font-medium <%= current == :invites ? 'text-purple-600 bg-purple-50 border-r-2 border-purple-600' : 'text-gray-700 hover:text-purple-600 hover:bg-purple-50' %> transition-colors duration-200">
+              <svg class="mr-3 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"></path>
+              </svg>
+              Invites (<%= current_user.invites.free.count %>)
+            </a>
+            <a href="<%= user_path(current_user) %>" class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 hover:text-purple-600 hover:bg-purple-50 transition-colors duration-200">
+              <svg class="mr-3 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path>
+              </svg>
+              View Public Profile
+            </a>
+          <% end %>
+        </nav>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Mobile Navigation - Horizontal Tab Bar -->
+  <div class="lg:hidden mb-4">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+      <div class="overflow-x-auto">
+        <nav class="flex min-w-max">
+          <a href="<%= profile_edit_path %>" class="flex items-center px-3 py-2 text-sm font-medium <%= current == :basics ? 'text-purple-600 bg-purple-50 border-b-2 border-purple-600' : 'text-gray-700 hover:text-purple-600 hover:bg-purple-50' %> transition-colors duration-200 whitespace-nowrap">
+            <svg class="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+            </svg>
+            Basics
+          </a>
+          <% if current_user.is_coach %>
+            <a href="<%= profile_edit_schedule_path %>" class="flex items-center px-3 py-2 text-sm font-medium <%= current == :schedule ? 'text-purple-600 bg-purple-50 border-b-2 border-purple-600' : 'text-gray-700 hover:text-purple-600 hover:bg-purple-50' %> transition-colors duration-200 whitespace-nowrap">
+              <svg class="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+              </svg>
+              Schedule
+            </a>
+            <a href="<%= profile_edit_improv_path %>" class="flex items-center px-3 py-2 text-sm font-medium <%= current == :experience ? 'text-purple-600 bg-purple-50 border-b-2 border-purple-600' : 'text-gray-700 hover:text-purple-600 hover:bg-purple-50' %> transition-colors duration-200 whitespace-nowrap">
+              <svg class="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2h2zM6 8H4v6h12V8h-2v1a1 1 0 11-2 0V8H8v1a1 1 0 11-2 0V8zm2-2V5a1 1 0 011-1h2a1 1 0 011 1v1H8z" clip-rule="evenodd"></path>
+              </svg>
+              Experience
+            </a>
+            <a href="<%= profile_invites_path %>" class="flex items-center px-3 py-2 text-sm font-medium <%= current == :invites ? 'text-purple-600 bg-purple-50 border-b-2 border-purple-600' : 'text-gray-700 hover:text-purple-600 hover:bg-purple-50' %> transition-colors duration-200 whitespace-nowrap">
+              <svg class="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"></path>
+              </svg>
+              Invites (<%= current_user.invites.free.count %>)
+            </a>
+            <a href="<%= user_path(current_user) %>" class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-purple-600 hover:bg-purple-50 transition-colors duration-200 whitespace-nowrap">
+              <svg class="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path>
+              </svg>
+              View Profile
+            </a>
+          <% end %>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>

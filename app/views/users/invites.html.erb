@@ -1,64 +1,88 @@
-<h1>Profile</h1>
+<div class="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-cyan-50">
+  <!-- Alerts Container -->
+  <div id="alerts"></div>
+  
+  <div class="container mx-auto px-4 py-8">
+    <%= render 'shared/profile_navigation', current: :invites %>
+    
+    <div class="lg:grid lg:grid-cols-12 lg:gap-8">
+      <!-- Main Content -->
+      <div class="lg:col-start-4 lg:col-span-9">
+        <div class="grid gap-6">
+          <!-- Invite Form Card -->
+          <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="px-6 py-4 bg-gradient-to-r from-purple-500 to-pink-500">
+              <h2 class="text-xl font-bold text-white">Invite a Friend to be a Coach</h2>
+            </div>
+            
+            <div class="p-6">
+              <% if(!current_user.is_admin?) %>
+                <div class="mb-4 p-4 bg-purple-50 rounded-lg border border-purple-200">
+                  <p class="text-purple-800 font-medium">
+                    You have 
+                    <span class="font-bold text-purple-900"><%= current_user.invites.free.count %></span> 
+                    invite<%= current_user.invites.free.count != 1 ? "s" : "" %> available
+                  </p>
+                </div>
+              <% end %>
+              
+              <% if(current_user.invites.free.count > 0 || current_user.is_admin?) %>
+                <%= form_tag profile_invites_path, method: :post, class: "form-email", data: { turbo: true } do %>
+                  <div class="space-y-4">
+                    <div>
+                      <%= label_tag :email, "Email Address", class: "block text-sm font-medium text-gray-700 mb-2" %>
+                      <%= text_field_tag :email, "", 
+                          class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm", 
+                          placeholder: "mypal@gmail.com", 
+                          autofocus: "" %>
+                    </div>
+                    
+                    <%= content_tag :button, type: :submit, 
+                        class: "w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all duration-200" do %>
+                      <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                      </svg>
+                      Send Invitation
+                    <% end %>
+                  </div>
+                <% end %>
+              <% else %>
+                <div class="p-4 bg-amber-50 rounded-lg border border-amber-200">
+                  <p class="text-amber-800">You don't have any invites available at the moment.</p>
+                </div>
+              <% end %>
+            </div>
+          </div>
 
-<div class="row">
-
-    <div class="col-sm-6 col-md-2 col-lg-2">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          Your Profile
-        </div>
-        <div class="panel-body">
-          <%= render "edit_links", current: :invites %>
+          <!-- Past Invites Section -->
+          <% if(current_user.invites.sent.count > 0) %>
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+              <div class="px-6 py-4 bg-gradient-to-r from-cyan-500 to-purple-500">
+                <h2 class="text-xl font-bold text-white">Past Invites</h2>
+              </div>
+              
+              <div class="p-6">
+                <div class="overflow-x-auto">
+                  <table class="w-full" id="invites">
+                    <thead>
+                      <tr class="border-b border-gray-200">
+                        <th class="px-4 py-3 text-left text-sm font-medium text-gray-900">Sent To</th>
+                        <th class="px-4 py-3 text-left text-sm font-medium text-gray-900">Status</th>
+                        <th class="px-4 py-3 text-center text-sm font-medium text-gray-900">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                      <% current_user.invites.sent.each do |invite| %>
+                        <%= render partial: "invites/invite", object: invite %>
+                      <% end %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>
-
-    <div class="col-sm-6 col-md-10 col-lg-10">
-    	
-		<div class="col-sm-6 col-md-6 col-lg-6">
-		    <div class="panel panel-default">
-		    	<div class="panel-heading">
-		    		<h3>Invite a Friend to be a Coach</h3>
-		    	</div>
-
-		    	<div class="panel-body">
-		    		<% if(!current_user.is_admin?) %>
-		    			<p>You have <%= current_user.invites.free.count %> invite<%= current_user.invites.free.count != 1 ? "s" : "" %> available.</p>
-		    		<% end %>
-		    		<% if(current_user.invites.free.count > 0 || current_user.is_admin?) %>
-			    		<%= form_tag profile_invites_path, method: :post, class: "form-email", data: { turbo: true } do %>
-			    			<div class="form-group">
-			    				<%= label_tag :email, "Email" %>
-			    				<%= text_field_tag :email, "", class: "form-control", placeholder: "mypal@gmail.com", autofocus: "" %>
-			    			</div>
-			    			<%= content_tag :button, type: :submit, class: "btn btn-primary btn-small btn-block" do %>
-								Invite
-								<span></span>
-							<% end %>
-			    		<% end %>
-			    	<% end %>
-		    	</div>
-		    </div>
-	    </div>
-
-		<% if(current_user.invites.sent.count > 0) %>
-			<div class="col-sm-12 col-md-10">
-				<h3>Past Invites</h3>
-				<table class="table" id="invites">
-					<thead>
-						<th>Sent To</th>
-						<th>Status</th>
-						<th></th>
-						<th></th>
-						<th></th>
-					</thead>
-					<tbody>
-						<% current_user.invites.sent.each do |invite| %>
-							<%= render partial: "invites/invite", object: invite %>
-						<% end %>
-					</tbody>
-				</table>
-			</div>
-		<% end %>
-	</div>
+  </div>
 </div>

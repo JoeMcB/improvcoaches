@@ -1,20 +1,69 @@
-<div class="result">
-	<div class="image_box">
-		<%= link_to user do %>
-			<%= image_tag avatar_image(user, '100x100'), { class: :avatar } %>
-		<% end %>
-	</div>
-	<%= link_to user_path(user, options) do %>
-		<h3><%= user.name %></h3>
-	<% end %>
-	<span class="bio"><%= user.bio.truncate 300, seperator: "..." %></span><br/>
-
-	<span class="updated_at">
-		<% if(user.schedule) %>
-			Schedule updated <%= time_ago_in_words(user.schedule.updated_at) %> ago
-		<% else %>
-			No schedule.
-		<% end %>
-	</span>
-	<div class="clearfix"></div>
+<div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 p-6">
+  <div class="flex items-start space-x-4">
+    <!-- Avatar -->
+    <div class="flex-shrink-0">
+      <%= link_to user, class: "block" do %>
+        <%= image_tag avatar_image(user, '80x80'), 
+            class: "w-20 h-20 rounded-full object-cover border-2 border-gray-200 hover:border-purple-300 transition-colors duration-200" %>
+      <% end %>
+    </div>
+    
+    <!-- Content -->
+    <div class="flex-1 min-w-0">
+      <!-- Name and Title -->
+      <div class="mb-3">
+        <%= link_to user_path(user, options), class: "block group" do %>
+          <h3 class="text-xl font-semibold text-gray-900 group-hover:text-purple-600 transition-colors duration-200">
+            <%= user.name %>
+          </h3>
+        <% end %>
+        <% if user.city %>
+          <p class="text-sm text-gray-500"><%= user.city.name %></p>
+        <% end %>
+      </div>
+      
+      <!-- Bio -->
+      <% if user.bio.present? %>
+        <div class="mb-4">
+          <p class="text-gray-600 text-sm leading-relaxed">
+            <%= truncate(user.bio, length: 200, separator: ' ') %>
+          </p>
+        </div>
+      <% end %>
+      
+      <!-- Schedule Info and Rating -->
+      <div class="flex items-center justify-between text-sm">
+        <div class="flex items-center text-gray-500">
+          <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <% if user.schedule %>
+            Schedule updated <%= time_ago_in_words(user.schedule.updated_at) %> ago
+          <% else %>
+            No schedule available
+          <% end %>
+        </div>
+        
+        <% if user.rating && user.rating > 0 %>
+          <div class="flex items-center">
+            <svg class="w-4 h-4 text-yellow-400 mr-1" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+            </svg>
+            <span class="text-gray-600"><%= user.rating.round(1) %></span>
+          </div>
+        <% end %>
+      </div>
+      
+      <!-- Action Button -->
+      <div class="mt-4">
+        <%= link_to user_path(user, options), 
+            class: "inline-flex items-center text-purple-600 hover:text-purple-700 font-medium text-sm transition-colors duration-200" do %>
+          View Profile
+          <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>

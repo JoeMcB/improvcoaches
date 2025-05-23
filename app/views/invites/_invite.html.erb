@@ -1,19 +1,53 @@
-<tr id="invite_<%= invite.id %>">
-	<td><%= invite.recipient %></td>
-	<td><%= invite.status %></td>
-	<td><!-- empty --></td>
-	<td>
-		<% if invite.status == "pending" %>
-			<%= link_to profile_invite_resend_path(invite), data: { turbo_method: :post } do %>
-				<span class="glyphicon glyphicon-refresh" ></span>
-			<% end %>
+<tr id="invite_<%= invite.id %>" class="hover:bg-gray-50 transition-colors duration-150">
+	<td class="px-4 py-4 text-sm text-gray-900"><%= invite.recipient %></td>
+	<td class="px-4 py-4 text-sm">
+		<% case invite.status %>
+		<% when "pending" %>
+			<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+				<svg class="w-2 h-2 mr-1" fill="currentColor" viewBox="0 0 8 8">
+					<circle cx="4" cy="4" r="3"/>
+				</svg>
+				Pending
+			</span>
+		<% when "used" %>
+			<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+				<svg class="w-2 h-2 mr-1" fill="currentColor" viewBox="0 0 8 8">
+					<circle cx="4" cy="4" r="3"/>
+				</svg>
+				Accepted
+			</span>
+		<% else %>
+			<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+				<svg class="w-2 h-2 mr-1" fill="currentColor" viewBox="0 0 8 8">
+					<circle cx="4" cy="4" r="3"/>
+				</svg>
+				<%= invite.status.capitalize %>
+			</span>
 		<% end %>
 	</td>
-	<td>
+	<td class="px-4 py-4 text-sm text-center">
 		<% if invite.status == "pending" %>
-			<%= link_to profile_invite_cancel_path(invite), data: { turbo_method: :delete } do %>
-				<span class="glyphicon glyphicon-remove" ></span>
-			<% end %>
+			<div class="flex justify-center space-x-2">
+				<%= link_to profile_invite_resend_path(invite), 
+					data: { turbo_method: :post },
+					class: "inline-flex items-center p-2 text-cyan-600 hover:text-cyan-900 hover:bg-cyan-50 rounded-lg transition-colors duration-150",
+					title: "Resend invitation" do %>
+					<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+					</svg>
+				<% end %>
+				
+				<%= link_to profile_invite_cancel_path(invite), 
+					data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to cancel this invitation?" },
+					class: "inline-flex items-center p-2 text-red-600 hover:text-red-900 hover:bg-red-50 rounded-lg transition-colors duration-150",
+					title: "Cancel invitation" do %>
+					<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+					</svg>
+				<% end %>
+			</div>
+		<% else %>
+			<span class="text-gray-400">—</span>
 		<% end %>
 	</td>
 </tr>

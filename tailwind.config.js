@@ -10,7 +10,9 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+  ],
   corePlugins: {
     preflight: false, // Keep Bootstrap resets intact
   },
