@@ -1,18 +1,26 @@
 <div id="bookmarks">
-	<% if !user.bookmarked_users.empty? %>
-		<% user.bookmarked_users.each do |bookmarked_user| %>
-			<div class="col-sm-2 col-md-2">
-				<div class="text-center thumbnail">
-					<%= link_to user_path(bookmarked_user) do %>
-						<%= image_tag avatar_image(bookmarked_user, '100x100'), { class: :avatar } %>
-						<div class="caption">
-							<h4><%= bookmarked_user.name %></h4>
-						</div>
-					<% end %>
-				</div>
-			</div>
-		<% end %>
-	<% else %>
-		Hmm, <%= user.name %> doesn't have any favorites.
-	<% end %>
+  <% if !user.bookmarked_users.empty? %>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+      <% user.bookmarked_users.each do |bookmarked_user| %>
+        <div class="text-center">
+          <%= link_to user_path(bookmarked_user), class: "block group" do %>
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-shadow duration-200">
+              <%= image_tag avatar_image(bookmarked_user, '100x100'), 
+                  class: "w-16 h-16 rounded-full mx-auto mb-3 object-cover" %>
+              <h4 class="text-sm font-medium text-gray-900 group-hover:text-purple-600 transition-colors duration-200">
+                <%= bookmarked_user.name %>
+              </h4>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="text-center py-8">
+      <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+      </svg>
+      <p class="text-gray-500">Hmm, <%= user.name %> doesn't have any favorites.</p>
+    </div>
+  <% end %>
 </div>

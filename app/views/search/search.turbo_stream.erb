@@ -2,27 +2,33 @@
 <% if @searched %>
   <%= turbo_stream.update "search-results" do %>
     <% if @users && @users.any? %>
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <h1>Search Results</h1>
-          </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="mb-6">
+          <h1 class="text-2xl font-bold text-gray-900">Search Results</h1>
         </div>
-        <div class="row">
-          <div class="col-md-10 col-lg-10 col-sm-12">
-            <div class="results">
-              <% @users.each do |user| %>
-                <%= render partial: "users/result", locals: {user: user, options: { from_search: true, page: params[:page]} } %>
-              <% end %>
-              
-              <%= will_paginate @users %>
-            </div>
+        
+        <div class="space-y-6">
+          <% @users.each do |user| %>
+            <%= render partial: "users/result", locals: {user: user, options: { from_search: true, page: params[:page]} } %>
+          <% end %>
+          
+          <div class="mt-8 flex justify-center">
+            <%= will_paginate @users, 
+                class: "flex items-center space-x-1",
+                previous_label: raw('<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>'),
+                next_label: raw('<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>'),
+                inner_window: 2,
+                outer_window: 1 %>
           </div>
         </div>
       </div>
     <% else %>
-      <div class="container">
-        <h2>No Results Found</h2>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-16">
+        <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        </svg>
+        <h2 class="text-xl font-medium text-gray-900 mb-2">No Results Found</h2>
+        <p class="text-gray-500">Try adjusting your search criteria or browse all coaches.</p>
       </div>
     <% end %>
   <% end %>

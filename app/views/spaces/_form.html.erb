@@ -1,87 +1,153 @@
-<div class="row">
-  <div class="col-md-6">
-    <%= form_for(@space, html: {class: "form-group" } ) do |f| %>
-      <% if @space.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(@space.errors.count, "error") %> prohibited this space from being saved:</h2>
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+    <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
+      <h2 class="text-xl font-semibold text-gray-900">Space Information</h2>
+    </div>
+    
+    <div class="p-6">
+      <%= form_for(@space, html: { class: "space-y-6" }) do |f| %>
+        <% if @space.errors.any? %>
+          <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+            <div class="flex">
+              <svg class="w-5 h-5 text-red-400 mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+              </svg>
+              <div>
+                <h3 class="text-sm font-medium text-red-800">
+                  <%= pluralize(@space.errors.count, "error") %> prohibited this space from being saved:
+                </h3>
+                <ul class="mt-2 text-sm text-red-700 list-disc list-inside">
+                  <% @space.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                  <% end %>
+                </ul>
+              </div>
+            </div>
+          </div>
+        <% end %>
 
-          <ul>
-          <% @space.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-          <% end %>
-          </ul>
+        <!-- Basic Information -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div>
+            <%= f.label :name, class: "block text-sm font-medium text-gray-700 mb-2" %>
+            <%= f.text_field :name, class: "w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500" %>
+          </div>
+          
+          <div>
+            <%= f.label :city_id, "City", class: "block text-sm font-medium text-gray-700 mb-2" %>
+            <%= f.collection_select(:city_id, City.all, :id, :name, { prompt: "Select a city" }, { class: "w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500" }) %>
+          </div>
+        </div>
+
+        <div>
+          <%= f.label :description, class: "block text-sm font-medium text-gray-700 mb-2" %>
+          <%= f.text_area :description, rows: 4, class: "w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500" %>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="border-t border-gray-200 pt-6">
+          <h3 class="text-lg font-medium text-gray-900 mb-4">Contact Information</h3>
+          
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div>
+              <%= f.label :phone, class: "block text-sm font-medium text-gray-700 mb-2" %>
+              <%= f.text_field :phone, class: "w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500" %>
+            </div>
+            
+            <div>
+              <%= f.label :email, class: "block text-sm font-medium text-gray-700 mb-2" %>
+              <%= f.email_field :email, class: "w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500" %>
+            </div>
+          </div>
+        </div>
+
+        <!-- Address Information -->
+        <div class="border-t border-gray-200 pt-6">
+          <h3 class="text-lg font-medium text-gray-900 mb-4">Address</h3>
+          
+          <div class="grid grid-cols-1 gap-6">
+            <div>
+              <%= f.label :address, "Street Address", class: "block text-sm font-medium text-gray-700 mb-2" %>
+              <%= f.text_field :address, class: "w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500" %>
+            </div>
+            
+            <div>
+              <%= f.label :address_2, "Address Line 2 (Optional)", class: "block text-sm font-medium text-gray-700 mb-2" %>
+              <%= f.text_field :address_2, class: "w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500" %>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <%= f.label :real_city, "City", class: "block text-sm font-medium text-gray-700 mb-2" %>
+                <%= f.text_field :real_city, class: "w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500" %>
+              </div>
+              
+              <div>
+                <%= f.label :state, class: "block text-sm font-medium text-gray-700 mb-2" %>
+                <%= f.text_field :state, class: "w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500" %>
+              </div>
+              
+              <div>
+                <%= f.label :zip, "ZIP Code", class: "block text-sm font-medium text-gray-700 mb-2" %>
+                <%= f.text_field :zip, class: "w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500" %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Online Presence -->
+        <div class="border-t border-gray-200 pt-6">
+          <h3 class="text-lg font-medium text-gray-900 mb-4">Online Presence</h3>
+          
+          <div class="grid grid-cols-1 gap-6">
+            <div>
+              <%= f.label :website_link, "Website URL", class: "block text-sm font-medium text-gray-700 mb-2" %>
+              <%= f.url_field :website_link, placeholder: "https://", class: "w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500" %>
+            </div>
+            
+            <div>
+              <%= f.label :yelp_link, "Yelp URL", class: "block text-sm font-medium text-gray-700 mb-2" %>
+              <%= f.url_field :yelp_link, placeholder: "https://", class: "w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500" %>
+            </div>
+            
+            <div>
+              <%= f.label :facebook_link, "Facebook URL", class: "block text-sm font-medium text-gray-700 mb-2" %>
+              <%= f.url_field :facebook_link, placeholder: "https://", class: "w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500" %>
+            </div>
+          </div>
+        </div>
+
+        <!-- Space Type -->
+        <div class="border-t border-gray-200 pt-6">
+          <h3 class="text-lg font-medium text-gray-900 mb-4">Space Type</h3>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="flex items-center">
+              <%= f.check_box :is_rehearsal, class: "h-4 w-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500" %>
+              <%= f.label :is_rehearsal, "Available for Rehearsals", class: "ml-2 block text-sm text-gray-700" %>
+            </div>
+            
+            <div class="flex items-center">
+              <%= f.check_box :is_performance, class: "h-4 w-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500" %>
+              <%= f.label :is_performance, "Available for Performances", class: "ml-2 block text-sm text-gray-700" %>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rating (Admin only) -->
+        <div class="border-t border-gray-200 pt-6">
+          <div>
+            <%= f.label :rating, "Rating (Admin Only)", class: "block text-sm font-medium text-gray-700 mb-2" %>
+            <%= f.number_field :rating, step: 0.1, min: 0, max: 5, class: "w-full lg:w-32 px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500" %>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="flex items-center justify-end space-x-4 pt-6 border-t border-gray-200">
+          <%= link_to "Cancel", spaces_path, class: "px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2" %>
+          <%= f.submit (@space.new_record? ? "Create Space" : "Update Space"), class: "px-6 py-2 text-sm font-medium text-white bg-purple-600 border border-transparent rounded-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2" %>
         </div>
       <% end %>
-
-      <div class="field ">
-        <%= f.label :name %><br />
-        <%= f.text_field :name, class: "form-control" %>
-      </div>
-      <div class="field">
-        <%= f.label :description %><br />
-        <%= f.text_area :description, class: "form-control"  %>
-      </div>
-      <div class="field">
-        <%= f.label :city_id %><br />
-        <%= f.collection_select(:city_id, City.all, :id, :name, { class: "form-control" } ) %>
-      </div>
-      <div class="field">
-        <%= f.label :rating %><br />
-        <%= f.text_field :rating, class: "form-control"  %>
-      </div>
-      <div class="field">
-        <%= f.label :website_link %><br />
-        <%= f.text_field :website_link, class: "form-control"  %>
-      </div>
-      <div class="field">
-        <%= f.label :yelp_link %><br />
-        <%= f.text_field :yelp_link, class: "form-control"  %>
-      </div>
-      <div class="field">
-        <%= f.label :facebook_link %><br />
-        <%= f.text_field :facebook_link, class: "form-control"  %>
-      </div>
-      <div class="field">
-        <%= f.label :address %><br />
-        <%= f.text_field :address, class: "form-control"  %>
-      </div>
-      <div class="field">
-        <%= f.label :address_2 %><br />
-        <%= f.text_field :address_2, class: "form-control"  %>
-      </div>
-      <div class="field">
-        <%= f.label :zip %><br />
-        <%= f.text_field :zip, class: "form-control"  %>
-      </div>
-      <div class="field">
-        <%= f.label :real_city %><br />
-        <%= f.text_field :real_city, class: "form-control"  %>
-      </div>
-      <div class="field">
-        <%= f.label :state %><br />
-        <%= f.text_field :state, class: "form-control"  %>
-      </div>
-      <div class="field">
-        <%= f.label :phone %><br />
-        <%= f.text_field :phone, class: "form-control"  %>
-      </div>
-      <div class="field">
-        <%= f.label :email %><br />
-        <%= f.text_field :email, class: "form-control"  %>
-      </div>
-      <div class="field">
-        <%= f.label :is_rehearsal, "Is Rehearsal" %>
-        <%= f.check_box :is_rehearsal %>
-      </div>
-      <div class="field">
-        <%= f.label :is_performance, "Is Performance" %>
-        <%= f.check_box :is_performance %>
-      </div>
-      <div class="actions">
-        <%= f.submit "Edit", class: "btn btn-block btn-primary" %>
-      </div>
-    <% end %>
-  </div>
-
+    </div>
   </div>
 </div>
