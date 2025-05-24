@@ -22,10 +22,12 @@ class AuthController < ApplicationController
       if user.save
         set_authorized_user(user, true)
         flash[:notice] = 'Your Facebook account has been linked.'
-        redirect_back(fallback_location: root_path)
+        return_url = session.delete(:return_to) || root_path
+        redirect_to return_url
       else
         flash[:error] = 'Your Facebook account could not be linked.'
-        redirect_back(fallback_location: root_path)
+        return_url = session.delete(:return_to) || root_path
+        redirect_to return_url
       end
     else
       flash[:warning] = 'Hmm, that email and password appear to be invalid.'
@@ -51,7 +53,8 @@ class AuthController < ApplicationController
         else
           session[:omniauth] = auth.except('extra')
           flash[:notice] = 'Welp, no one should ever see this. Email support if you do!'
-          redirect_back(fallback_location: root_path)
+          return_url = session.delete(:return_to) || root_path
+          redirect_to return_url
         end
       end
     else
@@ -91,7 +94,8 @@ class AuthController < ApplicationController
       redirect_to invite_accept_url(code: invite_code), flash: { success: "Welcome back #{user.name}" }
     else
       flash[:success] = "Welcome back #{user.name}"
-      redirect_back(fallback_location: root_path)
+      return_url = session.delete(:return_to) || root_path
+      redirect_to return_url
     end
   end
 

@@ -60,10 +60,16 @@ class UsersController < ApplicationController
 
     if current_user && @to_user
       current_user.send_coach_contact(@to_user, params[:message])
+      success = true
+      message = "Your message has been sent to #{@to_user.name}!"
+    else
+      success = false
+      message = "Failed to send message. Please try again."
     end
 
     respond_to do |format|
       format.js
+      format.json { render json: { success: success, message: message } }
     end
   end
 

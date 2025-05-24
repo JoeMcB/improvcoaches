@@ -2,12 +2,12 @@
 <div id="email" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden" onclick="closeEmailModal()">
   <!-- Modal Content -->
   <div class="flex items-center justify-center min-h-screen p-4">
-    <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-auto" onclick="event.stopPropagation()">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md sm:max-w-lg mx-auto max-h-[90vh] overflow-hidden flex flex-col" onclick="event.stopPropagation()">
       
       <!-- Modal Header -->
-      <div class="flex items-center justify-between p-6 border-b border-gray-200">
-        <h3 class="text-xl font-semibold text-heading">Send Message to <%= @user.name %></h3>
-        <button onclick="closeEmailModal()" class="text-gray-400 hover:text-gray-600 transition-colors duration-200">
+      <div class="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200">
+        <h3 class="text-lg sm:text-xl font-semibold text-heading pr-2">Send Message to <%= @user.name %></h3>
+        <button onclick="closeEmailModal()" class="text-gray-400 hover:text-gray-600 transition-colors duration-200 p-1 flex-shrink-0">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
           </svg>
@@ -15,43 +15,55 @@
       </div>
       
       <!-- Modal Body -->
-      <div class="p-6">
-        <%= form_tag user_email_path(@user, format: :js), method: :post, remote: true, class: "space-y-4" do %>
-          <%= token_tag form_authenticity_token.to_s %>
-          
-          <div>
-            <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Your Message</label>
-            <textarea 
-              name="message" 
-              id="message"
-              rows="6" 
-              class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors duration-200 resize-none"
-              placeholder="Write your message here..."
-              required
-            ></textarea>
-          </div>
-          
-          <div class="flex gap-3">
-            <button 
-              type="button" 
-              onclick="closeEmailModal()"
-              class="btn-secondary flex-1"
-            >
-              Cancel
-            </button>
-            <button 
-              type="submit" 
-              class="btn-primary flex-1"
-            >
-              Send Message
-            </button>
-          </div>
-        <% end %>
+      <div class="flex-1 overflow-y-auto">
+        <div class="px-6 py-6">
+          <form id="emailForm" class="h-full">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            
+            <div class="space-y-6">
+              <!-- Message Field -->
+              <div>
+                <label for="emailMessage" class="block text-sm font-medium text-gray-700 mb-2">
+                  Your Message
+                </label>
+                <div class="relative">
+                  <textarea 
+                    id="emailMessage"
+                    name="message"
+                    rows="6" 
+                    class="block w-full resize-none rounded-lg border border-gray-300 px-3 py-3 text-gray-900 placeholder-gray-500 focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500 sm:text-sm"
+                    style="box-sizing: border-box; max-width: 100%;"
+                    placeholder="Write your message here..."
+                    required
+                  ></textarea>
+                </div>
+              </div>
+              
+              <!-- Action Buttons -->
+              <div class="flex gap-4 pt-6">
+                <button 
+                  type="button" 
+                  onclick="closeEmailModal()"
+                  class="flex-1 min-w-0 rounded-xl border-2 border-gray-200 bg-white px-6 py-3 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transition-all duration-200"
+                >
+                  Cancel
+                </button>
+                <button 
+                  type="submit" 
+                  id="sendEmailBtn"
+                  class="flex-1 min-w-0 rounded-xl bg-purple-600 px-6 py-3 text-sm font-semibold text-white shadow-lg hover:bg-purple-700 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transition-all duration-200 transform hover:-translate-y-0.5"
+                >
+                  Send Message
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
       
       <!-- Modal Footer -->
-      <div class="px-6 pb-6">
-        <p class="text-sm text-gray-500 text-center">
+      <div class="px-6 py-3 bg-gray-50 rounded-b-2xl border-t border-gray-100">
+        <p class="text-xs text-gray-500 text-center">
           Replies will be sent to <span class="font-medium"><%= current_user.email %></span>
         </p>
       </div>
@@ -68,8 +80,114 @@
   function closeEmailModal() {
     document.getElementById('email').classList.add('hidden');
     document.body.style.overflow = 'auto';
-    document.getElementById('message').value = '';
+    document.getElementById('emailMessage').value = '';
+    
+    // Reset button state
+    const sendBtn = document.getElementById('sendEmailBtn');
+    sendBtn.disabled = false;
+    sendBtn.textContent = 'Send Message';
   }
+  
+  function showAlert(type, message) {
+    const alertContainer = document.getElementById('alerts');
+    if (!alertContainer) return;
+    
+    const alertColors = {
+      'success': 'bg-green-50 border-green-200 text-green-800',
+      'error': 'bg-red-50 border-red-200 text-red-800'
+    };
+    
+    const alertIcons = {
+      'success': '<svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>',
+      'error': '<svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>'
+    };
+
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `mb-4 rounded-xl border-2 p-4 shadow-lg transition-all duration-300 hover:shadow-xl ${alertColors[type] || alertColors['error']}`;
+    
+    alertDiv.innerHTML = `
+      <div class="flex items-start space-x-4">
+        <div class="flex-shrink-0 pt-0.5">
+          ${alertIcons[type] || alertIcons['error']}
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-medium leading-relaxed sm:text-base">${message}</p>
+        </div>
+        <div class="flex-shrink-0">
+          <button type="button" class="inline-flex rounded-md p-1.5 hover:bg-black hover:bg-opacity-10 focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors duration-200" onclick="this.closest('.mb-4').remove()">
+            <span class="sr-only">Dismiss</span>
+            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    `;
+    
+    alertContainer.appendChild(alertDiv);
+    
+    // Auto-dismiss success messages after 5 seconds
+    if (type === 'success') {
+      setTimeout(() => {
+        if (alertDiv.parentNode) {
+          alertDiv.style.opacity = '0';
+          alertDiv.style.transform = 'translateY(-10px)';
+          setTimeout(() => {
+            if (alertDiv.parentNode) {
+              alertDiv.remove();
+            }
+          }, 300);
+        }
+      }, 5000);
+    }
+  }
+  
+  // Handle form submission
+  document.getElementById('emailForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const sendBtn = document.getElementById('sendEmailBtn');
+    const messageField = document.getElementById('emailMessage');
+    const message = messageField.value.trim();
+    
+    if (!message) {
+      showAlert('error', 'Please enter a message.');
+      return;
+    }
+    
+    // Show loading state
+    sendBtn.disabled = true;
+    sendBtn.textContent = 'Sending...';
+    
+    try {
+      const formData = new FormData();
+      formData.append('message', message);
+      formData.append('authenticity_token', document.querySelector('input[name="authenticity_token"]').value);
+      
+      const response = await fetch('<%= user_email_path(@user) %>', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+          'Accept': 'application/json'
+        }
+      });
+      
+      if (response.ok) {
+        closeEmailModal();
+        showAlert('success', 'Your message has been sent to <%= @user.name %>!');
+      } else {
+        throw new Error('Failed to send message');
+      }
+    } catch (error) {
+      console.error('Error sending email:', error);
+      showAlert('error', 'Failed to send message. Please try again.');
+      
+      // Reset button state
+      sendBtn.disabled = false;
+      sendBtn.textContent = 'Send Message';
+    }
+  });
   
   // Close modal on Escape key
   document.addEventListener('keydown', function(e) {

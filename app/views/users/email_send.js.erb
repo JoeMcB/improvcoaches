@@ -1,3 +1,5 @@
-$('#email').modal('hide');
-$('#email textarea').val("");
-<%= render partial: "shared/alert", locals: { level: 'success', message: "Your email has been sent."} %>
+// Close the email modal
+closeEmailModal();
+
+// Show success message
+<%= render partial: "shared/alert", locals: { level: 'success', message: "Your email has been sent to #{@to_user.name}!"} %>
