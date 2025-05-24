@@ -21,16 +21,6 @@
           </svg>
           Advanced Search
         <% end %>
-        
-        <% unless current_user %>
-          <%= link_to join_path, 
-              class: "inline-flex items-center px-6 py-3 bg-white text-purple-600 font-semibold rounded-lg border border-purple-300 hover:bg-purple-50 transition-colors duration-200" do %>
-            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-            </svg>
-            Join as Coach
-          <% end %>
-        <% end %>
       </div>
     </div>
 
@@ -71,12 +61,8 @@
             </svg>
             <h3 class="text-xl font-medium text-gray-900 mb-2">No Coaches Found</h3>
             <p class="text-gray-500 mb-6 max-w-md mx-auto">
-              There are currently no coaches available in <%= current_city.name %>.
+              There are currently no coaches available in <%= current_city.name %>. Check back soon or try a different search.
             </p>
-            <%= link_to join_path, 
-                class: "inline-flex items-center px-6 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors duration-200" do %>
-              Be the First Coach
-            <% end %>
           </div>
         <% end %>
       </div>

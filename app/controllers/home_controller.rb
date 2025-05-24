@@ -6,6 +6,9 @@ class HomeController < ApplicationController
   def about
   end
 
+  def become_a_coach
+  end
+
   def splash
   	render layout: false
   end

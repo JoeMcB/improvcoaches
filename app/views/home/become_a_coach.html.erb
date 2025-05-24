@@ -1,0 +1,133 @@
+<% set_meta_tags title: "Become a Coach" %>
+
+<div class="min-h-screen bg-gray-50">
+  <!-- Hero Section -->
+  <div class="bg-white border-b border-gray-200">
+    <div class="container mx-auto px-4 py-20 lg:py-32">
+      <div class="text-center">
+        <h1 class="text-4xl lg:text-6xl font-bold mb-6 leading-tight text-gray-800">
+          Become an <span class="text-purple-600">ImprovCoach</span>
+        </h1>
+        <p class="text-xl lg:text-2xl mb-8 text-gray-600 max-w-3xl mx-auto">
+          Join our exclusive community of experienced improv instructors through invitation only
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="py-16 lg:py-24">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        
+        <!-- How It Works Section -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 lg:p-12 mb-12">
+          <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
+            How to Join ImprovCoaches
+          </h2>
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Step 1 -->
+            <div class="text-center">
+              <div class="bg-purple-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                <span class="text-2xl font-bold text-purple-600">1</span>
+              </div>
+              <h3 class="text-xl font-semibold text-gray-800 mb-3">Get Noticed</h3>
+              <p class="text-gray-600">
+                Build your reputation in the improv community through performances, workshops, and networking with existing coaches.
+              </p>
+            </div>
+            
+            <!-- Step 2 -->
+            <div class="text-center">
+              <div class="bg-purple-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                <span class="text-2xl font-bold text-purple-600">2</span>
+              </div>
+              <h3 class="text-xl font-semibold text-gray-800 mb-3">Receive Invitation</h3>
+              <p class="text-gray-600">
+                Current coaches on the platform can invite you to join based on your experience and reputation in the community.
+              </p>
+            </div>
+            
+            <!-- Step 3 -->
+            <div class="text-center">
+              <div class="bg-purple-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                <span class="text-2xl font-bold text-purple-600">3</span>
+              </div>
+              <h3 class="text-xl font-semibold text-gray-800 mb-3">Start Coaching</h3>
+              <p class="text-gray-600">
+                Once invited and approved, create your profile and start connecting with students looking for quality instruction.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Why Invitation Only Section -->
+        <div class="bg-purple-50 rounded-2xl border border-purple-200 p-8 lg:p-12 mb-12">
+          <h2 class="text-3xl font-bold text-purple-800 mb-6 text-center">
+            Why Invitation Only?
+          </h2>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+              <h3 class="text-xl font-semibold text-purple-700 mb-3">Quality Assurance</h3>
+              <p class="text-purple-600 mb-6">
+                Our invitation-only model ensures that all coaches have been vetted by existing community members, maintaining high standards for instruction and professionalism.
+              </p>
+            </div>
+            
+            <div>
+              <h3 class="text-xl font-semibold text-purple-700 mb-3">Community Trust</h3>
+              <p class="text-purple-600 mb-6">
+                Students can trust that every coach on our platform has been recommended by someone already in our network, creating a trusted ecosystem of learning.
+              </p>
+            </div>
+            
+            <div>
+              <h3 class="text-xl font-semibold text-purple-700 mb-3">Network Effects</h3>
+              <p class="text-purple-600 mb-6">
+                Our coaches often collaborate, refer students to each other, and share resources, creating a supportive professional network.
+              </p>
+            </div>
+            
+            <div>
+              <h3 class="text-xl font-semibold text-purple-700 mb-3">Experience Focus</h3>
+              <p class="text-purple-600 mb-6">
+                We prioritize experienced instructors who have proven track records in both performing and teaching improv to their peers.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Get Started Section -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 lg:p-12 text-center">
+          <h2 class="text-3xl font-bold text-gray-800 mb-6">
+            Ready to Get Started?
+          </h2>
+          <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+            Connect with existing coaches in your community, attend improv events, and build relationships. 
+            The best way to get invited is to become an active and respected member of your local improv scene.
+          </p>
+          
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <%= link_to users_path, 
+                class: "inline-flex items-center px-8 py-4 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors duration-200 shadow-md hover:shadow-lg" do %>
+              <span>Browse Current Coaches</span>
+              <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+              </svg>
+            <% end %>
+            
+            <%= link_to search_path, 
+                class: "inline-flex items-center px-8 py-4 bg-white text-purple-600 font-semibold rounded-lg border border-purple-300 hover:bg-purple-50 transition-colors duration-200" do %>
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+              <span>Search for Coaches</span>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

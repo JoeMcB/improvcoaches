@@ -98,7 +98,7 @@
               <!-- Login/Join buttons -->
               <div class="flex space-x-2">
                 <%= link_to "Login", login_path, class: "btn-secondary" %>
-                <%= link_to "Join", join_path, class: "btn-primary" %>
+                <%= link_to "Become a Coach", "/become-a-coach", class: "btn-primary" %>
               </div>
             <% else %>
               <!-- User Menu -->
@@ -184,7 +184,7 @@
               <div class="fb-login-button" data-width="" data-size="medium" data-onlogin="FBLogin();" data-button-type="login_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"></div>
             </div>
             <%= link_to "Login", login_path, class: "block px-3 py-2 text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md" %>
-            <%= link_to "Join", join_path, class: "block px-3 py-2 text-base font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md" %>
+            <%= link_to "Become a Coach", "/become-a-coach", class: "block px-3 py-2 text-base font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md" %>
           </div>
         <% else %>
           <div class="border-t border-gray-200 pt-3 mt-3">

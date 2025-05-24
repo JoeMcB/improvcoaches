@@ -57,6 +57,22 @@
           <div class="flex justify-center">
             <%= will_paginate @users, class: "flex space-x-1" %>
           </div>
+
+          <!-- Become a Coach Section -->
+          <div class="mt-12 text-center bg-white rounded-xl shadow-sm border p-8">
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">Interested in Becoming a Coach?</h3>
+            <p class="text-gray-600 mb-6 max-w-2xl mx-auto">
+              All coaches on ImprovCoaches are invited by existing members of our community. 
+              This helps us maintain a high-quality network of experienced instructors.
+            </p>
+            <%= link_to "/become-a-coach", 
+                class: "inline-flex items-center px-6 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors duration-200" do %>
+              Learn More About Becoming a Coach
+              <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+              </svg>
+            <% end %>
+          </div>
         <% else %>
           <div class="text-center py-12">
             <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

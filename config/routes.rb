@@ -4,6 +4,7 @@ Improvcoaches::Application.routes.draw do
   root to: 'home#index'
   get '/about', to: 'home#about'
   get '/splash', to: 'home#splash'
+  get '/become-a-coach', to: 'home#become_a_coach'
   match '/search', to: 'search#search', via: %i[post get]
   get '/improv-books', to: 'home#resources', as: 'resources'
 
