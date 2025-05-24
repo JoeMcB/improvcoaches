@@ -50,9 +50,9 @@ Improvcoaches::Application.routes.draw do
 
   resources :users, path: 'coaches' do
     controller :ratings do
-      get 'like' => :like, defaults: {format: :js }
-      get 'dislike' => :dislike, defaults: {format: :js }
-      get 'bookmark' => :bookmark, defaults: {format: :js }
+      post 'like' => :like, defaults: {format: :js }
+      post 'dislike' => :dislike, defaults: {format: :js }
+      post 'bookmark' => :bookmark, defaults: {format: :js }
     end
 
     get 'email' => :email

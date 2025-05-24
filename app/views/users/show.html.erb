@@ -57,7 +57,7 @@
 								</div>
 							<% else %>
 								<!-- Rating Section -->
-								<div class="mb-6 rating" data-userid="<%= @user.id%>">
+								<div class="mb-6" id="rating-<%= @user.id%>">
 									<div class="text-center p-4 bg-gray-50 rounded-xl">
 										<div class="mb-3">
 											<% if @user.rating >= 0 && @user.rating < 20 %>
@@ -80,7 +80,7 @@
 									<!-- Like/Dislike Actions -->
 									<% if(current_user.nil? || @user.id != current_user.id) %>
 										<div class="flex gap-3 mt-4">
-											<%= link_to user_dislike_path(@user), remote: true, 
+											<%= link_to user_dislike_path(@user), method: :post, data: { turbo_stream: true },
 											    class: "flex-1 inline-flex items-center justify-center px-4 py-2 border border-red-300 text-sm font-medium rounded-lg text-red-700 bg-red-50 hover:bg-red-100 transition-colors duration-200" do %>
 												<svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
 													<path fill-rule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
@@ -88,7 +88,7 @@
 												Dislike
 											<% end %>
 											
-											<%= link_to user_like_path(@user), remote: true, 
+											<%= link_to user_like_path(@user), method: :post, data: { turbo_stream: true },
 											    class: "flex-1 inline-flex items-center justify-center px-4 py-2 border border-green-300 text-sm font-medium rounded-lg text-green-700 bg-green-50 hover:bg-green-100 transition-colors duration-200" do %>
 												<svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
 													<path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path>

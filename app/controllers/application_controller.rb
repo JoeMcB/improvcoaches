@@ -54,6 +54,10 @@ class ApplicationController < ActionController::Base
         format.js do
           render 'shared/_alert', locals: { level: 'info', message: 'Please log in to access that page.' }
         end
+
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace("alerts", partial: "shared/alert", locals: { level: 'info', message: 'Please log in to access that page.' })
+        end
       end
     end
   end

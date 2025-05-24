@@ -132,11 +132,11 @@ class User < ActiveRecord::Base
 
   # Rating Functions
   def total_ratings
-    liked_by_count + disliked_by_count
+    (liked_by_count || 0) + (disliked_by_count || 0)
   end
 
   def calculate_rating
-    total_ratings > 0 ? ((liked_by_count.to_f / total_ratings.to_f) * 100) : -1
+    total_ratings > 0 ? (((liked_by_count || 0).to_f / total_ratings.to_f) * 100) : -1
   end
 
   def update_rating
