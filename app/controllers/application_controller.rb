@@ -81,15 +81,18 @@ class ApplicationController < ActionController::Base
   end
 
   def set_authorized_user(user, remember_me)
+    domain = Rails.env.development? ? "localhost" : "improvcoaches.com"
+    
     if remember_me
-      cookies.permanent[:auth_token] = user.auth_token
+      cookies.permanent[:auth_token] = { value: user.auth_token, domain: domain }
     else
-      cookies[:auth_token] = user.auth_token
+      cookies[:auth_token] = { value: user.auth_token, domain: domain }
     end
   end
 
   def remove_authorized_user
-    cookies.delete(:auth_token)
+    domain = Rails.env.development? ? "localhost" : "improvcoaches.com"
+    cookies.delete(:auth_token, domain: domain)
   end
 
   def set_turbo_request_variant
