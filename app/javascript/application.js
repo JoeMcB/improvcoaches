@@ -17,13 +17,12 @@ import { initializeTabs } from './components/tabs';
 
 // Import page-specific functionality
 import { initializeScheduleEditor } from './pages/schedules';
-import { initializeUserForms } from './pages/users';
+import { initializeUserForms, initializePhotoPreview } from './pages/users';
 import { initializeSearchPage } from './pages/search';
 import { initializeSpacePage } from './pages/spaces';
 
-// Initialize the application when the DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-  console.log('Modern JavaScript with jQuery support now loaded!');
+// Function to initialize all components
+function initializeApp() {
   console.log('Initializing application...');
   
   // Initialize Bootstrap polyfills
@@ -38,19 +37,21 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initialize page-specific functionality
   initializeScheduleEditor();
   initializeUserForms();
+  initializePhotoPreview();
   initializeSearchPage();
   initializeSpacePage();
   
-  // No extra navbar-toggle handler needed here, it's handled in bootstrap-polyfills.js
-  
-  // Debug info about navbar elements
-  console.log("Navbar elements:", {
-    "navbar": document.querySelectorAll('.navbar').length,
-    "navbar-collapse": document.querySelectorAll('.navbar-collapse').length,
-    "navbar-toggle": document.querySelectorAll('.navbar-toggle').length,
-    "navbar-right": document.querySelectorAll('.navbar-right').length,
-    "nav links": document.querySelectorAll('ul.nav li a').length
-  });
-  
   console.log('Application initialization complete');
+}
+
+// Initialize the application when the DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('Modern JavaScript with jQuery support now loaded!');
+  initializeApp();
+});
+
+// Also initialize when Turbo loads a new page
+document.addEventListener('turbo:load', function() {
+  console.log('Turbo loaded new page, reinitializing...');
+  initializeApp();
 });

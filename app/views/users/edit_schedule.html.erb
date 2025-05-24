@@ -10,21 +10,17 @@
 
     <%= render 'shared/profile_navigation', current: :schedule %>
     
-    <div class="space-y-6 lg:space-y-0 lg:grid lg:grid-cols-12 lg:gap-8">
-
+    <div class="max-w-4xl mx-auto">
       <!-- Schedule Editor -->
-      <div class="lg:col-span-12">
-        <div class="card">
-          <div class="card-header">
-            <h3 class="text-lg font-medium text-heading">Weekly Availability</h3>
-            <p class="text-sm text-gray-600 mt-1">Click time slots to toggle your availability</p>
-          </div>
-          <div class="card-body">
-            <%= render "schedules/form", schedule: current_user.schedule %>
-          </div>
+      <div class="card">
+        <div class="card-header">
+          <h3 class="text-lg font-medium text-heading">Weekly Availability</h3>
+          <p class="text-sm text-gray-600 mt-1">Click time slots to toggle your availability</p>
+        </div>
+        <div class="card-body">
+          <%= render "schedules/form", schedule: current_user.schedule %>
         </div>
       </div>
-
     </div>
   </div>
 </div>

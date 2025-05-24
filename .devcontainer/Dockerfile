@@ -7,7 +7,7 @@ ENV PATH="$GEM_HOME/bin:$PATH"
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt-get update && \
-    apt-get install -y vim zsh git fonts-font-awesome libpq-dev build-essential libssl-dev libreadline-dev zlib1g-dev curl 
+    apt-get install -y vim zsh git fonts-font-awesome libpq-dev build-essential libssl-dev libvips-dev libreadline-dev zlib1g-dev curl 
 
 
 # Install Node.js and npm

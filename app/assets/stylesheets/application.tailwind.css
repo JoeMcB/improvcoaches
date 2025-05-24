@@ -196,6 +196,16 @@
     @apply shadow-md;
   }
   
+  /* Add spacing between cards for all screen sizes */
+  .card + .card {
+    @apply mt-6;
+  }
+
+  /* Custom border thickness for profile tabs */
+  .border-b-3 {
+    border-bottom-width: 3px;
+  }
+
   /* Mobile-specific improvements for forms */
   @media (max-width: 1024px) {
     .card {
@@ -220,11 +230,6 @@
     .card-body select {
       max-width: 100%;
       box-sizing: border-box;
-    }
-    
-    /* Add spacing between cards */
-    .card + .card {
-      @apply mt-6;
     }
     
     /* Enhanced checkbox styling */

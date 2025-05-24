@@ -10,11 +10,13 @@
 
     <%= render 'shared/profile_navigation', current: :experience %>
     
-    <div class="space-y-6 lg:space-y-0 lg:grid lg:grid-cols-12 lg:gap-8">
-
+    <div class="max-w-4xl mx-auto space-y-6">
       <!-- Experience Form -->
-      <div class="lg:col-span-8" id="experience_list">
-      <div class="card">
+      <div class="card" id="experience_list">
+        <div class="card-header">
+          <h3 class="text-lg font-medium text-heading">Theatre Experience</h3>
+          <p class="text-sm text-gray-600 mt-1">Select your experience at various theatres and venues</p>
+        </div>
         <div class="card-body">
           <%= form_for(current_user, class: "space-y-8") do |f| %>
             <%= hidden_field_tag :experience_update, 1 %>
@@ -73,21 +75,18 @@
         </div>
       </div>
 
-      <!-- Explanation Sidebar -->
-      <div class="lg:col-span-4">
-        <div class="card border-yellow-200">
-          <div class="card-header bg-yellow-50 border-yellow-200">
-            <h3 class="text-lg font-medium text-yellow-800">Explanation of Roles</h3>
-          </div>
-          <div class="card-body text-sm space-y-3">
-            <div><strong>Students</strong> take classes at a theatre.</div>
-            <div><strong>Performers</strong> are listed as performers by the theatre.</div>
-            <div><strong>Teachers</strong> teach full-length classes or workshops for the theatre.</div>
-            <div><strong>House Team</strong> members are currently on a house team created by the theatre.</div>
-          </div>
+      <!-- Explanation Card -->
+      <div class="card border-yellow-200">
+        <div class="card-header bg-yellow-50 border-yellow-200">
+          <h3 class="text-lg font-medium text-yellow-800">Explanation of Roles</h3>
+        </div>
+        <div class="card-body text-sm space-y-3">
+          <div><strong>Students</strong> take classes at a theatre.</div>
+          <div><strong>Performers</strong> are listed as performers by the theatre.</div>
+          <div><strong>Teachers</strong> teach full-length classes or workshops for the theatre.</div>
+          <div><strong>House Team</strong> members are currently on a house team created by the theatre.</div>
         </div>
       </div>
-      
     </div>
   </div>
 </div>

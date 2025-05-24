@@ -33,3 +33,33 @@ export function initializeUserForms() {
     }
   });
 }
+
+export function initializePhotoPreview() {
+  const avatarInput = document.getElementById('user_avatar');
+  if (!avatarInput) return;
+
+  avatarInput.addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      
+      reader.onload = function(e) {
+        const previewContainer = document.getElementById('photo-preview');
+        const previewImage = document.getElementById('preview-image');
+        
+        if (previewContainer && previewImage) {
+          previewImage.src = e.target.result;
+          previewContainer.classList.remove('hidden');
+        }
+      };
+      
+      reader.readAsDataURL(file);
+    } else {
+      // Hide preview if no valid image is selected
+      const previewContainer = document.getElementById('photo-preview');
+      if (previewContainer) {
+        previewContainer.classList.add('hidden');
+      }
+    }
+  });
+}

@@ -21,26 +21,37 @@ class SpaceImage < ActiveRecord::Base
   
   # Variant helpers for different image sizes
   def thumb
-    image.variant(resize_to_fill: [75, 50])
+    safe_variant(resize_to_fill: [75, 50])
   end
   
   def small
-    image.variant(resize_to_fill: [200, 150])
+    safe_variant(resize_to_fill: [200, 150])
   end
   
   def medium
-    image.variant(resize_to_fit: [400, 300])
+    safe_variant(resize_to_fit: [400, 300])
   end
   
   def large
-    image.variant(resize_to_fill: [800, 600])
+    safe_variant(resize_to_fill: [800, 600])
   end
   
   def xlarge
-    image.variant(resize_to_fill: [1200, 900])
+    safe_variant(resize_to_fill: [1200, 900])
   end
   
   private
+  
+  def safe_variant(options)
+    return image unless image.attached?
+    
+    if Rails.env.development?
+      # Skip image processing entirely in development
+      image
+    else
+      image.variant(options)
+    end
+  end
   
   def acceptable_image
     return unless image.attached?

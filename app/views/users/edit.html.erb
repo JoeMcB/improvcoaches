@@ -10,11 +10,12 @@
 
     <%= render 'shared/profile_navigation', current: :basics %>
     
-    <div class="space-y-6 lg:space-y-0 lg:grid lg:grid-cols-12 lg:gap-12">
+    <div class="max-w-4xl mx-auto">
+      <div class="space-y-6 lg:space-y-0 lg:grid lg:grid-cols-12 lg:gap-12">
 
-      <!-- Main Form Content -->
-      <div class="lg:col-span-9 min-w-0">
-        <div class="max-w-full overflow-hidden">
+        <!-- Main Form Content -->
+        <div class="lg:col-span-9 min-w-0">
+          <div class="max-w-full overflow-hidden">
           <%= form_for current_user, url: :profile_update, method: :post, class: "space-y-6 lg:space-y-8" do |f| %>
           
           <!-- Error Messages -->
@@ -183,11 +184,18 @@
               </div>
               <div class="card-body text-center">
                 <div class="mb-4">
-                  <%= image_tag avatar_image(current_user), class: "w-24 h-24 rounded-full object-cover mx-auto border-4 border-gray-100 shadow-sm" %>
+                  <%= image_tag avatar_image(current_user), class: "w-24 h-24 rounded-full object-cover mx-auto border-4 border-gray-100 shadow-sm", id: "current-avatar" %>
                 </div>
+                
+                <!-- Photo Preview Area (hidden by default) -->
+                <div id="photo-preview" class="mb-4 hidden">
+                  <p class="text-sm text-gray-600 mb-2">New photo preview:</p>
+                  <img id="preview-image" class="w-24 h-24 rounded-full object-cover mx-auto border-4 border-purple-200 shadow-sm" alt="Photo preview">
+                </div>
+                
                 <%= form_with(model: current_user, url: :profile_update, method: :post, local: true, class: "space-y-4") do |f| %>
                   <div class="w-full">
-                    <%= f.file_field :avatar, class: "block w-full text-sm text-gray-500 file:mr-2 file:py-2 file:px-3 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100 border border-gray-300 rounded-md" %>
+                    <%= f.file_field :avatar, class: "block w-full text-sm text-gray-500 file:mr-2 file:py-2 file:px-3 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100 border border-gray-300 rounded-md", accept: "image/*" %>
                   </div>
                   <%= f.submit "Update Photo", class: "btn-secondary w-full text-sm py-2" %>
                 <% end %>
@@ -229,7 +237,7 @@
 
         </div>
       </div>
-
     </div>
+
   </div>
 </div>

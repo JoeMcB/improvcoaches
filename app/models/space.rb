@@ -44,22 +44,22 @@ class Space < ActiveRecord::Base
   
   # Helper methods for Active Storage variants
   def image_thumb
-    primary_image&.image&.variant(resize_to_fill: [75, 50])
+    primary_image&.thumb
   end
   
   def image_small
-    primary_image&.image&.variant(resize_to_fill: [200, 150])
+    primary_image&.small
   end
   
   def image_medium
-    primary_image&.image&.variant(resize_to_fit: [400, 300])
+    primary_image&.medium
   end
   
   def image_large
-    primary_image&.image&.variant(resize_to_fill: [800, 600])
+    primary_image&.large
   end
   
   def image_xlarge
-    primary_image&.image&.variant(resize_to_fill: [1200, 900])
+    primary_image&.xlarge
   end
 end
