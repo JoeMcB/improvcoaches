@@ -56,7 +56,7 @@ Improvcoaches::Application.routes.draw do
     end
 
     get 'email' => :email
-    post 'email' => :email_send, defaults: {format: :js }
+    post 'email' => :email_send
     post 'comment' => :comment_send, defaults: {format: :js }
   end
 

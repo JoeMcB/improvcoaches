@@ -1,7 +1,6 @@
 /**
  * Tabs component
  * Provides tab switching functionality across the application
- * Uses jQuery for Bootstrap 3 compatibility
  */
 
 export function initializeTabs() {
@@ -11,7 +10,7 @@ export function initializeTabs() {
     return;
   }
   
-  // Initialize Bootstrap tabs using jQuery
+  // Initialize tabs using jQuery
   $('.tabs').on('click', function(e) {
     e.preventDefault();
     

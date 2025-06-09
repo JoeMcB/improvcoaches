@@ -9,8 +9,6 @@ import "@hotwired/turbo-rails"
 // Use jQuery from CDN instead of importing it
 // jQuery will be loaded from the CDN in the application layout
 
-// Import utility modules
-import { initializeBootstrapPolyfills, initializeBootstrapComponents } from './utils/bootstrap-polyfills';
 
 // Import components
 import { initializeTabs } from './components/tabs';
@@ -25,11 +23,6 @@ import { initializeSpacePage } from './pages/spaces';
 function initializeApp() {
   console.log('Initializing application...');
   
-  // Initialize Bootstrap polyfills
-  initializeBootstrapPolyfills();
-  
-  // Initialize Bootstrap components - must be done first to ensure Navbar works
-  initializeBootstrapComponents();
   
   // Initialize shared components
   initializeTabs();

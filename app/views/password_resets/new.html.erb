@@ -4,7 +4,7 @@
     <p class="text-sm text-gray-600">Enter your email address to receive reset instructions</p>
   </div>
   
-  <%= form_tag password_resets_path, method: :post, class: "space-y-4" do %>
+  <%= form_tag password_resets_path, method: :post, class: "space-y-4", data: { turbo: false } do %>
     <div>
       <%= label_tag :email, "Email Address", class: "block text-sm font-medium text-gray-700 mb-2" %>
       <%= text_field_tag :email, params[:email], 

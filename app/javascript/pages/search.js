@@ -1,7 +1,6 @@
 /**
  * Search page functionality
  * Handles search options panel and collapse animation
- * Uses jQuery for Bootstrap 3 compatibility
  */
 
 export function initializeSearchPage() {

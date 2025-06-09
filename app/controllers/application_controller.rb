@@ -85,17 +85,17 @@ class ApplicationController < ActionController::Base
   end
 
   def set_authorized_user(user, remember_me)
-    domain = Rails.env.development? ? "localhost" : "improvcoaches.com"
+    domain = Rails.env.development? ? nil : "improvcoaches.com"
     
     if remember_me
-      cookies.permanent[:auth_token] = { value: user.auth_token, domain: domain }
+      cookies.permanent[:auth_token] = { value: user.auth_token, domain: domain }.compact
     else
-      cookies[:auth_token] = { value: user.auth_token, domain: domain }
+      cookies[:auth_token] = { value: user.auth_token, domain: domain }.compact
     end
   end
 
   def remove_authorized_user
-    domain = Rails.env.development? ? "localhost" : "improvcoaches.com"
+    domain = Rails.env.development? ? nil : "improvcoaches.com"
     cookies.delete(:auth_token, domain: domain)
   end
 

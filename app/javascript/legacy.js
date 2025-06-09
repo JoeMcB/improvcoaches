@@ -52,16 +52,18 @@ document.addEventListener('DOMContentLoaded', function() {
   // Search functionality (originally in search.js)
   const searchOptions = document.getElementById('search-options');
   if (searchOptions) {
-    // Listen for Bootstrap collapse events
-    ['hidden.bs.collapse', 'shown.bs.collapse'].forEach(event => {
-      searchOptions.addEventListener(event, function() {
+    // Handle manual collapse functionality
+    const toggleButton = document.querySelector("#search .panel-heading .pull-right");
+    if (toggleButton) {
+      toggleButton.addEventListener('click', function(e) {
+        e.preventDefault();
         const glyphicon = document.querySelector("#search .panel-heading .glyphicon");
         if (glyphicon) {
           glyphicon.classList.toggle('glyphicon-collapse-up');
           glyphicon.classList.toggle('glyphicon-collapse-down');
         }
       });
-    });
+    }
   }
 
   // Spaces functionality (originally in spaces.js)
@@ -105,28 +107,23 @@ document.addEventListener('DOMContentLoaded', function() {
   tabElements.forEach(tab => {
     tab.addEventListener('click', function(e) {
       e.preventDefault();
-      // If using Bootstrap tabs
-      if (typeof bootstrap !== 'undefined') {
-        new bootstrap.Tab(this).show();
-      } else {
-        // Manual tab handling if needed
-        const targetSelector = this.getAttribute('data-bs-target') || this.getAttribute('href');
-        if (targetSelector) {
-          // Hide all tab content
-          document.querySelectorAll('.tab-pane').forEach(pane => {
-            pane.classList.remove('active', 'show');
-          });
-          // Show the selected tab content
-          const targetTab = document.querySelector(targetSelector);
-          if (targetTab) {
-            targetTab.classList.add('active', 'show');
-          }
-          // Update active state on tab buttons
-          document.querySelectorAll('.tabs').forEach(t => {
-            t.classList.remove('active');
-          });
-          this.classList.add('active');
+      // Manual tab handling
+      const targetSelector = this.getAttribute('data-bs-target') || this.getAttribute('href');
+      if (targetSelector) {
+        // Hide all tab content
+        document.querySelectorAll('.tab-pane').forEach(pane => {
+          pane.classList.remove('active', 'show');
+        });
+        // Show the selected tab content
+        const targetTab = document.querySelector(targetSelector);
+        if (targetTab) {
+          targetTab.classList.add('active', 'show');
         }
+        // Update active state on tab buttons
+        document.querySelectorAll('.tabs').forEach(t => {
+          t.classList.remove('active');
+        });
+        this.classList.add('active');
       }
     });
   });

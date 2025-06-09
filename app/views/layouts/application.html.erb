@@ -155,15 +155,24 @@
       <div class="space-y-1 px-2 pb-3 pt-2 bg-white border-t border-gray-200 shadow-lg">
         <!-- City selection for mobile -->
         <div class="border-b border-gray-200 pb-3 mb-3">
-          <div class="text-sm font-medium text-gray-500 px-3 py-2">Current City</div>
-          <div class="text-base font-medium text-gray-900 px-3 py-1"><%= current_city.name %></div>
-          <% City.all.each do |city| %>
-            <% if current_city != city %>
-              <a href="<%= root_url(subdomain: city.subdomain) %>" class="block px-3 py-2 text-sm text-gray-600 hover:text-gray-900">
-                <%= city.name %>
-              </a>
+          <button class="w-full flex items-center justify-between px-3 py-2 text-left" id="mobile-city-dropdown-button">
+            <div>
+              <div class="text-sm font-medium text-gray-500">Current City</div>
+              <div class="text-base font-medium text-gray-900"><%= current_city.name %></div>
+            </div>
+            <svg class="h-4 w-4 text-gray-400 transition-transform duration-200" fill="currentColor" viewBox="0 0 20 20" id="mobile-city-arrow">
+              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+          <div class="hidden mt-2" id="mobile-city-options">
+            <% City.all.each do |city| %>
+              <% if current_city != city %>
+                <a href="<%= root_url(subdomain: city.subdomain) %>" class="block px-3 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded">
+                  <%= city.name %>
+                </a>
+              <% end %>
             <% end %>
-          <% end %>
+          </div>
         </div>
         
         <!-- Navigation links -->
@@ -183,7 +192,7 @@
             <div class="mb-3">
               <div class="fb-login-button" data-width="" data-size="medium" data-onlogin="FBLogin();" data-button-type="login_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"></div>
             </div>
-            <%= link_to "Login", login_path, class: "block px-3 py-2 text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md" %>
+            <%= link_to "Login", login_path, class: "block px-3 py-2 text-base font-medium text-purple-600 hover:text-purple-700 hover:bg-purple-50 rounded-md border border-purple-200" %>
             <%= link_to "Become a Coach", "/become-a-coach", class: "block px-3 py-2 text-base font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md" %>
           </div>
         <% else %>
@@ -407,6 +416,34 @@
           userMenuDropdown.classList.toggle('hidden');
           const isOpen = !userMenuDropdown.classList.contains('hidden');
           newUserMenuButton.setAttribute('aria-expanded', isOpen.toString());
+        });
+      }
+      
+      // Mobile city dropdown
+      const mobileCityButton = document.getElementById('mobile-city-dropdown-button');
+      const mobileCityOptions = document.getElementById('mobile-city-options');
+      const mobileCityArrow = document.getElementById('mobile-city-arrow');
+      
+      if (mobileCityButton && mobileCityOptions && mobileCityArrow) {
+        // Remove any existing event listeners
+        const newMobileCityButton = mobileCityButton.cloneNode(true);
+        mobileCityButton.parentNode.replaceChild(newMobileCityButton, mobileCityButton);
+        
+        newMobileCityButton.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          mobileCityOptions.classList.toggle('hidden');
+          const isOpen = !mobileCityOptions.classList.contains('hidden');
+          
+          // Rotate arrow
+          const arrow = document.getElementById('mobile-city-arrow');
+          if (arrow) {
+            if (isOpen) {
+              arrow.style.transform = 'rotate(180deg)';
+            } else {
+              arrow.style.transform = 'rotate(0deg)';
+            }
+          }
         });
       }
       
