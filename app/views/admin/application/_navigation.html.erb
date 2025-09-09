@@ -1,0 +1,67 @@
+<%#
+# Navigation
+#
+# This partial is used to display the navigation in Administrate.
+# By default, the navigation contains navigation links
+# for all resources in the admin dashboard.
+#
+# You can override this partial to display a custom navigation.
+# For example, you can add a link to a custom page or a link to a third-party service.
+%>
+
+<nav class="navigation" role="navigation">
+  <div class="navigation__wrapper">
+    <div class="navigation__section">
+      <h3 class="navigation__heading">Dashboard</h3>
+      <%= link_to "Overview", admin_dashboard_path, class: "navigation__link #{'navigation__link--active' if request.path == admin_dashboard_path}" %>
+    </div>
+
+    <div class="navigation__section">
+      <h3 class="navigation__heading">Users & Access</h3>
+      <%= link_to "Users", admin_users_path, class: "navigation__link #{'navigation__link--active' if controller_name == 'users'}" %>
+      <%= link_to "Invites", admin_invites_path, class: "navigation__link #{'navigation__link--active' if controller_name == 'invites'}" %>
+    </div>
+
+    <div class="navigation__section">
+      <h3 class="navigation__heading">Content</h3>
+      <%= link_to "Spaces", admin_spaces_path, class: "navigation__link #{'navigation__link--active' if controller_name == 'spaces'}" %>
+      <%= link_to "Space Images", admin_space_images_path, class: "navigation__link #{'navigation__link--active' if controller_name == 'space_images'}" %>
+      <%= link_to "Theatres", admin_theatres_path, class: "navigation__link #{'navigation__link--active' if controller_name == 'theatres'}" %>
+      <%= link_to "Experiences", admin_experiences_path, class: "navigation__link #{'navigation__link--active' if controller_name == 'experiences'}" %>
+      <%= link_to "Experience Types", admin_experience_types_path, class: "navigation__link #{'navigation__link--active' if controller_name == 'experience_types'}" %>
+    </div>
+
+    <div class="navigation__section">
+      <h3 class="navigation__heading">Scheduling</h3>
+      <%= link_to "Schedules", admin_schedules_path, class: "navigation__link #{'navigation__link--active' if controller_name == 'schedules'}" %>
+      <%= link_to "Time Blocks", admin_time_blocks_path, class: "navigation__link #{'navigation__link--active' if controller_name == 'time_blocks'}" %>
+    </div>
+
+    <div class="navigation__section">
+      <h3 class="navigation__heading">Locations</h3>
+      <%= link_to "Cities", admin_cities_path, class: "navigation__link #{'navigation__link--active' if controller_name == 'cities'}" %>
+      <%= link_to "Countries", admin_countries_path, class: "navigation__link #{'navigation__link--active' if controller_name == 'countries'}" %>
+    </div>
+
+    <div class="navigation__section">
+      <h3 class="navigation__heading">Tools</h3>
+      <%= link_to "Export Users", export_admin_users_path, class: "navigation__link" %>
+      <%= link_to "Main Site", root_path, target: "_blank", class: "navigation__link" %>
+    </div>
+  </div>
+</nav>
+
+<style>
+  .navigation__section { margin-bottom: 2rem; }
+  .navigation__heading { 
+    font-size: 0.75rem; 
+    text-transform: uppercase; 
+    letter-spacing: 0.05em; 
+    opacity: 0.6; 
+    margin-bottom: 0.5rem;
+  }
+  .navigation__link--active { 
+    background-color: rgba(255, 255, 255, 0.1); 
+    font-weight: bold;
+  }
+</style>

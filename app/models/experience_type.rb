@@ -9,5 +9,7 @@
 #
 
 class ExperienceType < ActiveRecord::Base
-  has_many :user_theatres
+  has_many :experiences
+  has_many :users, through: :experiences
+  has_many :theatres, through: :experiences
 end

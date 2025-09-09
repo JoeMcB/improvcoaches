@@ -1,0 +1,13 @@
+<%= link_to "Send Password Reset Email", 
+    password_reset_admin_user_path(field.resource),
+    method: :post,
+    data: { 
+      confirm: "Send password reset email to #{field.resource.email}?",
+      turbo_method: :post 
+    },
+    class: "btn btn-warning" %>
+<% if field.resource.password_reset_time.present? %>
+  <p class="text-muted mt-2">
+    Last reset sent: <%= field.resource.password_reset_time.strftime("%B %d, %Y at %I:%M %p") %>
+  </p>
+<% end %>

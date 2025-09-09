@@ -1,6 +1,32 @@
 # frozen_string_literal: true
 
 Improvcoaches::Application.routes.draw do
+  namespace :admin do
+      get 'dashboard', to: 'dashboard#index'
+      
+      resources :cities
+      resources :countries
+      resources :experiences
+      resources :experience_types
+      resources :invites
+      resources :schedules
+      resources :spaces
+      resources :space_images
+      resources :theatres
+      resources :time_blocks
+      resources :users do
+        member do
+          post :password_reset
+        end
+        collection do
+          post :bulk_activate
+          post :bulk_deactivate
+          get :export
+        end
+      end
+
+      root to: "dashboard#index"
+    end
   root to: 'home#index'
   get '/about', to: 'home#about'
   get '/splash', to: 'home#splash'

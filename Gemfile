@@ -1,4 +1,4 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 ruby '3.3.5'
 
 gem 'rails', '~> 7.1.3'
@@ -6,6 +6,10 @@ gem 'propshaft', '>= 1.1.0'
 gem "yard", ">= 0.9.11"
 gem 'puma'
 gem 'pg', '~>1.5'
+
+# Admin UI
+gem 'administrate'
+gem 'administrate-field-active_storage'
 
 gem "aws-sdk-s3", require: false
 
@@ -36,6 +40,9 @@ gem 'mutex_m'
 
 #pagination
 gem 'will_paginate'
+
+# Administrate pagination requires Kaminari
+gem 'kaminari', '~> 1.2'
 
 #recommendation
 gem 'recommendable'
