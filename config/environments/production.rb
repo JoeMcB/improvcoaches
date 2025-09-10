@@ -24,7 +24,8 @@ Rails.application.configure do
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
   # Compress CSS using a preprocessor.
-  # Not applicable with Propshaft
+  # Disable SassC compression to prevent issues with modern CSS syntax
+  config.assets.css_compressor = nil
 
   # Do not fall back to assets pipeline if a precompiled asset is missed.
   # Not applicable with Propshaft

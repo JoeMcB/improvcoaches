@@ -1,0 +1,14 @@
+/*
+ * This file includes Administrate styles for Propshaft
+ * Since Propshaft doesn't compile SCSS, we import the individual CSS components
+ */
+
+/* Import Normalize reset */
+@import "administrate/reset/normalize.css";
+
+/* Import Selectize styles */
+@import "selectize.css";
+@import "selectize.default.css";
+
+/* Import Administrate components - these need to be CSS not SCSS */
+/* For now, we'll create a compiled version */

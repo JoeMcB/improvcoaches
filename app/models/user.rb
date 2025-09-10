@@ -123,6 +123,17 @@ class User < ActiveRecord::Base
     name
   end
 
+  def is_admin?
+    is_admin == 1
+  end
+  
+  # Virtual attribute for admin dashboard
+  def password_reset
+    # This is just a placeholder for the admin dashboard
+    # The actual functionality is in the send_password_reset method
+    nil
+  end
+
   # invite Funcitons
   def add_invite
     Invite.create do |i|
