@@ -1,0 +1,9 @@
+<%#
+# Stylesheet Partial Override for Propshaft
+#
+# This overrides Administrate's default stylesheet partial
+# to work with Propshaft instead of Sprockets
+%>
+
+<%= stylesheet_link_tag "administrate-compiled", "data-turbo-track": "reload" %>
+<%= yield :stylesheet %>

@@ -1,0 +1,16 @@
+<%#
+# Javascript Partial Override for Propshaft
+#
+# This overrides Administrate's default javascript partial
+# to work with Propshaft and our esbuild setup
+%>
+
+<%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+<%= yield :javascript %>
+
+<% if Rails.env.test? %>
+  <%= javascript_tag do %>
+    $.fx.off = true;
+    $.ajaxSetup({ async: false });
+  <% end %>
+<% end %>
