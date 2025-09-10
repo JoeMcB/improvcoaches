@@ -69,6 +69,6 @@ class TheatreDashboard < Administrate::BaseDashboard
   # Overwrite this method to customize how theatres are displayed
   # across all pages of the admin dashboard.
   def display_resource(theatre)
-    theatre.name || "Theatre ##{theatre.id}"
+    theatre.name.presence || "Theatre ##{theatre.id}"
   end
 end

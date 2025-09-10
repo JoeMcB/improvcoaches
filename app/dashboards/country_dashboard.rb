@@ -60,6 +60,6 @@ class CountryDashboard < Administrate::BaseDashboard
   # Overwrite this method to customize how countries are displayed
   # across all pages of the admin dashboard.
   def display_resource(country)
-    country.name || "Country ##{country.id}"
+    country.name.presence || "Country ##{country.id}"
   end
 end

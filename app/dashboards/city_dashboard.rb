@@ -75,10 +75,10 @@ class CityDashboard < Administrate::BaseDashboard
   # Overwrite this method to customize how cities are displayed
   # across all pages of the admin dashboard.
   def display_resource(city)
-    if city.country
-      "#{city.name} (#{city.country.name})"
+    if city.name.present?
+      city.country ? "#{city.name} (#{city.country.name})" : city.name
     else
-      city.name || "City ##{city.id}"
+      "City ##{city.id}"
     end
   end
 end

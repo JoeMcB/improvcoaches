@@ -143,6 +143,6 @@ class UserDashboard < Administrate::BaseDashboard
 
   # Customize how users are displayed
   def display_resource(user)
-    user.name || "User ##{user.id}"
+    user.name.presence || "User ##{user.id}"
   end
 end

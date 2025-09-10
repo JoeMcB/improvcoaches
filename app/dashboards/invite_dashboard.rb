@@ -10,7 +10,7 @@ class InviteDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     id: Field::Number,
     code: Field::String,
-    owner: Field::BelongsTo,
+    owner: Field::BelongsTo.with_options(class_name: "User"),
     recipient: Field::String,
     status: Field::String,
     user: Field::HasOne,
