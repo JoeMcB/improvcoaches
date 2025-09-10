@@ -63,8 +63,11 @@ class SpaceImageDashboard < Administrate::BaseDashboard
 
   # Overwrite this method to customize how space images are displayed
   # across all pages of the admin dashboard.
-  #
-  # def display_resource(space_image)
-  #   "SpaceImage ##{space_image.id}"
-  # end
+  def display_resource(space_image)
+    if space_image.space
+      "#{space_image.space.name} - Image ##{space_image.sort_order || space_image.id}"
+    else
+      "Space Image ##{space_image.id}"
+    end
+  end
 end

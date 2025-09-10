@@ -62,8 +62,7 @@ class ExperienceTypeDashboard < Administrate::BaseDashboard
 
   # Overwrite this method to customize how experience types are displayed
   # across all pages of the admin dashboard.
-  #
-  # def display_resource(experience_type)
-  #   "ExperienceType ##{experience_type.id}"
-  # end
+  def display_resource(experience_type)
+    experience_type.name || "Experience Type ##{experience_type.id}"
+  end
 end

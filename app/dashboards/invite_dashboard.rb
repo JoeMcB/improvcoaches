@@ -68,8 +68,13 @@ class InviteDashboard < Administrate::BaseDashboard
 
   # Overwrite this method to customize how invites are displayed
   # across all pages of the admin dashboard.
-  #
-  # def display_resource(invite)
-  #   "Invite ##{invite.id}"
-  # end
+  def display_resource(invite)
+    if invite.code && invite.recipient
+      "#{invite.code} for #{invite.recipient}"
+    elsif invite.code
+      "Invite #{invite.code}"
+    else
+      "Invite ##{invite.id}"
+    end
+  end
 end

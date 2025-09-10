@@ -65,8 +65,15 @@ class TimeBlockDashboard < Administrate::BaseDashboard
 
   # Overwrite this method to customize how time blocks are displayed
   # across all pages of the admin dashboard.
-  #
-  # def display_resource(time_block)
-  #   "TimeBlock ##{time_block.id}"
-  # end
+  def display_resource(time_block)
+    days = %w[Sunday Monday Tuesday Wednesday Thursday Friday Saturday]
+    day_name = days[time_block.day] if time_block.day && time_block.day.between?(0, 6)
+    
+    if day_name && time_block.hour && time_block.minute
+      time = "#{time_block.hour.to_s.rjust(2, '0')}:#{time_block.minute.to_s.rjust(2, '0')}"
+      "#{day_name} #{time}"
+    else
+      "Time Block ##{time_block.id}"
+    end
+  end
 end

@@ -62,8 +62,12 @@ class ExperienceDashboard < Administrate::BaseDashboard
 
   # Overwrite this method to customize how experiences are displayed
   # across all pages of the admin dashboard.
-  #
-  # def display_resource(experience)
-  #   "Experience ##{experience.id}"
-  # end
+  def display_resource(experience)
+    parts = []
+    parts << experience.user.name if experience.user
+    parts << experience.experience_type.name if experience.experience_type
+    parts << "@ #{experience.theatre.name}" if experience.theatre
+    
+    parts.any? ? parts.join(" - ") : "Experience ##{experience.id}"
+  end
 end
