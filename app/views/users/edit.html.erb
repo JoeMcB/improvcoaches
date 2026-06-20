@@ -149,14 +149,14 @@
               <div>
                 <%= f.label :password, "New Password", class: "block text-sm font-medium text-gray-700 mb-2" %>
                 <div class="w-full">
-                  <%= f.password_field :password, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm", placeholder: "Leave blank to keep current password" %>
+                  <%= f.password_field :password, autocomplete: "new-password", class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm", placeholder: "Leave blank to keep current password" %>
                 </div>
               </div>
 
               <div>
                 <%= f.label :password_confirmation, "Confirm New Password", class: "block text-sm font-medium text-gray-700 mb-2" %>
                 <div class="w-full">
-                  <%= f.password_field :password_confirmation, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm" %>
+                  <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm" %>
                 </div>
               </div>
 
