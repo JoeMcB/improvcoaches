@@ -16,7 +16,7 @@ class SpacesController < ApplicationController
   # GET /spaces/1
   # GET /spaces/1.json
   def show
-    @space = Space.find(params[:id])
+    @space = Space.friendly.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -37,20 +37,20 @@ class SpacesController < ApplicationController
 
   # GET /spaces/1/edit
   def edit
-    @space = Space.find(params[:id])
+    @space = Space.friendly.find(params[:id])
   end
 
   # POST /spaces
   # POST /spaces.json
   def create
-    @space = Space.new(params[:space])
+    @space = Space.new(space_params)
 
     respond_to do |format|
       if @space.save
         format.html { redirect_to @space, notice: 'Space was successfully created.' }
         format.json { render json: @space, status: :created, location: @space }
       else
-        format.html { render action: "new" }
+        format.html { render action: "new", status: :unprocessable_entity }
         format.json { render json: @space.errors, status: :unprocessable_entity }
       end
     end
@@ -59,21 +59,21 @@ class SpacesController < ApplicationController
   # PUT /spaces/1
   # PUT /spaces/1.json
   def update
-    @space = Space.find(params[:id])
+    @space = Space.friendly.find(params[:id])
 
     respond_to do |format|
-      if @space.update_attributes(params[:space])
+      if @space.update(space_params)
         format.html { redirect_to edit_space_url(@space), notice: 'Space was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render action: "edit", status: :unprocessable_entity }
         format.json { render json: @space.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def add_image
-    @space = Space.find(params[:space_id])
+    @space = Space.friendly.find(params[:id])
 
     respond_to do |format|
       space_image = SpaceImage.new
@@ -106,7 +106,7 @@ class SpacesController < ApplicationController
   # DELETE /spaces/1
   # DELETE /spaces/1.json
   def destroy
-    @space = Space.find(params[:id])
+    @space = Space.friendly.find(params[:id])
     @space.destroy
 
     respond_to do |format|
@@ -117,5 +117,15 @@ class SpacesController < ApplicationController
 
   def remove_image
 
+  end
+
+  private
+
+  def space_params
+    params.require(:space).permit(
+      :name, :description, :city_id, :rating, :website_link, :yelp_link,
+      :facebook_link, :address, :address_2, :zip, :real_city, :state, :phone,
+      :is_rehearsal, :is_performance, :email
+    )
   end
 end

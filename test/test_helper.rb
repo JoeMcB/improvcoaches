@@ -1,13 +1,22 @@
-ENV["RAILS_ENV"] = "test"
-require File.expand_path('../../config/environment', __FILE__)
-require 'rails/test_help'
+ENV["RAILS_ENV"] ||= "test"
+require_relative "../config/environment"
+require "rails/test_help"
 
 class ActiveSupport::TestCase
-  # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
-  #
-  # Note: You'll currently still have to declare fixtures explicitly in integration tests
-  # -- they do not yet inherit this setting
   fixtures :all
+end
 
-  # Add more helper methods to be used by all tests here...
+class ActionDispatch::IntegrationTest
+  setup do
+    host! "www.improvcoaches.com"
+  end
+
+  def sign_in_as(user, password: "secret")
+    post login_path, params: { email: user.email, password: password }
+    assert_redirected_to root_path
+  end
+end
+
+class ActionMailer::TestCase
+  include Rails.application.routes.url_helpers
 end

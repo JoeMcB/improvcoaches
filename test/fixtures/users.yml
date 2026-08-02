@@ -1,15 +1,59 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  name: MyString
-  email: MyString
+member:
+  name: Regular Member
+  email: member@example.com
   is_coach: false
-  bio: MyText
-  password_digest: MyString
+  is_improv: false
+  is_sketch: false
+  is_active: true
+  is_admin: 0
+  city: new_york
+  bio: Just browsing
+  password_digest: <%= BCrypt::Password.create("secret") %>
+  auth_token: member-token
+  slug: regular-member
 
-two:
-  name: MyString
-  email: MyString
-  is_coach: false
-  bio: MyText
-  password_digest: MyString
+coach:
+  name: Alice Coach
+  email: alice@example.com
+  is_coach: true
+  is_improv: true
+  is_sketch: false
+  is_active: true
+  is_admin: 0
+  city: new_york
+  bio: Veteran improv teacher
+  password_digest: <%= BCrypt::Password.create("secret") %>
+  auth_token: coach-token
+  slug: alice-coach
+  rating: 80
+
+chicago_coach:
+  name: Chicago Coach
+  email: chicago@example.com
+  is_coach: true
+  is_improv: true
+  is_sketch: false
+  is_active: true
+  is_admin: 0
+  city: chicago
+  bio: Chicago teacher
+  password_digest: <%= BCrypt::Password.create("secret") %>
+  auth_token: chicago-token
+  slug: chicago-coach
+  rating: 90
+
+admin:
+  name: Site Admin
+  email: admin@example.com
+  is_coach: true
+  is_improv: true
+  is_sketch: true
+  is_active: true
+  is_admin: 1
+  city: new_york
+  bio: Keeps the lights on
+  password_digest: <%= BCrypt::Password.create("secret") %>
+  auth_token: admin-token
+  slug: site-admin

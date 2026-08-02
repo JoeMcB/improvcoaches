@@ -1,74 +1,62 @@
-source 'http://rubygems.org'
-ruby '3.3.5'
+source "https://rubygems.org"
+ruby "3.4.10"
 
-gem 'rails', '~> 7.1.3'
-gem 'propshaft', '>= 1.1.0'
-gem "yard", ">= 0.9.11"
-gem 'puma'
-gem 'pg', '~>1.5'
+gem "rails", "~> 8.1.3"
+gem "propshaft"
+gem "puma"
+gem "pg", "~> 1.6"
 
 gem "aws-sdk-s3", require: false
 
-# jQuery gems removed as part of migration to vanilla JavaScript
-# If needed, uncomment these gems and update application.html.erb
-# gem 'jquery-rails'
-# gem 'jquery-ui-rails'
-
-
-gem 'bcrypt-ruby'
-gem 'bugsnag'
-gem 'concurrent-ruby'
-gem 'dotenv-rails', :groups => [:development, :test]
-gem 'listen', groups: [:development, :test]
-gem 'cssbundling-rails', '~> 1.4'
-gem 'jsbundling-rails', '~> 1.2'
-gem 'turbo-rails'
-gem 'mimemagic'
-gem 'bigdecimal'
+gem "bcrypt"
+gem "bugsnag"
+gem "dotenv-rails", groups: %i[development test]
+gem "listen", groups: %i[development test]
+gem "cssbundling-rails"
+gem "jsbundling-rails"
+gem "turbo-rails"
+gem "bigdecimal"
 
 
 #Image Processing
-gem 'font-awesome-rails'
-gem 'image_processing', '~> 1.2'
+gem "image_processing", "~> 2.0"
+gem "ruby-vips", "~> 2.3"
 
 gem "recaptcha", "~> 5.12", require: "recaptcha/rails"
-gem 'mutex_m'
+gem "mutex_m"
 
 #pagination
-gem 'will_paginate'
+gem "will_paginate"
 
 #recommendation
-gem 'recommendable'
-gem 'resque'
-gem 'resque-loner'
+gem "recommendable"
+gem "resque"
 
-gem 'validates_email_format_of'
+gem "validates_email_format_of"
 
-gem 'meta-tags', :require => 'meta_tags'
+gem "meta-tags", require: "meta_tags"
 
-gem 'omniauth'
-gem 'omniauth-facebook'
-gem 'fb-channel-file'
-gem 'newrelic_rpm'
-gem 'friendly_id'
-gem 'open_uri_redirections'
+gem "omniauth"
+gem "omniauth-facebook"
+gem "omniauth-rails_csrf_protection"
+gem "newrelic_rpm"
+gem "friendly_id"
 
 group :development do
-  gem 'annotate'
-  gem 'byebug'
-  gem 'pry'
-  gem 'pry-rails'
-  gem 'pry-byebug'
-  gem 'meta_request'
+  gem "foreman", "~> 0.90"
+  gem "pry"
+  gem "pry-rails"
+  gem "meta_request"
   gem "better_errors"
   gem "binding_of_caller"
+  gem "yard"
 
   # Editor Gems
-  gem 'reek'
-  gem 'rubocop'
+  gem "reek"
+  gem "rubocop"
+  gem "rubocop-rails", require: false
 end
 
-
-group :production do
-  gem 'rails_12factor'
+group :development, :test do
+  gem "debug", platforms: :mri
 end

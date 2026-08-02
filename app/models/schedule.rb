@@ -31,7 +31,7 @@ class Schedule < ActiveRecord::Base
     success = true
 
     end_hour = start_hour if end_hour.nil?
-    end_hour = start_minute if end_minute.nil?
+    end_minute = start_minute if end_minute.nil?
 
     while h < end_hour || (h == end_hour && m <= end_minute)
       if time_blocks.where(

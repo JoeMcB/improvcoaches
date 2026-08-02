@@ -212,8 +212,8 @@
                   <p class="text-sm text-gray-600 mb-4">
                     Done with Facebook? Unlink your account and manually reset your password.
                   </p>
-                  <%= link_to "Unlink from Facebook", :profile_unlink, 
-                      data: { confirm: "Unlink and reset password?" }, 
+                  <%= link_to "Unlink from Facebook", :profile_unlink,
+                      data: { turbo_method: :delete, turbo_confirm: "Unlink and reset password?" },
                       class: "w-full inline-flex items-center justify-center px-3 py-2 border border-red-300 rounded-lg text-sm font-medium text-red-700 bg-red-50 hover:bg-red-100 transition-colors duration-200" %>
                 </div>
               </div>
@@ -228,8 +228,8 @@
                 <p class="text-sm text-gray-600 mb-4">
                   Done with improv? Concerned about your data? Account deletion is permanent.
                 </p>
-                <%= link_to "Delete Account", :profile_destroy, 
-                    data: { confirm: "Delete your account? This action cannot be undone." }, 
+                <%= link_to "Delete Account", :profile_destroy,
+                    data: { turbo_method: :delete, turbo_confirm: "Delete your account? This action cannot be undone." },
                     class: "inline-flex items-center justify-center px-3 py-2 border border-red-300 rounded-lg text-sm font-medium text-red-700 bg-red-50 hover:bg-red-100 transition-colors duration-200" %>
               </div>
             </div>

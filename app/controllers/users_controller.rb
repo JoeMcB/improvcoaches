@@ -4,7 +4,7 @@ require 'open-uri'
 require 'json'
 
 class UsersController < ApplicationController
-  before_action :require_login, only: %i[edit update edit_improv edit_schedule edit_endorsements edit_password delete_avatar email email_send invites unlink destroy]
+  before_action :require_login, only: %i[edit update edit_improv edit_schedule edit_endorsements edit_password delete_avatar email email_send comment_send invites unlink destroy]
 
   # GET /users
   # GET /users.json
@@ -36,9 +36,11 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    @user = User.find(params[:id])
+    @user = params[:profile] ? current_user : User.friendly.find(params[:id])
 
-    if request.path != user_path(@user)
+    return require_login if @user.nil?
+
+    if !params[:profile] && request.path != user_path(@user)
       redirect_to @user, status: :moved_permanently
     elsif @user&.is_coach && (@user&.is_improv || @user&.is_sketch)
       respond_to do |format|
@@ -78,7 +80,9 @@ class UsersController < ApplicationController
     comment_id = params[:comment_id]
     access_token = params[:access_token]
 
-    comment_data = JSON.parse(open("https://graph.facebook.com/v2.4/#{comment_id}?access_token=#{access_token}").read)
+    comment_url = URI("https://graph.facebook.com/v24.0/#{ERB::Util.url_encode(comment_id)}")
+    comment_url.query = URI.encode_www_form(access_token: access_token)
+    comment_data = JSON.parse(URI.open(comment_url).read)
 
     if comment_data['error'].nil?
       to_user.send_comment_notification(comment_data)
@@ -128,7 +132,8 @@ class UsersController < ApplicationController
       set_authorized_user(@user, false)
 
       if params[:invite_code]
-        redirect_to invite_accept_url(code: params[:invite_code])
+        session.delete(:return_to)
+        redirect_to invite_landing_url(code: params[:invite_code])
       else
         respond_to do |format|
           format.html { redirect_to root_url, notice: 'Welcome to ImprovCoaches.com.' }
@@ -137,7 +142,7 @@ class UsersController < ApplicationController
       end
     else
       respond_to do |format|
-        format.html { render action: 'new' }
+        format.html { render action: 'new', status: :unprocessable_entity }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end

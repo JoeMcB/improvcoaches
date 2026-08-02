@@ -10,7 +10,6 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user
   helper_method :current_city
-  helper_method :process_uri
 
   protected
 
@@ -25,15 +24,6 @@ class ApplicationController < ActionController::Base
   end
 
   private
-
-  def process_uri(uri)
-    require 'open-uri'
-    require 'open_uri_redirections'
-
-    open(uri, allow_redirections: :safe) do |r|
-      r.base_uri.to_s
-    end
-  end
 
   def current_user
     @current_user ||= User.find_by(auth_token: cookies[:auth_token]) if cookies[:auth_token]

@@ -11,7 +11,7 @@ Improvcoaches::Application.routes.draw do
   controller :auth do
     get  'login' => :new
     post 'login' => :create
-    get  'logout' => :destroy
+    delete 'logout' => :destroy
 
     get 'link' => :link
     post 'link' => :confirm_link
@@ -20,7 +20,7 @@ Improvcoaches::Application.routes.draw do
   # Omniauth
   get 'auth/:provider/callback', to: 'auth#create', from_facebook: true
   get 'auth/failure', to: 'auth#failure'
-  get 'signout', to: 'auth#destroy', as: 'signout'
+  delete 'signout', to: 'auth#destroy', as: 'signout'
 
   controller :users do
     get 'join' => :new
@@ -30,8 +30,8 @@ Improvcoaches::Application.routes.draw do
     post 'profile/invites/:code/resend' => 'invites#resend', as: 'profile_invite_resend'
     delete 'profile/invites/:code/cancel' => 'invites#cancel', as: 'profile_invite_cancel'
     get 'profile/edit' => :edit
-    get 'profile/unlink' => :unlink
-    get 'profile/destroy' => :destroy
+    delete 'profile/unlink' => :unlink
+    delete 'profile/destroy' => :destroy
     get 'profile/edit/improv' => :edit_improv
     get 'profile/edit/schedule' => :edit_schedule
     get 'profile/edit/password' => :edit_password
@@ -45,10 +45,10 @@ Improvcoaches::Application.routes.draw do
 
   controller :invites do
     get 'invite/:code' => :landing, as: 'invite_landing'
-    get 'invite/:code/accept' => :accept, as: 'invite_accept'
+    post 'invite/:code/accept' => :accept, as: 'invite_accept'
   end
 
-  resources :users, path: 'coaches' do
+  resources :users, path: 'coaches', only: %i[index show new create] do
     controller :ratings do
       post 'like' => :like, defaults: {format: :js }
       post 'dislike' => :dislike, defaults: {format: :js }
@@ -67,7 +67,6 @@ Improvcoaches::Application.routes.draw do
     end
   end
 
-  resources :password_resets
+  resources :password_resets, only: %i[index new create edit update]
   resources :theatres
-  resources :substitution_requests
 end

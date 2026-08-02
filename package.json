@@ -2,28 +2,27 @@
   "name": "improvcoaches",
   "private": true,
   "engines": {
-    "node": ">=20",
+    "node": ">=24",
     "yarn": ">=1.22.0"
   },
   "scripts": {
     "css:base": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --load-path=node_modules",
     "css:tailwind": "tailwindcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.tailwind.css",
     "build:css": "yarn css:base --no-source-map && yarn css:tailwind --minify",
-    "watch:css": "yarn css:base --watch & yarn css:tailwind --watch",
+    "watch:css": "yarn css:base --watch & yarn css:tailwind --watch=always",
     "js:base": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=/assets",
     "build:js": "yarn js:base",
-    "watch:js": "yarn js:base --watch",
+    "watch:js": "yarn js:base --watch=forever",
     "build": "yarn build:css && yarn build:js",
     "heroku-postbuild": "yarn build"
   },
   "dependencies": {
-    "@hotwired/turbo-rails": "^8.0.13",
-    "@tailwindcss/forms": "^0.5.10",
-    "autoprefixer": "^10.4.21",
-    "esbuild": "^0.25.4",
-    "jquery": "^3.7.1",
-    "postcss": "^8.4.38",
-    "sass": "^1.87.0",
-    "tailwindcss": "3.3.3"
+    "@hotwired/turbo-rails": "^8.0.23",
+    "@tailwindcss/forms": "^0.5.11",
+    "autoprefixer": "^10.5.4",
+    "esbuild": "^0.28.1",
+    "postcss": "^8.5.25",
+    "sass": "^1.102.0",
+    "tailwindcss": "^3.4.19"
   }
 }

@@ -1,49 +1,66 @@
-require 'test_helper'
+require "test_helper"
 
-class SpacesControllerTest < ActionController::TestCase
-  setup do
-    @space = spaces(:one)
-  end
+class SpacesControllerTest < ActionDispatch::IntegrationTest
+  test "space index is public and scoped to the current city" do
+    get spaces_path
 
-  test "should get index" do
-    get :index
     assert_response :success
-    assert_not_nil assigns(:spaces)
+    assert_includes response.body, spaces(:nyc_studio).name
+    assert_not_includes response.body, spaces(:chicago_studio).name
   end
 
-  test "should get new" do
-    get :new
+  test "space pages use friendly ids" do
+    get space_path(spaces(:nyc_studio))
+
     assert_response :success
+    assert_includes response.body, spaces(:nyc_studio).description
   end
 
-  test "should create space" do
-    assert_difference('Space.count') do
-      post :create, space: { address: @space.address, address_2: @space.address_2, city: @space.city, city_id: @space.city_id, description: @space.description, facebook_link: @space.facebook_link, name: @space.name, phone: @space.phone, rating: @space.rating, state: @space.state, website_link: @space.website_link, yelp_link: @space.yelp_link, zip: @space.zip }
+  test "space management requires an administrator" do
+    sign_in_as users(:member)
+
+    get new_space_path
+
+    assert_redirected_to root_path
+    assert_equal "You are not authorized to view that page.", flash[:alert]
+  end
+
+  test "administrator can create a space with permitted fields" do
+    sign_in_as users(:admin)
+
+    assert_difference "Space.count", 1 do
+      post spaces_path, params: {
+        space: {
+          name: "Chelsea Rehearsal Room",
+          description: "Mirrors and chairs",
+          city_id: cities(:new_york).id,
+          real_city: "New York",
+          state: "NY",
+          zip: "10011",
+          unknown_attribute: "ignored"
+        }
+      }
     end
 
-    assert_redirected_to space_path(assigns(:space))
+    space = Space.find_by!(name: "Chelsea Rehearsal Room")
+    assert_redirected_to space_path(space)
+    assert_equal cities(:new_york), space.city
   end
 
-  test "should show space" do
-    get :show, id: @space
-    assert_response :success
-  end
+  test "administrator can update and destroy a friendly-id space" do
+    sign_in_as users(:admin)
+    space = spaces(:nyc_studio)
 
-  test "should get edit" do
-    get :edit, id: @space
-    assert_response :success
-  end
+    patch space_path(space), params: {
+      space: { description: "Updated rooms", city_id: cities(:new_york).id }
+    }
 
-  test "should update space" do
-    put :update, id: @space, space: { address: @space.address, address_2: @space.address_2, city: @space.city, city_id: @space.city_id, description: @space.description, facebook_link: @space.facebook_link, name: @space.name, phone: @space.phone, rating: @space.rating, state: @space.state, website_link: @space.website_link, yelp_link: @space.yelp_link, zip: @space.zip }
-    assert_redirected_to space_path(assigns(:space))
-  end
+    assert_redirected_to edit_space_url(space)
+    assert_equal "Updated rooms", space.reload.description
 
-  test "should destroy space" do
-    assert_difference('Space.count', -1) do
-      delete :destroy, id: @space
+    assert_difference "Space.count", -1 do
+      delete space_path(space)
     end
-
-    assert_redirected_to spaces_path
+    assert_redirected_to spaces_url
   end
 end

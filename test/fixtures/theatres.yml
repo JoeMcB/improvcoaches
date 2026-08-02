@@ -1,9 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  name: MyString
-  city_id: 
+ucb:
+  name: Upright Citizens Brigade
+  cities: new_york
 
-two:
-  name: MyString
-  city_id: 
+second_city:
+  name: Second City
+  cities: chicago

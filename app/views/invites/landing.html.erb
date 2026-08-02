@@ -57,7 +57,7 @@
 
         <% if current_user %>
           <div class="text-center mt-8">
-            <%= link_to invite_accept_path(@invite), 
+            <%= button_to invite_accept_path(@invite), method: :post,
                 class: "inline-flex items-center px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors duration-200 shadow-sm" do %>
               <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
@@ -81,13 +81,7 @@
           </div>
           <div class="p-6">
             <div class="max-w-xs mx-auto">
-              <%= link_to "/auth/facebook", 
-                  class: "inline-flex items-center justify-center w-full px-4 py-2.5 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200 shadow-sm text-sm" do %>
-                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M20 10C20 4.477 15.523 0 10 0S0 4.477 0 10c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V10h2.54V7.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V10h2.773l-.443 2.89h-2.33v6.988C16.343 19.128 20 14.991 20 10z" clip-rule="evenodd"></path>
-                </svg>
-                Login with Facebook
-              <% end %>
+              <%= render "shared/facebook_login" %>
             </div>
           </div>
         </div>

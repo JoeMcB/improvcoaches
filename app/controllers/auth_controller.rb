@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "open-uri"
+
 class AuthController < ApplicationController
   def new; end
 
@@ -9,14 +11,15 @@ class AuthController < ApplicationController
 
   def confirm_link
     auth = session[:omniauth]
-    user = User.find_by_email(auth[:info][:email].downcase)
+    user = User.find_by_email(auth&.dig(:info, :email).to_s.downcase)
 
-    unless user && user.authenticate(params[:password])
+    if user&.authenticate(params[:password])
+      expires_at = auth.dig(:credentials, :expires_at)
       user.assign_attributes(
         provider: auth[:provider],
         uid: auth[:uid],
         oauth_token: auth[:credentials][:token],
-        oauth_token_expires_at: Time.at(auth[:credentials][:expires_at])
+        oauth_token_expires_at: expires_at && Time.at(expires_at)
       )
 
       if user.save
@@ -38,6 +41,10 @@ class AuthController < ApplicationController
   def create
     if params['from_facebook']
       auth = request.env['omniauth.auth']
+      if auth.blank? || auth.info.email.blank?
+        redirect_to login_path, alert: 'Facebook did not provide the account information needed to log in.'
+        return
+      end
 
       if User.where(email: auth.info.email.downcase, provider: nil).first
         session[:omniauth] = auth.except('extra')
@@ -58,7 +65,7 @@ class AuthController < ApplicationController
         end
       end
     else
-      user = User.find_by_email(params[:email].downcase)
+      user = User.find_by_email(params[:email].to_s.downcase)
       handle_existing_user(user, params)
     end
   end
@@ -77,21 +84,43 @@ class AuthController < ApplicationController
   private
 
   def setup_new_user(user, auth)
-    user.attributes = {
+    avatar_io = fetch_facebook_avatar(auth.uid)
+  rescue StandardError => error
+    Rails.logger.warn("Facebook avatar download failed: #{error.class}: #{error.message}")
+    assign_facebook_user_attributes(user, auth, nil)
+  else
+    assign_facebook_user_attributes(user, auth, avatar_io)
+  end
+
+  def assign_facebook_user_attributes(user, auth, avatar_io)
+    attributes = {
       provider: auth.provider,
       uid: auth.uid,
       name: auth.info.name,
       email: auth.info.email,
-      avatar: URI.parse(process_uri("http://graph.facebook.com/v10.0/#{auth.uid}/picture?height=500&width=500")),
-      password_digest: SecureRandom.urlsafe_base64,
+      password: SecureRandom.urlsafe_base64(32),
       oauth_token: auth.credentials.token,
-      oauth_token_expires_at: Time.at(auth.credentials.expires_at)
+      oauth_token_expires_at: auth.credentials.expires_at && Time.at(auth.credentials.expires_at)
     }
+    if avatar_io
+      attributes[:avatar] = {
+        io: avatar_io,
+        filename: "facebook-avatar-#{auth.uid}.jpg",
+        content_type: avatar_io.respond_to?(:content_type) ? avatar_io.content_type : "image/jpeg"
+      }
+    end
+
+    user.attributes = attributes
+  end
+
+  def fetch_facebook_avatar(uid)
+    URI.open("https://graph.facebook.com/v24.0/#{uid}/picture?height=500&width=500")
   end
 
   def redirect_to_next_step(user, invite_code)
     if invite_code
-      redirect_to invite_accept_url(code: invite_code), flash: { success: "Welcome back #{user.name}" }
+      session.delete(:return_to)
+      redirect_to invite_landing_url(code: invite_code), flash: { success: "Welcome back #{user.name}" }
     else
       flash[:success] = "Welcome back #{user.name}"
       return_url = session.delete(:return_to) || root_path

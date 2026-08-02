@@ -1,19 +1,19 @@
 # Commands & Guidelines for ImprovCoaches
 
 ## Build & Run Commands
-- Setup: `docker build . -t improvcoaches && docker-compose run web rake db:create && docker-compose run web rake db:seed`
-- Run server: `docker-compose up`
-- Rails console: `docker-compose run web rails c`
-- Run all tests: `docker-compose run web rake test`
-- Run single test: `docker-compose run web ruby -Itest test/path/to/test_file.rb -n test_method_name`
-- Run rubocop: `docker-compose run web rubocop`
-- Compile assets: `docker-compose run web bin/propshaft compile`
+- Setup: `docker compose build && docker compose run --rm web bin/rails db:prepare`
+- Run server: `docker compose up`
+- Rails console: `docker compose run --rm web bin/rails console`
+- Run all tests: `docker compose run --rm -e RAILS_ENV=test web bin/rails test`
+- Run single test: `docker compose run --rm -e RAILS_ENV=test web ruby -Itest test/path/to/test_file.rb -n test_method_name`
+- Run rubocop: `docker compose run --rm web bundle exec rubocop`
+- Compile assets: `docker compose run --rm web bin/rails assets:precompile`
 - Build assets: `yarn build`
 - Install frontend dependencies: `yarn install`
 
 ## Technology Stack
-- **Ruby Version**: 3.3.5
-- **Framework**: Rails 7.1.3
+- **Ruby Version**: 3.4.10
+- **Framework**: Rails 8.1
 - **Asset Pipeline**: Propshaft (replacing Sprockets)
 - **CSS Processing**: SCSS via cssbundling-rails + Tailwind CSS
 - **JavaScript**: ES6 modules via jsbundling-rails + esbuild

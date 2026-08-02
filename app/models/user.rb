@@ -48,7 +48,10 @@ class User < ActiveRecord::Base
   after_like ->(u) { u.update_rating }
   after_dislike ->(u) { u.update_rating }
 
-  has_secure_password
+  # Keep the app's existing database-backed password reset flow. Rails 8 enables
+  # its own signed reset token method by default, which otherwise shadows the
+  # password_reset_token column used by PasswordResetsController.
+  has_secure_password reset_token: false
 
   # Active Storage Image
   has_one_attached :avatar
@@ -90,7 +93,8 @@ class User < ActiveRecord::Base
   belongs_to :invite, optional: true
   belongs_to :city, optional: true
 
-  before_create :defaults, :generate_auth_token, :create_schedule, :lowercase_email
+  before_validation :lowercase_email
+  before_create :defaults, :generate_auth_token, :create_schedule
 
   scope :coaches, -> { where(is_coach: :t).where('is_improv = ? OR is_sketch = ?', true, true) }
   scope :improv_coaches, -> { coaches.where(is_improv: 't') }
@@ -162,12 +166,12 @@ class User < ActiveRecord::Base
   private
 
   def defaults
-    self.bio ||= ''
-    self.is_coach ||= 'f'
-    self.is_active ||= 't'
-    self.is_improv ||= 't'
-    self.is_sketch ||= 'f'
-    self.is_admin ||= 'f'
+    self.bio = '' if bio.nil?
+    self.is_coach = false if is_coach.nil?
+    self.is_active = true if is_active.nil?
+    self.is_improv = true if is_improv.nil?
+    self.is_sketch = false if is_sketch.nil?
+    self.is_admin = 0 if is_admin.nil?
     self.rating = -1
   end
 
@@ -186,6 +190,6 @@ class User < ActiveRecord::Base
   end
 
   def lowercase_email
-    email.downcase!
+    email&.downcase!
   end
 end

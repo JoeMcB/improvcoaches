@@ -1,4 +1,4 @@
-FROM ruby:3.3.5
+FROM ruby:3.4.10
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ America/New_York
@@ -11,13 +11,13 @@ RUN apt-get update && \
 
 
 # Install Node.js and npm
-RUN curl -sL https://deb.nodesource.com/setup_20.x | bash - && \
+RUN curl -sL https://deb.nodesource.com/setup_24.x | bash - && \
     apt-get install -y nodejs
 
 RUN wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
 
-# Install Bundler
-RUN gem install bundler -v 2.4.0 && gem update --system 3.3.5
+# Match the Bundler version recorded in Gemfile.lock for reproducible builds.
+RUN gem install bundler -v 4.0.17
 
 WORKDIR /workspace
 
@@ -29,7 +29,11 @@ RUN bundle config set --local path "$GEM_HOME" && \
     bundle install
 
 # Install Yarn
-RUN npm install -g yarn
+RUN npm install -g yarn@1.22.22
+
+COPY package.json /workspace/package.json
+COPY yarn.lock /workspace/yarn.lock
+RUN yarn install --frozen-lockfile
 
 RUN git config --global --add safe.directory /workspace
 

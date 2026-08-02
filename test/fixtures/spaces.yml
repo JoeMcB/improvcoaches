@@ -1,31 +1,24 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  name: MyString
-  description: MyString
-  city_id: 1
-  rating: 9.99
-  website_link: MyString
-  yelp_link: MyString
-  facebook_link: MyString
-  address: MyString
-  address_2: MyString
-  zip: MyString
-  city: MyString
-  state: MyString
-  phone: MyString
+nyc_studio:
+  name: Midtown Studio
+  description: Rehearsal rooms
+  city: new_york
+  rating: 4.5
+  website_link: https://studio.example.com
+  address: 123 Broadway
+  real_city: New York
+  state: NY
+  zip: "10001"
+  phone: 212-555-0100
+  slug: midtown-studio
 
-two:
-  name: MyString
-  description: MyString
-  city_id: 1
-  rating: 9.99
-  website_link: MyString
-  yelp_link: MyString
-  facebook_link: MyString
-  address: MyString
-  address_2: MyString
-  zip: MyString
-  city: MyString
-  state: MyString
-  phone: MyString
+chicago_studio:
+  name: Loop Studio
+  description: Chicago rooms
+  city: chicago
+  address: 456 State Street
+  real_city: Chicago
+  state: IL
+  zip: "60601"
+  slug: loop-studio

@@ -1,7 +1,3 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  space_id: 1
-
-two:
-  space_id: 1
+# Attachments are created explicitly by tests that exercise image behavior.

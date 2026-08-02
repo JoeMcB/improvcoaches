@@ -1,5 +1,7 @@
 ---
-Layout/AlignParameters:
+plugins: rubocop-rails
+
+Layout/ParameterAlignment:
   EnforcedStyle: with_fixed_indentation
 
 Layout/MultilineMethodCallIndentation:

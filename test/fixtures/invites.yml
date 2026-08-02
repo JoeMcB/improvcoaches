@@ -1,13 +1,18 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  code: MyString
-  owner: 1
-  recipient: MyString
-  status: MyString
+pending:
+  code: pending-code
+  owner: coach
+  recipient: future-coach@example.com
+  status: pending
 
-two:
-  code: MyString
-  owner: 1
-  recipient: MyString
-  status: MyString
+free:
+  code: free-code
+  owner: coach
+  status: free
+
+used:
+  code: used-code
+  owner: coach
+  recipient: used@example.com
+  status: used

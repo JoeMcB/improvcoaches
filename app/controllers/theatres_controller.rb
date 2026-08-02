@@ -43,14 +43,14 @@ class TheatresController < ApplicationController
   # POST /theatres
   # POST /theatres.json
   def create
-    @theatre = Theatre.new(params[:theatre])
+    @theatre = Theatre.new(theatre_params)
 
     respond_to do |format|
       if @theatre.save
         format.html { redirect_to @theatre, notice: 'Theatre was successfully created.' }
         format.json { render json: @theatre, status: :created, location: @theatre }
       else
-        format.html { render action: "new" }
+        format.html { render action: "new", status: :unprocessable_entity }
         format.json { render json: @theatre.errors, status: :unprocessable_entity }
       end
     end
@@ -62,11 +62,11 @@ class TheatresController < ApplicationController
     @theatre = Theatre.find(params[:id])
 
     respond_to do |format|
-      if @theatre.update_attributes(params[:theatre])
+      if @theatre.update(theatre_params)
         format.html { redirect_to @theatre, notice: 'Theatre was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render action: "edit", status: :unprocessable_entity }
         format.json { render json: @theatre.errors, status: :unprocessable_entity }
       end
     end
@@ -82,5 +82,11 @@ class TheatresController < ApplicationController
       format.html { redirect_to theatres_url }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def theatre_params
+    params.require(:theatre).permit(:name, city_ids: [])
   end
 end

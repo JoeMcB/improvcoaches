@@ -1,9 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  name: MyString
-  country_id: 1
+new_york:
+  name: New York
+  country: united_states
+  subdomain: www
+  has_spaces: true
 
-two:
-  name: MyString
-  country_id: 1
+chicago:
+  name: Chicago
+  country: united_states
+  subdomain: chicago
+  has_spaces: true

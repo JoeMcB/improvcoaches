@@ -9,6 +9,9 @@ I originally built the site as a resource for improv students and coaches while 
 ## Requirements
 - Docker
 
+The development container currently uses Ruby 3.4.10, Rails 8.1, Node.js 24,
+PostgreSQL 17, and Redis 7.4.
+
 ## Environment Variables
 The application uses the following environment variables:
 
@@ -23,15 +26,15 @@ The application uses the following environment variables:
 
 ## Running
 
-- Run `docker build . -t improvcoaches`
-- Run `docker-compose run web rake db:create`
-- Run `docker-compose run web rake db:seed`
-- Run `docker-compose up`.  Server is available at localhost:300
-- Access the Rails consolt with `docker-compose run web rails c`
+- Run `docker compose build`
+- Run `docker compose run --rm web bin/rails db:prepare`
+- Run `docker compose up`. The server is available at localhost:3000.
+- Access the Rails console with `docker compose run --rm web bin/rails console`
+- Run the test suite with `docker compose run --rm -e RAILS_ENV=test web bin/rails test`
 
 ## Create an Admin account
 - Open a console.
-- `User.first.update_attributes(is_admin: true)` to set up that account as the admin of your local site.
+- `User.first.update!(is_admin: true)` to set up that account as the admin of your local site.
 
 ## Contributing
 

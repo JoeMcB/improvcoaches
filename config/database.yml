@@ -21,6 +21,6 @@ test:
   adapter: postgresql
   encoding: unicode
   database: improvcoaches_test
-  url: <%= ENV['DATABASE_URL'] %>
+  url: <%= ENV['TEST_DATABASE_URL'] %>
   username: improvcoaches
   password: improvcoaches

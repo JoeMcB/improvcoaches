@@ -1,9 +1,17 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  user_id: 
-  name: MyString
+member:
+  user: member
+  name: Member schedule
 
-two:
-  user_id: 
-  name: MyString
+coach:
+  user: coach
+  name: Coach schedule
+
+chicago_coach:
+  user: chicago_coach
+  name: Chicago schedule
+
+admin:
+  user: admin
+  name: Admin schedule

@@ -17,13 +17,11 @@
 
   <!-- JavaScript assets -->
   <!-- jQuery loaded first to ensure compatibility -->
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   <!-- Modern JavaScript from esbuild -->
   <%= javascript_include_tag "application", type: "module", "data-turbo-track": "reload" %>
 </head>
 <body class="h-full bg-creative">
-  <%= render "shared/fb_tag" %>
-
   <!-- Modern Tailwind Navigation -->
   <nav class="bg-white/90 backdrop-blur-md shadow-lg border-b border-purple-100 sticky top-0 z-50 relative">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -92,8 +90,7 @@
         <div class="hidden md:block">
           <div class="ml-4 flex items-center md:ml-6 space-x-4">
             <% if current_user.nil? %>
-              <!-- Facebook Login -->
-              <div class="fb-login-button" data-width="" data-size="medium" data-onlogin="FBLogin();" data-button-type="login_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"></div>
+              <%= render "shared/facebook_login", compact: true %>
               
               <!-- Login/Join buttons -->
               <div class="flex space-x-2">
@@ -136,7 +133,7 @@
                       </svg>
                       Settings
                     </a>
-                    <a href="<%= logout_path %>" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                    <a href="<%= logout_path %>" data-turbo-method="delete" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
                       <svg class="mr-3 h-4 w-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"></path>
                       </svg>
@@ -191,7 +188,7 @@
         <% if current_user.nil? %>
           <div class="border-t border-gray-200 pt-3 mt-3">
             <div class="mb-3">
-              <div class="fb-login-button" data-width="" data-size="medium" data-onlogin="FBLogin();" data-button-type="login_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"></div>
+              <%= render "shared/facebook_login", compact: true %>
             </div>
             <%= link_to "Login", login_path, class: "block px-3 py-2 text-base font-medium text-purple-600 hover:text-purple-700 hover:bg-purple-50 rounded-md border border-purple-200" %>
             <%= link_to "Sign Up", join_path, class: "block px-3 py-2 text-base font-medium text-purple-600 hover:text-purple-700 hover:bg-purple-50 rounded-md border border-purple-200 mt-2" %>
@@ -207,7 +204,7 @@
             <a href="<%= profile_edit_path %>" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md">
               Settings
             </a>
-            <a href="<%= logout_path %>" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md">
+            <a href="<%= logout_path %>" data-turbo-method="delete" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md">
               Logout
             </a>
           </div>

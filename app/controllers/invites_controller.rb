@@ -1,21 +1,18 @@
 class InvitesController < ApplicationController
   before_action :require_login, except: [:landing]
-  skip_before_action :verify_authenticity_token, if: :valid_turbo_request?
 
   def landing
     @invite = Invite.find_by_code(params[:code])
 
-    if @invite.owner.city != current_city
+    if @invite.nil? || @invite.status != 'pending'
+      redirect_to root_url, flash: { alert: 'This invite has already been used.' }
+    elsif @invite.owner.city != current_city
       redirect_to subdomain: @invite.owner.city.subdomain
     else
-      if @invite && @invite.status == 'pending'
-        @user = User.new(params[:user]) # Hack till I figure out login
-        session[:redirect_on_login] = invite_accept_url code: params[:code]
+      @user = User.new
+      session[:return_to] = invite_landing_url(code: params[:code]) unless current_user
 
-        flash.keep # Preserve to next request
-      else
-        redirect_to root_url, { flash: { alert: 'This invite has already been used.'} }
-      end
+      flash.keep # Preserve to next request
     end
   end
 
@@ -58,27 +55,30 @@ class InvitesController < ApplicationController
     redirect_hash = { flash: {} }
     redirect_flash = redirect_hash[:flash]
 
-    if @invite && @invite.status == 'pending'
-      if !current_user.is_coach
-        @invite.status = 'used'
-        @invite.save!
+    if @invite
+      @invite.with_lock do
+        if @invite.status == 'pending'
+          if !current_user.is_coach
+            current_user.update!(
+              is_coach: true,
+              is_improv: true,
+              city: @invite.owner.city
+            )
+            @invite.update!(status: 'used')
 
-        u = @user = User.find(current_user.id)
+            redirect_flash[:success] = 'Welcome to ImprovCoaches!  Be sure to add a bio, schedule, and your experience to help users discover your profile.'
+          else
+            redirect_flash[:alert] = 'Your account has already been upgraded.'
+          end
 
-        u.is_coach = 't'
-        u.is_improv = 't'
-        u.city = @invite.owner.city
-        u.save
-
-        redirect_flash[:success] = 'Welcome to ImprovCoaches!  Be sure to add a bio, schedule, and your experience to help users discover your profile.'
-      else
-        redirect_flash[:alert] = 'Your account has already been upgraded.'
-      end
-
-      if @invite.owner.city != current_city
-        return_to_url = profile_edit_url( subdomain: @invite.owner.city.subdomain )
-      else
-        return_to_url = profile_edit_url
+          if @invite.owner.city != current_city
+            return_to_url = profile_edit_url(subdomain: @invite.owner.city.subdomain)
+          else
+            return_to_url = profile_edit_url
+          end
+        else
+          redirect_flash[:alert] = 'That invite has already been used.'
+        end
       end
     else
       redirect_flash[:alert] = 'That invite has already been used.'
@@ -90,7 +90,7 @@ class InvitesController < ApplicationController
   end
 
   def resend
-    @invite = Invite.find_by_code(params[:code])
+    @invite = current_user.invites.pending.find_by!(code: params[:code])
     @invite.deliver
 
     respond_to do |format|
@@ -100,22 +100,12 @@ class InvitesController < ApplicationController
   end
 
   def cancel
-    @invite = Invite.find_by_code(params[:code])
-    if @invite.status != 'used'
-      @invite.recipient = nil
-      @invite.status = 'free'
-      @invite.save!
-    end
+    @invite = current_user.invites.pending.find_by!(code: params[:code])
+    @invite.update!(recipient: nil, status: 'free')
 
     respond_to do |format|
       format.js
       format.turbo_stream
     end
-  end
-
-  private
-
-  def valid_turbo_request?
-    request.format.turbo_stream? || request.accept.include?('text/vnd.turbo-stream.html')
   end
 end

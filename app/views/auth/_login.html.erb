@@ -37,28 +37,16 @@
   <div>
     <%= submit_tag "Sign In", class: "btn-primary w-full text-base py-3" %>
   </div>
-  
-  <!-- Divider -->
-  <div class="relative">
-    <div class="absolute inset-0 flex items-center">
-      <div class="w-full border-t border-gray-300"></div>
-    </div>
-    <div class="relative flex justify-center text-sm">
-      <span class="px-2 bg-white text-gray-500">Or continue with</span>
-    </div>
-  </div>
-  
-  <!-- Facebook Login -->
-  <div class="text-center">
-    <div class="fb-login-button" 
-         data-width="" 
-         data-size="large" 
-         data-onlogin="FBLogin();" 
-         data-button-type="login_with" 
-         data-layout="default" 
-         data-auto-logout-link="false" 
-         data-use-continue-as="false">
-    </div>
-  </div>
-  
 <% end %>
+
+<!-- Divider -->
+<div class="relative my-6">
+  <div class="absolute inset-0 flex items-center">
+    <div class="w-full border-t border-gray-300"></div>
+  </div>
+  <div class="relative flex justify-center text-sm">
+    <span class="px-2 bg-white text-gray-500">Or continue with</span>
+  </div>
+</div>
+
+<%= render "shared/facebook_login" %>

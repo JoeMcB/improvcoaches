@@ -1,13 +1,19 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  schedule_id: 1
+coach_monday_ten:
+  schedule: coach
+  day: 1
+  hour: 10
+  minute: 0
+
+coach_monday_ten_thirty:
+  schedule: coach
   day: 1
   hour: 10
   minute: 30
 
-two:
-  schedule_id: 1
+coach_monday_eleven:
+  schedule: coach
   day: 1
-  hour: 10
+  hour: 11
   minute: 0

@@ -71,7 +71,7 @@ class SchedulesController < ApplicationController
     new_blocks = []
     
     #Get rid of the old guys.
-    @schedule.time_blocks.delete_all
+    @schedule.time_blocks.destroy_all
     
     if(params['time_blocks']) then
       params['time_blocks'].each do |i, param_block|
