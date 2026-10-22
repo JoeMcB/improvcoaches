@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '3.3.5'
 
-gem 'rails', '~> 7.1.3'
+gem 'rails', '~> 7.2.0'
 gem 'propshaft', '>= 1.1.0'
 gem "yard", ">= 0.9.11"
 gem 'puma'
@@ -39,8 +39,7 @@ gem 'will_paginate'
 
 #recommendation
 gem 'recommendable'
-gem 'resque'
-gem 'resque-loner'
+gem 'resque', '~> 2.6'
 
 gem 'validates_email_format_of'
 
