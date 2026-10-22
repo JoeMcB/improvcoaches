@@ -37,3 +37,7 @@ dump.rdb
 
 public/assets/*
 **/.claude/settings.local.json
+
+# Local env files (never commit)
+.env.development
+.env.test
